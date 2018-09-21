@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load staticfiles %}
+    {% load thumbnail %}
+    
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}{% endblock description %}">
+    <meta name="author" content="Sportfreunde DEPL">
+    <link rel="shortcut icon" href="{% static 'site/ico/favicon.ico' %}">
+
+    <title>Sportschule Schusters Kurverwaltung</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this site -->
+    {% block styles %}
+
+    <link href="{% static '/css/main.css' %}" rel="stylesheet">
+    {% endblock styles %}
+
+    <!-- Custom tags for the head tag -->
+    {% block extrahead %}{% endblock extrahead %}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <h1>Hier kommt der Inhalt rein, der auf allen Seiten angezeigt werden soll</h1>
+    <p> Das könnten zum Beispiel Schlatflächen für das Login sein</p>
+    
+    <!--
+    Eine Unterscheidung würde in Django etwas so erfolgen (momentan noch nicht funktionsfähig!)
+    {% if user.is_authenticated %}
+
+        <p align="right">
+            <a class="btn btn-primary btn-sm" href="{% url 'logout'%}">Logout</a>
+        </p>
+
+        {% else %}
+
+        <p align="right">
+            <a class="btn btn-primary btn-sm" href="{% url 'login'%}">Login</a>
+        </p>
+        {% endif %}
+        <hr>
+
+        {% block content %}
+        
+        <p>default content text (typically empty)</p>
+        
+        {% endblock %}
+    
+    -->
+    
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
+    {% block scripts %}
+    {% endblock scripts %}
+
+    
+  </body>
+</html>
+
+
