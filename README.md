@@ -2,8 +2,8 @@
 
 > Enthaltene Librarys
 
-bootstrap.js (v3.3.6)
-bootstrap.min.js (v3.3.6)
+bootstrap.js (v3.3.7)
+bootstrap.min.js (v3.3.7)
 
 > Enthaltenes CSS
 
