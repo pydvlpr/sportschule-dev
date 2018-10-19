@@ -18,6 +18,7 @@ th, td {
     Muss noch gepimmt werden.
 </p>
 
+{% if user.is_authenticated %}
 
 <table>
     <tr>
@@ -49,4 +50,16 @@ th, td {
     </tr>
 </table>
 
+{% else %}
+
+<table>
+    <tr>
+        <td>
+            <form action="kurse/">
+                <input type="submit" value="Kurse" class="btn btn-primary"/>
+            </form>
+        </td>
+</table>
+
+{% endif %}
 {% endblock %}
