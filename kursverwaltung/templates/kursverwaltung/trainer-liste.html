@@ -4,7 +4,7 @@
 {% block content %}
 
 
-<h1>Kurse</h1>
+<h1>Trainer</h1>
 {% if trainer_liste %}
     <table border=1>
     <tr>
@@ -42,7 +42,8 @@
     <p>Es sind aktuell keine Trainer verfügbar.</p>
 {% endif %}
 {% if user.is_authenticated %}
-    <a href="{% url 'trainer_hinzufügen' %}" class="btn btn-primary">hinzufügen</a>
+    <p>Angemeldete Benutzer können Kurse erstellen.</p>
+    <a href="" class="btn btn-primary">hinzufügen</a>
 {% endif %}
 
 {% endblock %}
