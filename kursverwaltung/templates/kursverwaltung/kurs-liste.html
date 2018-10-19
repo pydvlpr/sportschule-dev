@@ -1,0 +1,47 @@
+{% extends "kursverwaltung/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+<h1>Kurse</h1>
+{% if kurs_liste %}
+    <table border=1>
+    <tr>
+    <th>KursID.</th>
+    <th>Titel</th>
+    <th>Beschreibung</th>
+    <th>Anfangszeit</th>
+    <th>Endzeit</th>
+    <th>Raum</th>
+    <th>Trainer</th>
+    <th>Teilnehmerzahl</th>
+    <th>Max. Teilnehmer</th>
+    <th>Kursgebühr</th>
+    <tr>
+    {% for course in course_list %}
+    <tr>
+    <td>{{course.id}}</td>
+    <td><a href="/kursverwaltung/kurse/{{ kurs.id }}/">{{ kurs.Titel}}</a></td>
+    <td>{{kurs.KursID}}</td>
+    <td>{{kurs.Titel}}</td>
+    <td>{{kurs.Beschreibung}}</td>
+    <td>{{kurs.Anfangsdatum}} {{kurs.Anfangszeit}}</td>
+    <td>{{kurs.Enddatum}} {{kurs.Endzeit}}</td>
+    <td>{{kurs.Raum}}</td>
+    <td>{{kurs.Trainer}}</td>
+    <td>{{kurs.Zeilnehmerzahl}}</td>
+    <td>{{kurs.Max_Teilnehmer}}</td>
+    <td>{{kurs.Gebühr}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <p>Es sind aktuell keine Kurse verfügbar.</p>
+{% endif %}
+{% if user.is_authenticated %}
+
+    <a href="{% url 'kurs_hinzufügen' %}" class="btn btn-primary">hinzufügen</a>
+{% endif %}
+
+{% endblock %}
