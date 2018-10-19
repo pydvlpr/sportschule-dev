@@ -4,6 +4,39 @@ html, body{
     height:100%;		/* For full height images */
 }
 
+* {
+    box-sizing: border-box;
+}
+
+.menu {
+    width: 25%;
+    float: left;
+    padding: 15px;
+    border: 1px solid red;
+}
+.main {
+    width: 75%;
+    float: left;
+    padding: 15px;
+    border: 1px solid red;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
 .starter-template {
   padding: 40px 15px;
   text-align: center;
