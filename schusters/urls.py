@@ -17,6 +17,12 @@ from django.contrib import admin
 from django.urls import include,path
 
 urlpatterns = [
+    # Einbinden der lokalen URLs der Kursverwaltung
     path('kursverwaltung/', include('kursverwaltung.urls')),
-    #path('admin/', admin.site.urls),
+
+    # Verwaltungsoberfläche
+    path('admin/', admin.site.urls),
+
+    # Benutzerauthentifikation ohne Admin-Oberfläche
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
