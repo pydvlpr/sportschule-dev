@@ -40,8 +40,9 @@
     <p>Es sind aktuell keine Kurse verfügbar.</p>
 {% endif %}
 {% if user.is_authenticated %}
+    <p>Angemeldete Benutzer können Kurse erstellen.</p>
+    <a href="" class="btn btn-primary">Kurs hinzufügen</a>
 
-    <a href="{% url 'kurs_hinzufügen' %}" class="btn btn-primary">hinzufügen</a>
 {% endif %}
 
 {% endblock %}
