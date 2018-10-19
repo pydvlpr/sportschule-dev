@@ -1,0 +1,52 @@
+{% extends "kursverwaltung/base.html" %}
+
+<!-- Custom styles for this site -->
+
+{% block content %}
+<style>
+table, th, td {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+</style>
+
+<p>
+    Kursverwaltungssystem von Sportschule Schuster's.
+    Muss noch gepimmt werden.
+</p>
+
+
+<table>
+    <tr>
+        <td>
+            <form action="kurse/">
+                <input type="submit" value="Kurse" class="btn btn-primary"/>
+            </form>
+        </td>
+        <td>
+            <form action="buchungen/">
+                <input type="submit" value="Buchungen" class="btn btn-primary"/>
+            </form>
+        </td>
+        <td>
+            <form action="trainer/">
+                <input type="submit" value="Trainer" class="btn btn-primary"/>
+            </form>
+        </td>
+        <td>
+            <form action="kunden/">
+                <input type="submit" value="Kunden" class="btn btn-primary"/>
+            </form>
+        </td>
+        <td>
+            <form action="raeume/">
+                <input type="submit" value="Räume" class="btn btn-primary"/>
+            </form>
+        </td>
+    </tr>
+</table>
+
+{% endblock %}
