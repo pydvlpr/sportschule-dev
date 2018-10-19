@@ -1,3 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404,render, redirect
 
-# Create your views here.
+# Index-Site
+def index(request):
+    return render(request, 'kursverwaltung/index.html')
