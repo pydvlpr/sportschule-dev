@@ -41,13 +41,13 @@
       </div>
 
       {% if user.is_authenticated %}
-      <p align="right">
+      <p align="center">
             <a class="btn btn-danger btn-sm" href="{% url 'logout'%}">Logout</a>
         </p>
 
         {% else %}
 
-        <p align="right">
+        <p align="center">
             <a class="btn btn-warning btn-sm" href="{% url 'login'%}">Login</a>
         </p>
         {% endif %}
