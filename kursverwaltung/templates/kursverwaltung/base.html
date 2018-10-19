@@ -40,7 +40,20 @@
           <h2>Kursverwaltung</h2>
       </div>
 
+      {% if user.is_authenticated %}
+      <p align="right">
+            <a class="btn btn-danger btn-sm" href="{% url 'logout'%}">Logout</a>
+        </p>
+
+        {% else %}
+
+        <p align="right">
+            <a class="btn btn-warning btn-sm" href="{% url 'login'%}">Login</a>
+        </p>
+        {% endif %}
       {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+
+    </div>
 
       <div style="padding:20px;">
           <a type="button" class="btn btn-secondary" href="{% url 'index' %}">Startseite</a>
