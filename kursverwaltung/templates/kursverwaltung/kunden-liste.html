@@ -24,24 +24,24 @@
             <tr>
             {% for kunde in kunden_liste %}
                 <tr>
-                    <th>Kd-Nr.</th>
+                    <td>{{kunde.kdnr}}</td>
                     <td><a href="/kursverwaltung/kunden/{{ kunde.kdnr }}/">{{ kunde.Nachname}}, {{kunde.Vorname}}</a></td>
-                    <th>Nachname</th>
-                    <th>Vorname</th>
-                    <th>Straße</th>
-                    <th>Hausnummer</th>
-                    <th>PLZ</th>
-                    <th>Stadt</th>
-                    <th>Ansprechpartner</th>
-                    <th>Handy</th>
-                    <th>Festnetz</th>
-                    <th>Fax</th>
-                    <th>E-Mail</td>
+                    <td>{{kunde.Nachname}}</td>
+                    <td>{{kunde.Vorname}}</td>
+                    <td>{{kunde.Straße}}</td>
+                    <td>{{kunde.Hausnummer}}</td>
+                    <td>{{kunde.PLZ}}</td>
+                    <td>{{kunde.Stadt}}</td>
+                    <td>{{kunde.Ansprechpartner}}</td>
+                    <td>{{kunde.Handy}}</td>
+                    <td>{{kunde.Festnetz}}</td>
+                    <td>{{kunde.Fax}}</td>
+                    <td>{{kunde.E-Mail}}</td>
                 </tr>
             {% endfor %}
     </table>
     {% else %}
-        <p>Es sind aktuell keine Kurse verfügbar.</p>
+        <p>Es sind aktuell keine Kunden verfügbar.</p>
     {% endif %}
 
     <p>Angemeldete Benutzer können Kunden erstellen.</p>

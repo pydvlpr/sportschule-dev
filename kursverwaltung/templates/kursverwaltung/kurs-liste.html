@@ -18,9 +18,9 @@
                 <th>Max. Teilnehmer</th>
                 <th>Kursgebühr</th>
             <tr>
-            {% for course in course_list %}
+            {% for kurs in kurs_list %}
                 <tr>
-                    <td>{{course.id}}</td>
+                    <td>{{kurs.id}}</td>
                     <td><a href="/kursverwaltung/kurse/{{ kurs.id }}/">{{ kurs.Titel}}</a></td>
                     <td>{{kurs.KursID}}</td>
                     <td>{{kurs.Titel}}</td>

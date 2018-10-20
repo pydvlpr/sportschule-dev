@@ -9,42 +9,47 @@
 <h1>Trainer</h1>
     {% if trainer_liste %}
         <table border=1>
-        <tr>
-        <th>Nachname.</th>
-        <th>Vorname</th>
-        <th>Bemerkungen</th>
-        <th>Geburtsdatum</th>
-        <th>Straße</th>
-        <th>Hausnummer</th>
-        <th>Stadt</th>
-        <th>PLZ</th>
-        <th>Zertifizierungen</th>
-        <th>Telefonnummer</th>
-        <th>E-Mail</th>
-        <tr>
+            <tr>
+                <th>Nachname.</th>
+                <th>Vorname</th>
+                <th>Bemerkungen</th>
+                <th>Geburtsdatum</th>
+                <th>Straße</th>
+                <th>Hausnummer</th>
+                <th>Stadt</th>
+                <th>PLZ</th>
+                <th>Zertifizierungen</th>
+                <th>Telefonnummer</th>
+                <th>E-Mail</th>
+            <tr>
         {% for trainer in trainer_liste %}
-        <tr>
-        <td>{{course.id}}</td>
-        <td><a href="/kursverwaltung/trainer/{{ trainer.id }}/">{{ trainer.Nachname}}, {{trainer.Vorname}}</a></td>
-        <td>{{trainer.Nachname}}</td>
-        <td>{{trainer.Vorname}}</td>
-        <td>{{trainer.Bemerkungen}}</td>
-        <td>{{trainer.Geburtsdatum}}</td>
-        <td>{{trainer.Straße}}</td>
-        <td>{{trainer.Hausnummer}}</td>
-        <td>{{trainer.Stadt}}</td>
-        <td>{{trainer.PLZ}}</td>
-        <td>{{trainer.Zertifizierungen}}</td>
-        <td>{{trainer.Telefonnummer}}</td>
-        <td>{{trainer.E_Mail}}</td>
-        </tr>
+            <tr>
+                <td>{{course.id}}</td>
+                <td><a href="/kursverwaltung/trainer/{{ trainer.id }}/">{{ trainer.Nachname}}, {{trainer.Vorname}}</a></td>
+                <td>{{trainer.Nachname}}</td>
+                <td>{{trainer.Vorname}}</td>
+                <td>{{trainer.Bemerkungen}}</td>
+                <td>{{trainer.Geburtsdatum}}</td>
+                <td>{{trainer.Straße}}</td>
+                <td>{{trainer.Hausnummer}}</td>
+                <td>{{trainer.Stadt}}</td>
+                <td>{{trainer.PLZ}}</td>
+                <td>{{trainer.Zertifizierungen}}</td>
+                <td>{{trainer.Telefonnummer}}</td>
+                <td>{{trainer.E_Mail}}</td>
+            </tr>
         {% endfor %}
     </table>
+
     {% else %}
+
         <p>Es sind aktuell keine Trainer verfügbar.</p>
+
     {% endif %}
+
     <p>Angemeldete Benutzer können Kurse erstellen.</p>
     <a href="" class="btn btn-primary">hinzufügen</a>
+    
 {% else %}
     <div style="color:red">
         <h2>Fehler bei der Authentifizierung</h2>
