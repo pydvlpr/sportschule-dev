@@ -21,17 +21,17 @@
             {% for kurs in kurs_list %}
                 <tr>
                     <td>{{kurs.id}}</td>
-                    <td><a href="/kursverwaltung/kurse/{{ kurs.id }}/">{{ kurs.Titel}}</a></td>
-                    <td>{{kurs.KursID}}</td>
-                    <td>{{kurs.Titel}}</td>
-                    <td>{{kurs.Beschreibung}}</td>
-                    <td>{{kurs.Anfangsdatum}} {{kurs.Anfangszeit}}</td>
-                    <td>{{kurs.Enddatum}} {{kurs.Endzeit}}</td>
-                    <td>{{kurs.Raum}}</td>
-                    <td>{{kurs.Trainer}}</td>
-                    <td>{{kurs.Zeilnehmerzahl}}</td>
-                    <td>{{kurs.Max_Teilnehmer}}</td>
-                    <td>{{kurs.Gebuehr}}</td>
+                    <td><a href="/kursverwaltung/kurse/{{ kurs.id }}/">{{ kurs.titel}}</a></td>
+                    <td>{{kurs.id}}</td>
+                    <td>{{kurs.titel}}</td>
+                    <td>{{kurs.beschreibung}}</td>
+                    <td>{{kurs.anfangsdatum}} {{kurs.Anfangszeit}}</td>
+                    <td>{{kurs.enddatum}} {{kurs.Endzeit}}</td>
+                    <td>{{kurs.raum}}</td>
+                    <td>{{kurs.trainer}}</td>
+                    <td>{{kurs.zeilnehmerzahl}}</td>
+                    <td>{{kurs.max_teilnehmer}}</td>
+                    <td>{{kurs.gebuehr}}</td>
                 </tr>
         {% endfor %}
     </table>
