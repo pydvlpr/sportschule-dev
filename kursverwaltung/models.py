@@ -1,3 +1,1 @@
-from django.db import models
-
-# Create your models here.
+# Die Modelle werden auf mehrere Dateien verteilt im Verteichnis models
