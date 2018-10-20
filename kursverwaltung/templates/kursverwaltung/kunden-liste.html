@@ -24,8 +24,8 @@
             <tr>
             {% for kunde in kunden_liste %}
                 <tr>
-                    <td>{{kunde.kdnr}}</td>
-                    <td><a href="/kursverwaltung/kunden/{{ kunde.kdnr }}/">{{ kunde.Nachname}}, {{kunde.Vorname}}</a></td>
+                    <td>{{kunde.kd_nr}}</td>
+                    <td><a href="/kursverwaltung/kunden/{{ kunde.kd_nr }}/">{{ kunde.Nachname}}, {{kunde.Vorname}}</a></td>
                     <td>{{kunde.nachname}}</td>
                     <td>{{kunde.vorname}}</td>
                     <td>{{kunde.strasse}}</td>
