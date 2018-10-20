@@ -24,3 +24,10 @@ def kunden_liste(request):
     #context = {'kurs_liste':course_list}
     #return render(request, 'kursverwaltung/kurs-liste.html',context)
     return render(request, 'kursverwaltung/kunden-liste.html')
+
+# Buchungen views
+def buchungen_liste(request):
+    #kurs_liste = Kurse.objects.order_by('id')
+    #context = {'kurs_liste':course_list}
+    #return render(request, 'kursverwaltung/kurs-liste.html',context)
+    return render(request, 'kursverwaltung/buchungen-liste.html')

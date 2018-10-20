@@ -1,0 +1,42 @@
+{% extends "kursverwaltung/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+    <h1>Buchungen</h1>
+    {% if buchungen_liste %}
+        <table border=1>
+            <tr>
+                <th>Kurs-Nr.</th>
+                <th>Datum</th>
+                <th>Kurs</th>
+                <th>Kunde</th>
+                <th>Trainer</th>
+            <tr>
+            {% for buchung in buchungen_liste %}
+                <tr>
+                    <td>{{buchung.kurs_id}}.</td>
+                    <td>{{buchung}.datum}</td>
+                    <td>{{buchung.kurs}}</td>
+                    <td>{{buchung.kunde}}</td>
+                    <td>{{buchung.trainer}}</td>
+                </tr>
+            {% endfor %}
+    </table>
+    {% else %}
+        <p>Es sind aktuell keine Buchungen verfügbar.</p>
+    {% endif %}
+
+    <p>Angemeldete Benutzer können Kunden erstellen.</p>
+    <a href="" class="btn btn-primary">Kunde hinzufügen</a>
+{% else %}
+    <div style="color:red">
+        <h2>Fehler bei der Authentifizierung</h2>
+        <p>Sie dürfen diese Seite nicht anzeigen.</p>
+        <p>Bitte melden Sie sich an.</p>
+    </div>
+{% endif %}
+
+{% endblock %}
