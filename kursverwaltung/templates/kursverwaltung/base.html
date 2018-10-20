@@ -33,36 +33,37 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Übersicht</a>
+            <a class="nav-link" href="{% url 'kunden_liste'%}">Übersicht</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Kunden</a>
+            <a class="nav-link" href="{% url 'kunden_liste'%}">Kunden</a>
           </li>
 		  <li class="nav-item">
-            <a class="nav-link" href="#">Kurse</a>
+            <a class="nav-link" href="{% url 'kurs_liste'%}">Kurse</a>
           </li>
 		  <li class="nav-item">
-            <a class="nav-link" href="#">Buchungen</a>
+            <a class="nav-link" href="{% url 'buchungen_liste'%}">Buchungen</a>
           </li>
 		  <li class="nav-item">
-            <a class="nav-link" href="#">Trainer</a>
+            <a class="nav-link" href="{% url 'trainer_liste'%}">Trainer</a>
           </li>
 		  <li class="nav-item">
-            <a class="nav-link" href="#">Räume</a>
+            <a class="nav-link" href="{% url 'kunden_liste'%}">Räume</a>
           </li>
 		  <li class="nav-item">
-            <a class="nav-link" href="#">Zertifizierungen</a>
+            <a class="nav-link" href="{% url 'kunden_liste'%}">Zertifizierungen</a>
           </li>
         </ul>
- 
+		{% if user.is_authenticated %}
+			<a class="btn btn-outline-danger my-2 my-sm-0" href="{% url 'logout'%}">Logout</a>
+		{% endif %}
       </div>
     </nav>
 
     <main role="main" class="container">
 		
 	   {% if user.is_authenticated %}
-      <p align="center">
-            <a class="btn btn-danger btn-sm" href="{% url 'logout'%}">Logout</a>
+		<p align="center">
 			{% block content %}<!-- Platzhalter -->{% endblock %}
         </p>
 
