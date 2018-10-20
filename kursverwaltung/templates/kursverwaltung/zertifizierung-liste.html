@@ -1,0 +1,36 @@
+{% extends "kursverwaltung/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+    <h1>Zertifizierungen</h1>
+    {% if zertifizierung_liste %}
+        <table border=1>
+            <tr>
+                <th>Name</th>
+                <th>Gültigkeit der Zertifizierung</th>
+            <tr>
+            {% for zertifizierung in zertifizierung_liste %}
+                <tr>
+                    <td><a href="/kursverwaltung/zertifizierungen/{{ zertifizierung.pk }}/">{{ zertifizierung.name}}</a></td>
+                    {{zertifizierung.gueltig_bis}}
+                </tr>
+            {% endfor %}
+    </table>
+    {% else %}
+        <p>Es sind aktuell keine Zertifizierungen verfügbar.</p>
+    {% endif %}
+
+    <p>Angemeldete Benutzer können Zertifizierungen erstellen.</p>
+    <a href="" class="btn btn-primary">Zertifizierung hinzufügen</a>
+{% else %}
+    <div style="color:red">
+        <h2>Fehler bei der Authentifizierung</h2>
+        <p>Sie dürfen diese Seite nicht anzeigen.</p>
+        <p>Bitte melden Sie sich an.</p>
+    </div>
+{% endif %}
+
+{% endblock %}
