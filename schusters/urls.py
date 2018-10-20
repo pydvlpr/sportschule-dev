@@ -21,7 +21,7 @@ urlpatterns = [
     path('kursverwaltung/', include('kursverwaltung.urls')),
 
     # Verwaltungsoberfläche
-    path('admin/', admin.site.urls),
+    path('nutzerverwaltung/', admin.site.urls),
 
     # Benutzerauthentifikation ohne Admin-Oberfläche
     path('accounts/', include('django.contrib.auth.urls')),
