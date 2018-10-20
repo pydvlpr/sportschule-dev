@@ -3,42 +3,42 @@
 
 {% block content %}
 
-
 <h1>Kurse</h1>
-{% if kurs_liste %}
-    <table border=1>
-    <tr>
-    <th>KursID.</th>
-    <th>Titel</th>
-    <th>Beschreibung</th>
-    <th>Anfangszeit</th>
-    <th>Endzeit</th>
-    <th>Raum</th>
-    <th>Trainer</th>
-    <th>Teilnehmerzahl</th>
-    <th>Max. Teilnehmer</th>
-    <th>Kursgebühr</th>
-    <tr>
-    {% for course in course_list %}
-    <tr>
-    <td>{{course.id}}</td>
-    <td><a href="/kursverwaltung/kurse/{{ kurs.id }}/">{{ kurs.Titel}}</a></td>
-    <td>{{kurs.KursID}}</td>
-    <td>{{kurs.Titel}}</td>
-    <td>{{kurs.Beschreibung}}</td>
-    <td>{{kurs.Anfangsdatum}} {{kurs.Anfangszeit}}</td>
-    <td>{{kurs.Enddatum}} {{kurs.Endzeit}}</td>
-    <td>{{kurs.Raum}}</td>
-    <td>{{kurs.Trainer}}</td>
-    <td>{{kurs.Zeilnehmerzahl}}</td>
-    <td>{{kurs.Max_Teilnehmer}}</td>
-    <td>{{kurs.Gebühr}}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% else %}
-    <p>Es sind aktuell keine Kurse verfügbar.</p>
-{% endif %}
+    {% if kurs_liste %}
+        <table border=1>
+            <tr>
+                <th>KursID.</th>
+                <th>Titel</th>
+                <th>Beschreibung</th>
+                <th>Anfangszeit</th>
+                <th>Endzeit</th>
+                <th>Raum</th>
+                <th>Trainer</th>
+                <th>Teilnehmerzahl</th>
+                <th>Max. Teilnehmer</th>
+                <th>Kursgebühr</th>
+            <tr>
+            {% for kurs in kurs_list %}
+                <tr>
+                    <td>{{kurs.id}}</td>
+                    <td><a href="/kursverwaltung/kurse/{{ kurs.id }}/">{{ kurs.titel}}</a></td>
+                    <td>{{kurs.id}}</td>
+                    <td>{{kurs.titel}}</td>
+                    <td>{{kurs.beschreibung}}</td>
+                    <td>{{kurs.anfangsdatum}} {{kurs.Anfangszeit}}</td>
+                    <td>{{kurs.enddatum}} {{kurs.Endzeit}}</td>
+                    <td>{{kurs.raum}}</td>
+                    <td>{{kurs.trainer}}</td>
+                    <td>{{kurs.zeilnehmerzahl}}</td>
+                    <td>{{kurs.max_teilnehmer}}</td>
+                    <td>{{kurs.gebuehr}}</td>
+                </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>Es sind aktuell keine Kurse verfügbar.</p>
+    {% endif %}
+
 {% if user.is_authenticated %}
     <p>Angemeldete Benutzer können Kurse erstellen.</p>
     <a href="" class="btn btn-primary">Kurs hinzufügen</a>
