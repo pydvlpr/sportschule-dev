@@ -1,0 +1,57 @@
+{% extends "kursverwaltung/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+    <h1>Kurse</h1>
+    {% if kunden_liste %}
+        <table border=1>
+            <tr>
+                <th>Kd-Nr.</th>
+                <th>Nachname</th>
+                <th>Vorname</th>
+                <th>Straße</th>
+                <th>Hausnummer</th>
+                <th>PLZ</th>
+                <th>Stadt</th>
+                <th>Ansprechpartner</th>
+                <th>Handy</th>
+                <th>Festnetz</th>
+                <th>Fax</th>
+                <th>E-Mail</th>
+            <tr>
+            {% for kunde in kunden_liste %}
+                <tr>
+                    <th>Kd-Nr.</th>
+                    <td><a href="/kursverwaltung/kunden/{{ kunde.kdnr }}/">{{ kunde.Nachname}}, {{kunde.Vorname}}</a></td>
+                    <th>Nachname</th>
+                    <th>Vorname</th>
+                    <th>Straße</th>
+                    <th>Hausnummer</th>
+                    <th>PLZ</th>
+                    <th>Stadt</th>
+                    <th>Ansprechpartner</th>
+                    <th>Handy</th>
+                    <th>Festnetz</th>
+                    <th>Fax</th>
+                    <th>E-Mail</td>
+                </tr>
+            {% endfor %}
+    </table>
+    {% else %}
+        <p>Es sind aktuell keine Kurse verfügbar.</p>
+    {% endif %}
+
+    <p>Angemeldete Benutzer können Kunden erstellen.</p>
+    <a href="" class="btn btn-primary">Kunde hinzufügen</a>
+{% else %}
+    <div style="color:red">
+        <h2>Fehler bei der Authentifizierung</h2>
+        <p>Sie dürfen diese Seite nicht anzeigen.</p>
+        <p>Bitte melden Sie sich an.</p>
+    </div>
+{% endif %}
+
+{% endblock %}
