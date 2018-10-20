@@ -1,54 +1,96 @@
-{% extends "base.html" %}
+<!doctype html>
+<html lang="en">
+	{% load staticfiles %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
 
-{% block content %}
+    <title>Sportfreunde PEDL Buchungssystem</title>
 
-{% if user.is_authenticated %}
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="{% static 'kursverwaltung/css/bootstrap.min.css' %}">
 
-    <p>Sie sind bereits eingeloggt..</p>
+	 <!--Bootstrape and Co.-->
+    <script src="{% static 'kursverwaltung/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'kursverwaltung/js/popper.min.js' %}"></script>
+    <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
+	 
+    <!-- Eigenes CSS -->
+    <link href="{% static 'kursverwaltung/css/main.css' %}" rel="stylesheet">
+  </head>
 
-    <a href="javascript:history.go(-1)" class="btn btn-secondary">back</a>
-{% else %}
+  <body>
 
-{% if form.errors %}
-<p>Benutzername oder Password sind ungültig. Versuchen Sie es noch einmal.</p>
-{% endif %}
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Sportfreunde PEDL</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Ihr Benutzer-Account ist nicht berechtigt, diese Seite anzuzeigen.
-        Melden Sie sich mit einem berechtigten Benutzer-Account an.
-    </p>
-    {% else %}
-    <p>Sie müssen sich anmelden, um diese Seite zu sehen.</p>
-    {% endif %}
-{% endif %}
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Übersicht</a>
+          </li>
+        </ul>
+ 
+      </div>
+    </nav>
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
-    <div>
-        <tr>
-          <td>{{ form.username.label_tag }}</td>
-          <td>{{ form.username }}</td>
-        </tr>
-    </div>
-    <div>
-        <tr>
-          <td>{{ form.password.label_tag }}</td>
-          <td>{{ form.password }}</td>
-        <tr>
-    </div>
-</table>
-<div>
-  <input class="btn btn-primary" type="submit" value="login" />
-  <a href="javascript:history.go(-1)" class="btn btn-secondary">abbrechen</a>
-  <input type="hidden" name="next" value="{{ next }}" />
-</div>
-</form>
+    <main role="main" class="container">
+		
+	   {% if user.is_authenticated %}
+      <p align="center">
+            <a class="btn btn-danger btn-sm" href="{% url 'logout'%}">Logout</a>
+        </p>
 
-{% endif %}
-<!--
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
--->
-{% endblock %}
+        {% else %}
+		<div class="starter-template">
+			<h1>Login</h1>
+			{% if form.errors %}
+				<p>Benutzername oder Password sind ungültig. Versuchen Sie es noch einmal.</p>
+			{% endif %}
+			
+			
+			<form method="post" action="{% url 'login' %}">
+			{% csrf_token %}
+			<div style="margin: 20px 0px">
+				<table align="center" >
+					<div>
+						<tr>
+						  <td>{{ form.username.label_tag }}</td>
+						  <td>{{ form.username }}</td>
+						</tr>
+					</div>
+					<div>
+						<tr>
+						  <td>{{ form.password.label_tag }}</td>
+						  <td>{{ form.password }}</td>
+						<tr>
+					</div>
+				</table>
+			</div>
+			<div>
+			  <input class="btn btn-outline-dark btn-lg" type="submit" value="login" />
+			  <a href="javascript:history.go(-1)" class="btn btn-outline-secondary btn-lg">abbrechen</a>
+			  <input type="hidden" name="next" value="{{ next }}" />
+			</div>
+			</form>
+		</div>
+        {% endif %}
+		
+      
+
+    </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="{% static 'kursverwaltung/js/popper.min.js' %}"></script> 
+    <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

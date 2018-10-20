@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    {% load staticfiles %}
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}{% endblock description %}">
+    <meta name="author" content="Sportfreunde DEPL">
+    <link rel="shortcut icon" href="{% static 'kursverwaltung/ico/favicon.jpeg' %}">
+
+    <title>Sportschule Schusters Kurverwaltung</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'kursverwaltung/css/bootstrap.min.css' %}">
+
+
+    <!--Bootstrape and Co.-->
+    <script src="{% static 'kursverwaltung/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'kursverwaltung/js/popper.min.js' %}"></script>
+    <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
+
+    <!-- Eigenes CSS -->
+    <link href="{% static 'kursverwaltung/css/main.css' %}" rel="stylesheet">
+
+
+    <!-- Custom styles for this site >
+    {% block styles %}
+
+    {% endblock styles %}
+
+    <!-- Custom tags for the head tag -->
+    {% block extrahead %}{% endblock extrahead %}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+      <div>
+          <h1>Schuster's - Wir machen Sie Fit !</h1>
+          <h2>Kursverwaltung</h2>
+      </div>
+
+      {% if user.is_authenticated %}
+      <p align="center">
+            <a class="btn btn-danger btn-sm" href="{% url 'logout'%}">Logout</a>
+        </p>
+
+        {% else %}
+
+        <p align="center">
+            <a class="btn btn-warning btn-sm" href="{% url 'login'%}">Login</a>
+        </p>
+        {% endif %}
+      {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+
+    </div>
+
+      <div style="padding:20px;">
+          <a class="btn btn-secondary" href="{% url 'index' %}">Startseite</a>
+          <a class="btn btn-secondary" href="javascript:history.go(-1)">zurück</a>
+      </div>
+
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
+    {% block scripts %}
+
+    {% endblock scripts %}
+
+
+  </body>
+</html>
