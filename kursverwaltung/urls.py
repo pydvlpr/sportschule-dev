@@ -16,6 +16,6 @@ urlpatterns = [
     path('zertifizierungen/',views.zertifizierung_liste, name='zertifizierung_liste'),
 
     # urls Kunden Formulare
-    #path('kunden/add/', KundeErstellen.as_view(), name="kunde-erstellen"),
+    path('kunden/add/', views.KundeErstellen.as_view(), name='kunde_erstellen'),
 
 ]

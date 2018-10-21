@@ -6,5 +6,9 @@ class Kunde(Person):
 
     # AutoField max. Wert ist 2147483647, das reicht
     # wir füllen mit nullen auf, sodass max. 8 stellig wird
-    kd_nr = int(str(models.AutoField(primary_key=True)).zfill(8))
-    ansprechpartner = models.CharField()
+    #id = models.AutoField(primary_key=True)
+    ansprechpartner = models.CharField(max_length=100)
+
+
+    def __str__(self):
+        return (self.kd_nr+","+self.nachname+","+self.vorname)

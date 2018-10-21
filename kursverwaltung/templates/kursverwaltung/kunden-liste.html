@@ -24,8 +24,8 @@
             <tr>
             {% for kunde in kunden_liste %}
                 <tr>
-                    <td>{{kunde.kd_nr}}</td>
-                    <td><a href="/kursverwaltung/kunden/{{ kunde.kd_nr }}/">{{ kunde.Nachname}}, {{kunde.Vorname}}</a></td>
+                    <td>{{kunde.id}}</td>
+                    <td><a href="/kursverwaltung/kunden/{{ kunde.id }}/">{{ kunde.Nachname}}, {{kunde.Vorname}}</a></td>
                     <td>{{kunde.nachname}}</td>
                     <td>{{kunde.vorname}}</td>
                     <td>{{kunde.strasse}}</td>
@@ -45,7 +45,7 @@
     {% endif %}
 
     <p>Angemeldete Benutzer können Kunden erstellen.</p>
-    <a href="" class="btn btn-primary">Kunde hinzufügen</a>
+    <a href="{% url 'kunde_erstellen' %}" class="btn btn-primary">Kunde hinzufügen</a>
 {% else %}
     <div style="color:red">
         <h2>Fehler bei der Authentifizierung</h2>
