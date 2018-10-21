@@ -12,6 +12,7 @@ from .models.zertifizierung import Zertifizierung
 
 
 class KundeErstellen(CreateView):
+
     model = Kunde
     fields = [   'nachname', 'vorname', 'strasse',
                 'hausnummer', 'plz', 'stadt',
@@ -22,7 +23,10 @@ class KundeErstellen(CreateView):
     def get_absolute_url(self):
         return reverse('kunden_liste')
 
+
 class KundeAktualisieren(UpdateView):
+
+
      model = Kunde
      fiels = [   'nachname', 'vorname', 'strasse',
                  'hausnummer', 'plz', 'stadt',
@@ -33,7 +37,6 @@ class KundeAktualisieren(UpdateView):
 class KundeLoeschen(DeleteView):
     model = Kunde
     success_url = reverse_lazy('kunden_liste')
-
 
 
 # Index-Site
