@@ -5,6 +5,9 @@ __pycache__/
 # Pytest cache
 .cache/
 
+# Django Mirgations
+*/migrations/*.py
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
