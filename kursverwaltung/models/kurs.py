@@ -7,7 +7,7 @@ class Kurs(models.Model):
     # AutoField max. Wert ist 2147483647, das reicht
     # wir füllen mit nullen auf, sodass max. 8 stellig wird
     #id = str(models.AutoField(primary_key=True)).zfill(8)
-    titel = models.CharField(max_length=100)
+    titel = models.CharField(max_length=100, unique=True)
     beschreibung = models.CharField(max_length=32767, default=" ")
     anfangszeit = models.DateTimeField()
     endzeit = models.DateTimeField()

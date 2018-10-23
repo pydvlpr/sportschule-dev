@@ -9,6 +9,8 @@ class Kunde(Person):
     #id = models.AutoField(primary_key=True)
     ansprechpartner = models.CharField(max_length=100)
 
+    class Meta:
+        unique_together = (("nachname", "vorname", 'strasse', 'hausnummer', 'stadt'),)
 
     def __str__(self):
-        return (self.kd_nr+","+self.nachname+","+self.vorname)
+        return ("Kd-Nr.: "+str(self.id)+", Name: " + self.vorname+" " +self.nachname)

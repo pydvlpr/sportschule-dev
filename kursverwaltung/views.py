@@ -12,29 +12,41 @@ from .models.zertifizierung import Zertifizierung
 
 
 class KundeErstellen(CreateView):
-
+    template_name = "kunde_create_form.html"
     model = Kunde
+
     fields = [   'nachname', 'vorname', 'strasse',
                 'hausnummer', 'plz', 'stadt',
                 'handy','festnetz','fax', 'e_mail',
                 'ansprechpartner',
              ]
+    success_url = reverse_lazy('kunden_liste')
 
-    def get_absolute_url(self):
-        return reverse('kunden_liste')
-
+    def get_form(self, form_class=None):
+        form = super(KundeErstellen, self).get_form(form_class)
+        form.fields['handy'].required = False
+        form.fields['fax'].required = False
+        return form
 
 class KundeAktualisieren(UpdateView):
 
-
-     model = Kunde
-     fiels = [   'nachname', 'vorname', 'strasse',
+    model = Kunde
+    fields = [   'nachname', 'vorname', 'strasse',
                  'hausnummer', 'plz', 'stadt',
                  'handy','festnetz','fax', 'e_mail',
                  'ansprechpartner'
               ]
+    template_name_suffix = '_aktualisieren_form'
+    success_url = reverse_lazy('kunden_liste')
+    
+    def get_form(self, form_class=None):
+        form = super(KundeAktualisieren, self).get_form(form_class)
+        form.fields['handy'].required = False
+        form.fields['fax'].required = False
+        return form
 
-class KundeLoeschen(DeleteView):
+
+class KundeEntfernen(DeleteView):
     model = Kunde
     success_url = reverse_lazy('kunden_liste')
 
@@ -55,10 +67,10 @@ def trainer_liste(request):
 
 # Kunden Views
 def kunden_liste(request):
-    #kunden_liste = Kunde.objects.order_by('id')
-    #context = {'kunden_liste':kunden_liste}
-    #return render(request, 'kursverwaltung/kunden-liste.html',context)
-    return render(request, 'kursverwaltung/kunden-liste.html')
+    kunden_liste = Kunde.objects.order_by('id')
+    context = {'kunden_liste':kunden_liste}
+    return render(request, 'kursverwaltung/kunden-liste.html',context)
+    #return render(request, 'kursverwaltung/kunden-liste.html')
 
 # Buchungen views
 def buchungen_liste(request):

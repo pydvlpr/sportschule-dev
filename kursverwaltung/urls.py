@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, reverse
 from . import views
 
 urlpatterns = [
@@ -17,5 +17,7 @@ urlpatterns = [
 
     # urls Kunden Formulare
     path('kunden/add/', views.KundeErstellen.as_view(), name='kunde_erstellen'),
+    path('kunden/<int:pk>/', views.KundeAktualisieren.as_view(), name='kunde_aktualisieren'),
+    path('kunden/<int:pk>/entfernen/', views.KundeEntfernen.as_view(), name='kunde_entfernen'),
 
 ]

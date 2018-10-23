@@ -8,6 +8,7 @@
     <table>
         {{ form.as_table }}
     </table>
-    <input type="submit" class="btn btn-default" value="Speichern">
+    <input class="btn btn-primary" type="submit" class="btn btn-default" value="Aktualisieren">
+    <a class="btn btn-secondary" href="{% url 'kunden_liste' %}">Zurück</a>
 </form>
 {% endblock %}
