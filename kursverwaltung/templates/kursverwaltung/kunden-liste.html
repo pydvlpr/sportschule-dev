@@ -1,35 +1,10 @@
-{% extends "kursverwaltung/base.html" %}
+{% extends "kursverwaltung/base_listen.html" %}
 {% load staticfiles %}
 
 {% block content %}
-
-<!--Etwas CSS damit die erste spalte fix ist-->
-<style>
-.table > thead:first-child > tr:first-child > th:first-child {
-    position: absolute;
-    display: inline-block;
-    background-color: white;
-}
-
-.table > tbody > tr > td:first-child {
-    position: absolute;
-    display: inline-block;
-    background-color: white;
-}
-
-.table > thead:first-child > tr:first-child > th:nth-child(2) {
-    padding-left: 100px;
-}
-
-.table > tbody > tr > td:nth-child(2) {
-    padding-left: 100px !important;
-}
-</style>
-
-{% if user.is_authenticated %}
     <div class="container">
-        <h1>Kunden</h1>
-            <div class="table-responsive">
+        <div class="table-responsive">
+            <h1>Kunden</h1>
             {% if kunden_liste %}
                 <table class="table table-bordered table-hover ">
                     <thead>
@@ -66,7 +41,7 @@
                                     </a>
                                 </td>
                                 <td>{{kunde.id}}</td>
-                                <td><a href="/kursverwaltung/kunden/{{ kunde.id }}/">{{ kunde.nachname}}, {{kunde.vorname}}</a></td>
+                                <td><a href={% url 'kunde_aktualisieren' pk=kunde.id %}>{{ kunde.nachname}}, {{kunde.vorname}}</a></td>
                                 <td>{{kunde.strasse}}</td>
                                 <td>{{kunde.hausnummer}}</td>
                                 <td>{{kunde.plz}}</td>
@@ -81,22 +56,14 @@
                     {% endfor %}
                 </table>
             </div>
-    </div>
-{% else %}
-    <p>Es sind aktuell keine Kunden verfügbar.</p>
-{% endif %}
+        </div>
+        {% else %}
+            <p>Es sind aktuell keine Kunden verfügbar.</p>
+        {% endif %}
     <div>
         <p>
         <a href="{% url 'kunde_erstellen' %}" class="btn btn-primary">Kunde hinzufügen</a>
         <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
         </p>
     </div>
-{% else %}
-    <div style="color:red">
-        <h2>Fehler bei der Authentifizierung</h2>
-        <p>Sie dürfen diese Seite nicht anzeigen.</p>
-        <p>Bitte melden Sie sich an.</p>
-    </div>
-{% endif %}
-
 {% endblock %}

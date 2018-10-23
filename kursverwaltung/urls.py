@@ -20,4 +20,9 @@ urlpatterns = [
     path('kunden/<int:pk>/', views.KundeAktualisieren.as_view(), name='kunde_aktualisieren'),
     path('kunden/<int:pk>/entfernen/', views.KundeEntfernen.as_view(), name='kunde_entfernen'),
 
+    # urls Trainer Formulare
+    path('trainer/add/', views.TrainerErstellen.as_view(), name='trainer_erstellen'),
+    path('trainer/<int:pk>/', views.TrainerAktualisieren.as_view(), name='trainer_aktualisieren'),
+    path('trainer/<int:pk>/entfernen/', views.TrainerEntfernen.as_view(), name='trainer_entfernen'),
+
 ]

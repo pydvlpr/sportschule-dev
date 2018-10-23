@@ -8,6 +8,8 @@ class Kunde(Person):
     # wir füllen mit nullen auf, sodass max. 8 stellig wird
     #id = models.AutoField(primary_key=True)
     ansprechpartner = models.CharField(max_length=100)
+    #CharField wegen internationaler Nummern
+    fax = models.CharField(max_length=30)
 
     class Meta:
         unique_together = (("nachname", "vorname", 'strasse', 'hausnummer', 'stadt'),)

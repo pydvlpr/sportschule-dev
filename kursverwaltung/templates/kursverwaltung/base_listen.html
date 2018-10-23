@@ -1,0 +1,38 @@
+{% extends "kursverwaltung/base.html" %}
+{% load staticfiles %}
+
+<!--Etwas CSS damit die erste spalte fix ist-->
+<style>
+.table > thead:first-child > tr:first-child > th:first-child {
+    position: absolute;
+    display: inline-block;
+    background-color: white;
+}
+
+.table > tbody > tr > td:first-child {
+    position: absolute;
+    display: inline-block;
+    background-color: white;
+}
+
+.table > thead:first-child > tr:first-child > th:nth-child(2) {
+    padding-left: 100px;
+}
+
+.table > tbody > tr > td:nth-child(2) {
+    padding-left: 100px !important;
+}
+</style>
+
+{% if user.is_authenticated %}
+    
+
+            {% block content %}<!-- Platzhalter -->{% endblock %}
+
+{% else %}
+    <div style="color:red">
+        <h2>Fehler bei der Authentifizierung</h2>
+        <p>Sie dürfen diese Seite nicht anzeigen.</p>
+        <p>Bitte melden Sie sich an.</p>
+    </div>
+{% endif %}

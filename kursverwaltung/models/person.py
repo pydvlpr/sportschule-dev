@@ -16,9 +16,6 @@ class Person(models.Model):
     #CharField wegen internationaler Nummern
     festnetz = models.CharField(max_length=30)
 
-    #CharField wegen internationaler Nummern
-    fax = models.CharField(max_length=30)
-
     e_mail = models.EmailField(verbose_name="E-Mail")
 
     class Meta:

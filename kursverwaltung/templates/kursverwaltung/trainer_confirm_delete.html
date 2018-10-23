@@ -1,0 +1,15 @@
+{% extends "kursverwaltung/base.html" %}
+
+<!-- Custom styles for this site -->
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+    <p style="color:red">Wollen Sie den Kunden wirklich löschen?</p>
+    <p>{{ object }}</p>
+    <input class="btn btn-primary" type="submit" value="Löschen">
+    <a class="btn btn-secondary" href="{% url 'trainer_liste' %}">Zurück</a>
+</form>
+
+
+{% endblock %}
