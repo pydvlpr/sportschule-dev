@@ -91,7 +91,7 @@ class TrainerErstellen(CreateView):
 
     class Meta:
         widgets = {
-            'note': forms.Textarea(attrs={'cols' :25, 'row':    100}),
+            'bemerkung': forms.Textarea(attrs={'cols' :25, 'row':    100}),
             }
 
 
@@ -114,7 +114,7 @@ class TrainerAktualisieren(UpdateView):
 
     class Meta:
         widgets = {
-            'note': forms.Textarea(attrs={'cols' :25, 'row':    100})
+            'bemerkung': forms.Textarea(attrs={'cols' :25, 'row':    100})
             },
 
 class TrainerEntfernen(DeleteView):
@@ -133,8 +133,69 @@ def zertifizierung_liste(request):
 ## Kurs Views
 
 def kurs_liste(request):
+    kurs_liste = Kurs.objects.order_by('id')
+    context = {'kurs_liste':kurs_liste}
+    return render(request, 'kursverwaltung/kurs-liste.html',context)
 
-    return render(request, 'kursverwaltung/kurs-liste.html')
+
+class KursErstellen(CreateView):
+    template_name = "kurs_create_form.html"
+    model = Kurs
+
+    fields = [   'titel', 'anfangszeit', 'endzeit',
+                'raum', 'trainer', 'max_teilnehmer',
+                'teilnehmerzahl', 'gebuehr', 'beschreibung'
+             ]
+    success_url = reverse_lazy('kurs_liste')
+
+    def get_form(self, form_class=None):
+        form = super(KursErstellen, self).get_form(form_class)
+        form.fields['teilnehmerzahl'].required = False
+        form.fields['beschreibung'].required = False #später entfernen, soll True sein!
+        return form
+
+    # der Check funktioniert noch nicht !
+    def clean(self):
+        # individual field's clean methods have already been called
+        cleaned_data = self.cleaned_data
+        teilnehmer1 = cleaned_data.get("max_teilnehmer")
+        teilnehmer2 = cleaned_data.get("teilnehmer")
+        if max_teilnehmer1 < teilnehmer2:
+            raise forms.ValidationError("Der Kurs ist bereits ausgebucht.")
+
+        return cleaned_data
+
+    class Meta:
+        widgets = {
+            'beschreibung': forms.Textarea(attrs={'cols' :25, 'row':    100}),
+            }
+
+
+class KursAktualisieren(UpdateView):
+
+    model = Kurs
+    fields = [   'titel', 'anfangszeit', 'endzeit',
+                'raum', 'trainer', 'max_teilnehmer',
+                'teilnehmerzahl', 'gebuehr', 'beschreibung'
+             ]
+
+    template_name_suffix = '_aktualisieren_form'
+    success_url = reverse_lazy('kurs_liste')
+
+    def get_form(self, form_class=None):
+        form = super(KursAktualisieren, self).get_form(form_class)
+        form.fields['beschreibung'].required = False
+        form.fields['teilnehmerzahl'].required = False
+        return form
+
+    class Meta:
+        widgets = {
+            'beschreibung': forms.Textarea(attrs={'cols' :25, 'row':    100})
+            },
+
+class KursEntfernen(DeleteView):
+    model = Kurs
+    success_url = reverse_lazy('kurs_liste')
 
 
 ## Buchungen views

@@ -1,29 +1,41 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from .raum import Raum
 from .trainer import Trainer
 
 class Kurs(models.Model):
 
-    # AutoField max. Wert ist 2147483647, das reicht
-    # wir füllen mit nullen auf, sodass max. 8 stellig wird
-    #id = str(models.AutoField(primary_key=True)).zfill(8)
     titel = models.CharField(max_length=100, unique=True)
     beschreibung = models.CharField(max_length=32767, default=" ")
-    anfangszeit = models.DateTimeField()
-    endzeit = models.DateTimeField()
+
+    # Datum/Zeit-Erfassung sollte mit Javascrip Widget erfolgen
+    anfangszeit = models.DateTimeField(help_text="Format: Tag.Monat.Jahr Stunde:Minute")
+    endzeit = models.DateTimeField(help_text="Format: Tag.Monat.Jahr Stunde:Minute")
+
     raum = models.ForeignKey(Raum, on_delete=models.CASCADE)
     trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
 
     # Teilnehmerzahl darf max. Teilnehmer nicht überschreiten,
-    # das soll aber das Form prüfen (d.h. dort max_value setzten)
-    teilnehmerzahl = models.IntegerField()
-    max_teilnehmer = models.IntegerField()
+    # das soll aber das Form prüfen (d.h. dort max_value setzen)
+    max_teilnehmer = models.IntegerField(default=10)
+
+    teilnehmerzahl = models.IntegerField(default=1)
+    """
+    ,
+            validators=[
+                MaxValueValidator(num),
+                MinValueValidator(1)
+                ],
+            )
+    """
 
     # 6 Stellen vor dem Komma, zwei danach
-    gebuehr = models.DecimalField(max_digits=6, decimal_places=2)
-
-    class Meta:
-        ordering = ["-id", "-anfangszeit"]
+    gebuehr = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Gebühr")
 
     def __str__(self):
-        return self.titel
+        return ("Kurs-ID "+str(self.id)+": "+self.titel+", Trainer: "+str(self.trainer))
+
+
+    class Meta:
+        #schauen, ob das funktioniert
+        ordering = ["-id", "-anfangszeit"]

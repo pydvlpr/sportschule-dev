@@ -9,4 +9,4 @@ class Trainer(Person):
     geb_datum = models.DateField(verbose_name="Geburtstag")
 
     def __str__(self):
-        return ("Trainer-ID: "+str(self.id)+", Name: " + self.vorname+" " +self.nachname)
+        return (self.vorname+" " +self.nachname+" (Trainer-ID: "+str(self.id)+")" )

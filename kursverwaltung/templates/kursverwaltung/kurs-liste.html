@@ -1,48 +1,64 @@
-{% extends "kursverwaltung/base.html" %}
+{% extends "kursverwaltung/base_listen.html" %}
 {% load staticfiles %}
 
 {% block content %}
-
-<h1>Kurse</h1>
-    {% if kurs_liste %}
-        <table border=1>
-            <tr>
-                <th>KursID.</th>
-                <th>Titel</th>
-                <th>Beschreibung</th>
-                <th>Anfangszeit</th>
-                <th>Endzeit</th>
-                <th>Raum</th>
-                <th>Trainer</th>
-                <th>Teilnehmerzahl</th>
-                <th>Max. Teilnehmer</th>
-                <th>Kursgebühr</th>
-            <tr>
-            {% for kurs in kurs_list %}
-                <tr>
-                    <td>{{kurs.id}}</td>
-                    <td><a href="/kursverwaltung/kurse/{{ kurs.id }}/">{{ kurs.titel}}</a></td>
-                    <td>{{kurs.id}}</td>
-                    <td>{{kurs.titel}}</td>
-                    <td>{{kurs.beschreibung}}</td>
-                    <td>{{kurs.anfangsdatum}} {{kurs.Anfangszeit}}</td>
-                    <td>{{kurs.enddatum}} {{kurs.Endzeit}}</td>
-                    <td>{{kurs.raum}}</td>
-                    <td>{{kurs.trainer}}</td>
-                    <td>{{kurs.teilnehmerzahl}}</td>
-                    <td>{{kurs.max_teilnehmer}}</td>
-                    <td>{{kurs.gebuehr}}</td>
-                </tr>
-        {% endfor %}
-    </table>
+    <div class="container">
+        <div class="table-responsive">
+            <h1>Kurse</h1>
+            {% if kurs_liste %}
+                <table class="table table-bordered table-hover ">
+                    <tr>
+                        <th>Aktion</th>
+                        <th>KursID</th>
+                        <th>Titel</th>
+                        <th>Beschreibung</th>
+                        <th>Anfangszeit</th>
+                        <th>Endzeit</th>
+                        <th>Raum</th>
+                        <th>Trainer</th>
+                        <th>Teilnehmerzahl</th>
+                        <th>Max. Teilnehmer</th>
+                        <th>Kursgebühr</th>
+                    <tr>
+                {% for kurs in kurs_liste %}
+                    <tr>
+                        <td >
+                            <a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">
+                                <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
+                                title="Kurs ändern"
+                                height="20" width="20"
+                                >
+                            </a>
+                            <a href="{% url 'kurs_entfernen' pk=kurs.id %}">
+                                <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
+                                title="Kurs entfernen"
+                                height="20" width="20"
+                                >
+                            </a>
+                        </td>
+                        <td>{{kurs.id}}</td>
+                        <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id }">{{ kurs.titel}}</a></td>
+                        <td>{{kurs.beschreibung}}</td>
+                        <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
+                        <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr}}</td>
+                        <td>{{kurs.raum}}</td>
+                        <td>{{kurs.trainer}}</td>
+                        <td>{{kurs.teilnehmerzahl}}</td>
+                        <td>{{kurs.max_teilnehmer}}</td>
+                        <td>{{kurs.gebuehr}} €</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
     {% else %}
         <p>Es sind aktuell keine Kurse verfügbar.</p>
     {% endif %}
+    <div>
+        <p>
+            <a href="{% url 'kurs_erstellen' %}" class="btn btn-primary">Kurs hinzufügen</a>
+            <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
+        </p>
+    </div>
 
-{% if user.is_authenticated %}
-    <p>Angemeldete Benutzer können Kurse erstellen.</p>
-    <a href="" class="btn btn-primary">Kurs hinzufügen</a>
-
-{% endif %}
-
-{% endblock %}
+{% endblock content%}
