@@ -21,8 +21,15 @@ urlpatterns = [
     path('kunden/<int:pk>/entfernen/', views.KundeEntfernen.as_view(), name='kunde_entfernen'),
 
     # urls Trainer Formulare
+    path('trainer/',views.trainer_liste, name='trainer_liste'),
     path('trainer/add/', views.TrainerErstellen.as_view(), name='trainer_erstellen'),
     path('trainer/<int:pk>/', views.TrainerAktualisieren.as_view(), name='trainer_aktualisieren'),
     path('trainer/<int:pk>/entfernen/', views.TrainerEntfernen.as_view(), name='trainer_entfernen'),
+
+    # urls Raum Formulare
+    path('raum/',views.raum_liste, name='raum_liste'),
+    path('raum/add/', views.RaumErstellen.as_view(), name='raum_erstellen'),
+    path('raum/<int:pk>/', views.RaumAktualisieren.as_view(), name='raum_aktualisieren'),
+    path('raum/<int:pk>/entfernen/', views.RaumEntfernen.as_view(), name='raum_entfernen'),
 
 ]

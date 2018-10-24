@@ -7,7 +7,7 @@ class Person(models.Model):
     strasse = models.CharField(max_length=100, verbose_name="Straße")
     hausnummer = models.CharField(max_length=5)
     # CharField da sonst plz mit 0 nicht gehen
-    plz = models.CharField(max_length=5,verbose_name="PLZ")
+    plz = models.CharField(max_length=5,verbose_name="PLZ", default="00000")
     stadt = models.CharField(max_length=100)
 
     #CharField wegen internationaler Nummern

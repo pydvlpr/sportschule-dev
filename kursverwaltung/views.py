@@ -145,6 +145,50 @@ def buchungen_liste(request):
 
 ## Räume views
 def raum_liste(request):
+    raum_liste = Raum.objects.order_by('id')
+    context = {'raum_liste':raum_liste}
+    return render(request, 'kursverwaltung/raum-liste.html',context)
 
-    return render(request, 'kursverwaltung/raum-liste.html')
-    # Kunden Views
+
+class RaumErstellen(CreateView):
+    template_name = "raum_create_form.html"
+    model = Raum
+
+    fields = [  'gebaeude', 'strasse','hausnummer', 'raum_nr',
+                'plz', 'stadt', 'bemerkung',
+                'sitzplaetze','ansprechpartner', 'geraeteverantwortlicher',
+
+             ]
+    success_url = reverse_lazy('raum_liste')
+
+
+    def get_form(self, form_class=None):
+        form = super(RaumErstellen, self).get_form(form_class)
+        form.fields['bemerkung'].required = False
+        #form.fields['feld2'].required = False
+        return form
+
+class RaumAktualisieren(UpdateView):
+
+    model = Raum
+    fields = [  'gebaeude', 'strasse','hausnummer', 'raum_nr',
+                'plz', 'stadt', 'bemerkung',
+                'sitzplaetze','ansprechpartner', 'geraeteverantwortlicher',
+
+             ]
+
+    template_name_suffix = '_aktualisieren_form'
+    success_url = reverse_lazy('raum_liste')
+
+    """ brauchen wir evtl. noch
+        def get_form(self, form_class=None):
+            form = super(RaumAktualisieren, self).get_form(form_class)
+            form.fields['feld1'].required = False
+            form.fields['feld2'].required = False
+            return form
+    """
+
+
+class RaumEntfernen(DeleteView):
+    model = Raum
+    success_url = reverse_lazy('raum_liste')
