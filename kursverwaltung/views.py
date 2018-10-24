@@ -154,17 +154,6 @@ class KursErstellen(CreateView):
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
         return form
 
-    # der Check funktioniert noch nicht !
-    def clean(self):
-        # individual field's clean methods have already been called
-        cleaned_data = self.cleaned_data
-        teilnehmer1 = cleaned_data.get("max_teilnehmer")
-        teilnehmer2 = cleaned_data.get("teilnehmer")
-        if max_teilnehmer1 < teilnehmer2:
-            raise forms.ValidationError("Der Kurs ist bereits ausgebucht.")
-
-        return cleaned_data
-
     class Meta:
         widgets = {
             'beschreibung': forms.Textarea(attrs={'cols' :25, 'row':    100}),

@@ -17,7 +17,7 @@ class Kurs(models.Model):
 
     # Teilnehmerzahl darf max. Teilnehmer nicht überschreiten,
     # das soll aber das Form prüfen (d.h. dort max_value setzen)
-    max_teilnehmer = models.IntegerField(default=10)
+    max_teilnehmer = models.IntegerField(default=10, verbose_name="Max. Teilnehmer")
 
     teilnehmerzahl = models.IntegerField(default=1)
     """
