@@ -20,3 +20,9 @@ class Raum(models.Model):
     hausnummer = models.CharField(max_length=100)
     plz = models.CharField(max_length=5,verbose_name="PLZ", default="00000")
     stadt = models.CharField(max_length=100)
+
+    def __str__(self):
+        return ("Raum-ID: "+str(self.id)+", Gebäude: " +
+                self.gebaeude+", " +self.strasse
+                +", " +self.stadt
+                )
