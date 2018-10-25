@@ -179,7 +179,7 @@ class KursAktualisieren(UpdateView):
 
     class Meta:
         widgets = {
-            'beschreibung': forms.Textarea(attrs={'cols' :25, 'row':    100})
+            'beschreibung': forms.Textarea(attrs={'cols' :25, 'row':    100,'class': 'form-control'})
             },
 
 class KursDetails(DetailView):

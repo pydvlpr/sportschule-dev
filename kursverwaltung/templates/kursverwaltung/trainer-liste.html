@@ -50,7 +50,9 @@
                                 {% if zertifizierungen_liste %}
                                     {% for zertifizierung in zertifizierungen_liste %}
                                         {% if zertifizierung.trainer.id == trainer.id %}
-                                            <li>{{ zertifizierung.name }} ({{zertifizierung.gueltig_bis|date:'d.m.Y'}})</li>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">{{ zertifizierung.name }} ({{zertifizierung.gueltig_bis|date:'d.m.Y'}})</li>
+                                        </ul>
                                         {% endif %}
                                     {% endfor %}
                                 {% else %}
