@@ -27,13 +27,13 @@
                         <tbody>
                             <tr>
                                 <td >
-                                    <a href={% url 'kunde_aktualisieren' pk=kunde.id %}>
+                                    <a href="{% url 'kunde_aktualisieren' pk=kunde.id %}">
                                         <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
                                         title="Kunde ändern"
                                         height="20" width="20"
                                         >
                                     </a>
-                                    <a href={% url 'kunde_entfernen' pk=kunde.id %}>
+                                    <a href="{% url 'kunde_entfernen' pk=kunde.id %}">
                                         <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
                                         title="Kunde entfernen"
                                         height="20" width="20"
@@ -41,7 +41,7 @@
                                     </a>
                                 </td>
                                 <td>{{kunde.id}}</td>
-                                <td><a href={% url 'kunde_aktualisieren' pk=kunde.id %}>{{ kunde.nachname}}, {{kunde.vorname}}</a></td>
+                                <td><a href="{% url 'kunde_aktualisieren' pk=kunde.id %}">{{ kunde.nachname}}, {{kunde.vorname}}</a></td>
                                 <td>{{kunde.strasse}}</td>
                                 <td>{{kunde.hausnummer}}</td>
                                 <td>{{kunde.plz}}</td>
@@ -60,7 +60,7 @@
         {% else %}
             <p>Es sind aktuell keine Kunden verfügbar.</p>
         {% endif %}
-    <div>
+    <div class="container">
         <p>
         <a href="{% url 'kunde_erstellen' %}" class="btn btn-primary">Kunde hinzufügen</a>
         <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>

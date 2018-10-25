@@ -40,7 +40,7 @@
                                 </a>
                             </td>
                             <td>{{kurs.id}}</td>
-                            <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id }">{{ kurs.titel}}</a></td>
+                            <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">{{ kurs.titel}}</a></td>
                             <td>{{kurs.beschreibung}}</td>
                             <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
                             <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
@@ -58,7 +58,7 @@
     {% else %}
         <p>Es sind aktuell keine Kurse verfügbar.</p>
     {% endif %}
-    <div>
+    <div class="container">
         <p>
             <a href="{% url 'kurs_erstellen' %}" class="btn btn-primary">Kurs hinzufügen</a>
             <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>

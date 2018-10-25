@@ -7,9 +7,18 @@ class Buchung(models.Model):
     """
     # die Prüfung auf freie Kursplätze erfolgt im entsprechenden Buchungs-View
     # Prüfung auf Doppelbuchung ebenfalls im View
-    kurs_nr = models.ForeignKey(Kurs.id, on_delete= models.CASCADE)
-    kunde = models.ForeignKey(Kunde, on_delete=models.CASCADE)
-
-    #kurs = models.ForeignKey(Kurs.beschreibung, on_delete= models.CASCADE)
-    trainer = models.ForeignKey(Trainer, on_delete= models.SET_DEFAULT, default = 0)
     """
+    datum = models.DateField(verbose_name="Datum",auto_now_add=True)
+    kurs_nr = models.ForeignKey(Kurs, on_delete= models.CASCADE, default = 0, verbose_name="Kurs-Nr.:")
+    kunde = models.ForeignKey(Kunde, on_delete=models.CASCADE, default = 0)
+    trainer = models.ForeignKey(Trainer, on_delete= models.SET_DEFAULT, default = 0)
+
+    def __str__(self):
+        return ("Datum: "+str(self.datum)+"<br>"  +
+                "Trainer: "+str(self.trainer)+"<br>"
+                "Kunde: "+str(self.kunde)
+                )
+
+    class Meta:
+        #schauen, ob das funktioniert
+        ordering = ["-datum"]

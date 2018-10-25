@@ -40,13 +40,13 @@
                                 </a>
                             </td>
                             <td><a href="{% url 'trainer_aktualisieren' pk=trainer.id %}"> {{ trainer.nachname}}, {{trainer.vorname}}</a></td>
-                            <td>{{trainer.bemerkungen}}</td>
-                            <td>{{trainer.geburtsdatum}}</td>
+                            <td>{{trainer.bemerkung}}</td>
+                            <td>{{trainer.geb_datum|date:'d.m.Y'}}</td>
                             <td>{{trainer.strasse}}</td>
                             <td>{{trainer.hausnummer}}</td>
                             <td>{{trainer.stadt}}</td>
                             <td>{{trainer.plz}}</td>
-                            <td>{{trainer.zertifizierungen}}</td>
+                            <td>hier müssen noch die zertifikate gelistet werden.</td>
                             <td>{{trainer.telefonnummer}}</td>
                             <td>{{trainer.e_mail}}</td>
                         </tr>
@@ -58,7 +58,7 @@
     {% else %}
         <p>Es sind aktuell keine Trainer verfügbar.</p>
     {% endif %}
-    <div>
+    <div class="container">
         <p>
             <a href="{% url 'trainer_erstellen' %}" class="btn btn-primary">Trainer hinzufügen</a>
             <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>

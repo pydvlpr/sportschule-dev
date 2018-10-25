@@ -1,0 +1,95 @@
+{% extends "kursverwaltung/base.html" %}
+
+<!-- Custom styles for this site -->
+
+{% block content %}
+<div class="container">
+    <h1>Kurs Details</h1>
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Kurs-ID:
+            </th>
+            <td>
+                {{ object.id}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Titel:
+            </th>
+                <td>
+                    {{ object.titel}}
+                </td>
+        </tr>
+        <tr>
+            <th>
+                Anfangszeit:
+            </th>
+            <td>
+                {{ object.anfangszeit}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Endzeit:
+            </th>
+            <td>
+                {{ object.endzeit}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Raum:
+            </th>
+            <td>
+                {{ object.raum}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Trainer:
+            </th>
+            <td>
+                {{ object.trainer}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Max. Teilnehmer:
+            </th>
+            <td>
+                {{ object.max_teilnehmer}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Teilnehmerzahl:
+            </th>
+            <td>
+                {{ object.teilnehmerzahl}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Gebühr:
+            </th>
+            <td>
+                {{ object.gebuehr}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Beschreibung:
+            </th>
+            <td>
+                {{ object.beschreibung}}
+            </td>
+        </tr>
+    </table>
+    <a class="btn btn-secondary" href="{% url 'buchungen_liste' %}">Zurück</a>
+</div>
+
+
+
+{% endblock %}

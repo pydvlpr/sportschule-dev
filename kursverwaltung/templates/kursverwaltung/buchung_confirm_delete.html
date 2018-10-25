@@ -4,16 +4,18 @@
 
 {% block content %}
 <div class=container>
-    <h1>Kurs löschen</h1>
+    <h1>Buchung löschen</h1>
     <form method="post">{% csrf_token %}
-        <p style="color:red">Wollen Sie den Kurs wirklich löschen?</p>
+        <p style="color:red">Wollen Sie die Buchung wirklich löschen?</p>
         <p>
             {% autoescape off%}
             {{ object }}
             {% endautoescape %}
         </p>
         <input class="btn btn-danger" type="submit" value="Löschen">
-        <a class="btn btn-secondary" href="{% url 'kurs_liste' %}">Zurück</a>
+        <a class="btn btn-secondary" href="{% url 'buchungen_liste' %}">Zurück</a>
     </form>
 </div>
+
+
 {% endblock %}

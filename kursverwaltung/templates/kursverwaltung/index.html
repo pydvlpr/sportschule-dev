@@ -1,14 +1,18 @@
 {% extends "kursverwaltung/base.html" %}
-
+{% load staticfiles %}
 <!-- Custom styles for this site -->
 
 {% block content %}
 
-<p>
-    Kursverwaltungssystem von Sportschule Schuster's.
+<div class="container">
+    <p><img src="{% static 'kursverwaltung/images/fitnessstudio.png' %}" height="100" width="100"></p>
+    <p>
+        Kursverwaltungssystem von Sportschule Schuster's.
+    <p>
 
-	Dies wird mal eine Übersicht...
-</p>
-
+    <p>
+        Dies wird mal eine Übersicht...oder hier wir direkt zur Kursübersicht verlinkt ?!
+    </p>
+</div>
 
 {% endblock %}

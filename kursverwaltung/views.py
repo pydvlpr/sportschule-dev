@@ -72,6 +72,7 @@ def trainer_liste(request):
     context = {'trainer_liste':trainer_liste}
     return render(request, 'kursverwaltung/trainer-liste.html',context)
 
+
 class TrainerErstellen(CreateView):
     template_name = "trainer_create_form.html"
     model = Trainer
@@ -79,14 +80,13 @@ class TrainerErstellen(CreateView):
     fields = [   'nachname', 'vorname', 'geb_datum', 'strasse',
                 'hausnummer', 'plz', 'stadt',
                 'festnetz', 'e_mail',
-                'bemerkung', 'zertifizierung'
+                'bemerkung'
              ]
     success_url = reverse_lazy('trainer_liste')
 
     def get_form(self, form_class=None):
         form = super(TrainerErstellen, self).get_form(form_class)
         form.fields['bemerkung'].required = False
-        form.fields['zertifizierung'].required = False #später entfernen, soll True sein!
         return form
 
     class Meta:
@@ -101,7 +101,7 @@ class TrainerAktualisieren(UpdateView):
     fields = [   'nachname', 'vorname', 'geb_datum', 'strasse',
                 'hausnummer', 'plz', 'stadt',
                 'festnetz', 'e_mail',
-                'bemerkung', 'zertifizierung'
+                'bemerkung'
              ]
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('trainer_liste')
@@ -109,7 +109,6 @@ class TrainerAktualisieren(UpdateView):
     def get_form(self, form_class=None):
         form = super(TrainerAktualisieren, self).get_form(form_class)
         form.fields['bemerkung'].required = False
-        form.fields['zertifizierung'].required = False #später entfernen, soll True sein!
         return form
 
     class Meta:
@@ -152,6 +151,7 @@ class KursErstellen(CreateView):
         form = super(KursErstellen, self).get_form(form_class)
         form.fields['teilnehmerzahl'].required = False
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
+        form.fields['id'].label_from_instance=self.id
         return form
 
     class Meta:
@@ -182,15 +182,70 @@ class KursAktualisieren(UpdateView):
             'beschreibung': forms.Textarea(attrs={'cols' :25, 'row':    100})
             },
 
+class KursDetails(DetailView):
+
+    model = Kurs
+    template_name_suffix = '_details_form'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
 class KursEntfernen(DeleteView):
     model = Kurs
     success_url = reverse_lazy('kurs_liste')
 
 
 ## Buchungen views
-def buchungen_liste(request):
+"""
+def buchung_liste(request):
 
     return render(request, 'kursverwaltung/buchungen-liste.html')
+"""
+
+def buchungen_liste(request):
+    buchungen_liste = Buchung.objects.order_by('id')
+    context = {'buchungen_liste':buchungen_liste}
+    return render(request, 'kursverwaltung/buchungen-liste.html',context)
+
+class BuchungErstellen(CreateView):
+    template_name = "buchung_create_form.html"
+    model = Buchung
+
+    fields = [ 'kurs_nr', 'kunde', 'trainer' ]
+
+    success_url = reverse_lazy('buchungen_liste')
+
+    def get_form(self, form_class=None):
+        form = super(BuchungErstellen, self).get_form(form_class)
+        #form.fields['teilnehmerzahl'].required = False
+        #form.fields['beschreibung'].required = False #später entfernen, soll True sein!
+        return form
+
+    class Meta:
+        pass
+
+class BuchungAktualisieren(UpdateView):
+
+    model = Buchung
+    fields = [ 'kurs_nr', 'kunde', 'trainer' ]
+
+    template_name_suffix = '_aktualisieren_form'
+    success_url = reverse_lazy('buchungen_liste')
+
+    def get_form(self, form_class=None):
+        form = super(BuchungAktualisieren, self).get_form(form_class)
+        #form.fields['teilnehmerzahl'].required = False
+        #form.fields['beschreibung'].required = False #später entfernen, soll True sein!
+        return form
+
+    class Meta:
+        pass
+
+class BuchungEntfernen(DeleteView):
+    model = Buchung
+    success_url = reverse_lazy('buchungen_liste')
 
 
 ## Räume views
@@ -230,15 +285,54 @@ class RaumAktualisieren(UpdateView):
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('raum_liste')
 
-    """ brauchen wir evtl. noch
-        def get_form(self, form_class=None):
-            form = super(RaumAktualisieren, self).get_form(form_class)
-            form.fields['feld1'].required = False
-            form.fields['feld2'].required = False
-            return form
-    """
+    def get_form(self, form_class=None):
+        form = super(RaumAktualisieren, self).get_form(form_class)
+        form.fields['bemerkung'].required = False
+        #form.fields['feld2'].required = False
+        return form
 
 
 class RaumEntfernen(DeleteView):
     model = Raum
     success_url = reverse_lazy('raum_liste')
+
+## Zertifizierung views
+def zertifizierungen_liste(request):
+    zertifizierung_liste = Zertifizierung.objects.order_by('id')
+    context = {'zertifizierung_liste':zertifizierung_liste}
+    return render(request, 'kursverwaltung/zertifizierung-liste.html',context)
+
+
+class ZertifizierungErstellen(CreateView):
+    template_name = "zertifizierung_create_form.html"
+    model = Zertifizierung
+
+    fields = [  'name', 'trainer', 'gueltig_bis']
+    success_url = reverse_lazy('zertifizierungen_liste')
+
+
+    def get_form(self, form_class=None):
+        form = super(ZertifizierungErstellen, self).get_form(form_class)
+        #form.fields['bemerkung'].required = False
+        #form.fields['feld2'].required = False
+        return form
+
+class ZertifizierungAktualisieren(UpdateView):
+
+    model = Zertifizierung
+    fields = [  'name', 'trainer', 'gueltig_bis']
+
+    template_name_suffix = '_aktualisieren_form'
+    success_url = reverse_lazy('zertifizierungen_liste')
+
+    """
+    def get_form(self, form_class=None):
+        form = super(ZertifizierungErstellen, self).get_form(form_class)
+        #form.fields['bemerkung'].required = False
+        #form.fields['feld2'].required = False
+        return form
+    """
+
+class ZertifizierungEntfernen(DeleteView):
+    model = Zertifizierung
+    success_url = reverse_lazy('zertifizierungen_liste')

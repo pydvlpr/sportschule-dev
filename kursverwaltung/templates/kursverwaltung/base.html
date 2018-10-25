@@ -68,7 +68,7 @@
                     <a class="nav-link" href="{% url 'raum_liste'%}">Räume</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'zertifizierung_liste'%}">Zertifizierungen</a>
+                    <a class="nav-link" href="{% url 'zertifizierungen_liste'%}">Zertifizierungen</a>
                   </li>
                 </ul>
                 <a class="btn btn-outline-danger my-2 my-sm-0" href="{% url 'logout'%}">Logout</a>
@@ -88,16 +88,7 @@
         {% endif %}
         </nav>
 
-    <!--
-        hierdurch werden alle Inhalte überlagert
-
-        das sollte angepasst werden, damit den Kunden (nie angemeldet)
-        auch eine Kursübersicht gezeigt werden kann
-    -->
-    <!--<p align="center">-->
         {% block content %}<!-- Platzhalter -->{% endblock %}
-    <!--</p>-->
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
