@@ -46,7 +46,17 @@
                             <td>{{trainer.hausnummer}}</td>
                             <td>{{trainer.stadt}}</td>
                             <td>{{trainer.plz}}</td>
-                            <td>hier müssen noch die zertifikate gelistet werden.</td>
+                            <td>
+                                {% if zertifizierungen_liste %}
+                                    {% for zertifizierung in zertifizierungen_liste %}
+                                        {% if zertifizierung.trainer.id == trainer.id %}
+                                            <li>{{ zertifizierung.name }} ({{zertifizierung.gueltig_bis|date:'d.m.Y'}})</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p>keine Zertifikate</p>
+                                {% endif %}
+                            </td>
                             <td>{{trainer.telefonnummer}}</td>
                             <td>{{trainer.e_mail}}</td>
                         </tr>

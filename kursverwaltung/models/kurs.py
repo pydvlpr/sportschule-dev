@@ -20,14 +20,6 @@ class Kurs(models.Model):
     max_teilnehmer = models.IntegerField(default=10, verbose_name="Max. Teilnehmer")
 
     teilnehmerzahl = models.IntegerField(default=1)
-    """
-    ,
-            validators=[
-                MaxValueValidator(num),
-                MinValueValidator(1)
-                ],
-            )
-    """
 
     # 6 Stellen vor dem Komma, zwei danach
     gebuehr = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Gebühr")

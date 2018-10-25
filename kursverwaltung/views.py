@@ -69,8 +69,9 @@ class KundeEntfernen(DeleteView):
 
 def trainer_liste(request):
     trainer_liste = Trainer.objects.order_by('id')
-    context = {'trainer_liste':trainer_liste}
-    return render(request, 'kursverwaltung/trainer-liste.html',context)
+    zertifizierungen_liste = Zertifizierung.objects.order_by('id')
+    return render(request, 'kursverwaltung/trainer-liste.html',
+                  {'trainer_liste':trainer_liste, 'zertifizierungen_liste':zertifizierungen_liste})
 
 
 class TrainerErstellen(CreateView):
@@ -151,7 +152,6 @@ class KursErstellen(CreateView):
         form = super(KursErstellen, self).get_form(form_class)
         form.fields['teilnehmerzahl'].required = False
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
-        form.fields['id'].label_from_instance=self.id
         return form
 
     class Meta:
