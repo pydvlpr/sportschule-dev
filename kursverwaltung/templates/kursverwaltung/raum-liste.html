@@ -7,48 +7,52 @@
             <h1>Räume</h1>
             {% if raum_liste %}
                 <table class="table table-bordered table-hover ">
-                    <tr>
-                        <th>Aktion</th>
-                        <th>Raum-ID</th>
-                        <th>Gebäude</th>
-                        <th>Straße</th>
-                        <th>Hausnummer</th>
-                        <th>Raum-Nr.</th>
-                        <th>PLZ</th>
-                        <th>Stadt</th>
-                        <th>Bemerkung</th>
-                        <th>Sitzplätze</th>
-                        <th>Ansprechpartner</th>
-                        <th>Geräteverantwortlicher</th>
-                    <tr>
-                    {% for raum in raum_liste %}
+                    <thead>
                         <tr>
-                            <td >
-                                <a href={% url 'raum_aktualisieren' pk=raum.id %}>
-                                    <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
-                                    title="Raum ändern"
-                                    height="20" width="20"
-                                    >
-                                </a>
-                                <a href={% url 'raum_entfernen' pk=raum.id %}>
-                                    <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
-                                    title="raum entfernen"
-                                    height="20" width="20"
-                                    >
-                                </a>
-                            </td>
-                            <td>{{raum.id}}</td>
-                            <td>{{raum.gebaeude}}</td>
-                            <td>{{raum.strasse}}</td>
-                            <td>{{raum.hausnummer}}</td>
-                            <td>{{raum.raum_nr}}</td>
-                            <td>{{raum.plz}}</td>
-                            <td>{{raum.stadt}}</td>
-                            <td>{{raum.bemerkung}}</td>
-                            <td>{{raum.sitzplaetze}}</td>
-                            <td>{{raum.ansprechpartner}}</td>
-                            <td>{{raum.geraeteverantwortlicher}}</td>
-                        </tr>
+                            <th>Aktion</th>
+                            <th>Raum-ID</th>
+                            <th>Gebäude</th>
+                            <th>Straße</th>
+                            <th>Hausnummer</th>
+                            <th>Raum-Nr.</th>
+                            <th>PLZ</th>
+                            <th>Stadt</th>
+                            <th>Bemerkung</th>
+                            <th>Sitzplätze</th>
+                            <th>Ansprechpartner</th>
+                            <th>Geräteverantwortlicher</th>
+                        <tr>
+                    </thead>
+                    {% for raum in raum_liste %}
+                        <tbody>
+                            <tr>
+                                <td >
+                                    <a href={% url 'raum_aktualisieren' pk=raum.id %}>
+                                        <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
+                                        title="Raum ändern"
+                                        height="20" width="20"
+                                        >
+                                    </a>
+                                    <a href={% url 'raum_entfernen' pk=raum.id %}>
+                                        <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
+                                        title="raum entfernen"
+                                        height="20" width="20"
+                                        >
+                                    </a>
+                                </td>
+                                <td>{{raum.id}}</td>
+                                <td>{{raum.gebaeude}}</td>
+                                <td>{{raum.strasse}}</td>
+                                <td>{{raum.hausnummer}}</td>
+                                <td>{{raum.raum_nr}}</td>
+                                <td>{{raum.plz}}</td>
+                                <td>{{raum.stadt}}</td>
+                                <td>{{raum.bemerkung}}</td>
+                                <td>{{raum.sitzplaetze}}</td>
+                                <td>{{raum.ansprechpartner}}</td>
+                                <td>{{raum.geraeteverantwortlicher}}</td>
+                            </tr>
+                        </tbody>
                     {% endfor %}
             </table>
         </div>

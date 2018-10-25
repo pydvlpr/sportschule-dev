@@ -6,47 +6,51 @@
         <div class="table-responsive">
             <h1>Kurse</h1>
             {% if kurs_liste %}
-                <table class="table table-bordered table-hover ">
-                    <tr>
-                        <th>Aktion</th>
-                        <th>KursID</th>
-                        <th>Titel</th>
-                        <th>Beschreibung</th>
-                        <th>Anfangszeit</th>
-                        <th>Endzeit</th>
-                        <th>Raum</th>
-                        <th>Trainer</th>
-                        <th>Teilnehmerzahl</th>
-                        <th>Max. Teilnehmer</th>
-                        <th>Kursgebühr</th>
-                    <tr>
+                <table id="kurse" class="table table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Aktion</th>
+                            <th>KursID</th>
+                            <th>Titel</th>
+                            <th>Beschreibung</th>
+                            <th>Anfangszeit</th>
+                            <th>Endzeit</th>
+                            <th>Raum</th>
+                            <th>Trainer</th>
+                            <th>Teilnehmerzahl</th>
+                            <th>Max. Teilnehmer</th>
+                            <th>Kursgebühr</th>
+                        <tr>
+                    </thead>
                 {% for kurs in kurs_liste %}
-                    <tr>
-                        <td >
-                            <a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">
-                                <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
-                                title="Kurs ändern"
-                                height="20" width="20"
-                                >
-                            </a>
-                            <a href="{% url 'kurs_entfernen' pk=kurs.id %}">
-                                <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
-                                title="Kurs entfernen"
-                                height="20" width="20"
-                                >
-                            </a>
-                        </td>
-                        <td>{{kurs.id}}</td>
-                        <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id }">{{ kurs.titel}}</a></td>
-                        <td>{{kurs.beschreibung}}</td>
-                        <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
-                        <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr}}</td>
-                        <td>{{kurs.raum}}</td>
-                        <td>{{kurs.trainer}}</td>
-                        <td>{{kurs.teilnehmerzahl}}</td>
-                        <td>{{kurs.max_teilnehmer}}</td>
-                        <td>{{kurs.gebuehr}} €</td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td >
+                                <a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">
+                                    <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
+                                    title="Kurs ändern"
+                                    height="20" width="20"
+                                    >
+                                </a>
+                                <a href="{% url 'kurs_entfernen' pk=kurs.id %}">
+                                    <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
+                                    title="Kurs entfernen"
+                                    height="20" width="20"
+                                    >
+                                </a>
+                            </td>
+                            <td>{{kurs.id}}</td>
+                            <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id }">{{ kurs.titel}}</a></td>
+                            <td>{{kurs.beschreibung}}</td>
+                            <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
+                            <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
+                            <td>{{kurs.raum}}</td>
+                            <td>{{kurs.trainer}}</td>
+                            <td>{{kurs.teilnehmerzahl}}</td>
+                            <td>{{kurs.max_teilnehmer}}</td>
+                            <td>{{kurs.gebuehr}} €</td>
+                        </tr>
+                    </tbody>
                 {% endfor %}
             </table>
         </div>
@@ -62,3 +66,9 @@
     </div>
 
 {% endblock content%}
+
+<scrip>
+    $(document).ready( function () {
+        $('#kurse').DataTable();
+    } );
+</script>
