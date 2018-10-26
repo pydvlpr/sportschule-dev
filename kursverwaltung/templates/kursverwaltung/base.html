@@ -12,6 +12,7 @@
 
     <!-- Bootstrap core CSS -->
      <link rel="stylesheet" href="{% static 'kursverwaltung/css/bootstrap.min.css' %}">
+     <link rel="stylesheet" href="{% static 'kursverwaltung/css/bootstrap-datetimepicker-standalone.min.css' %}">
 
      <!--
         <link rel="stylesheet" type="text/css" href="kursverwaltung/css/datatables.css">
@@ -19,10 +20,12 @@
 
 	 <!--Bootstrape and Co.-->
     <script src="{% static 'kursverwaltung/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'kursverwaltung/js/moment-with-locales.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/popper.min.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'kursverwaltung/js/bootstrap-datetimepicker.min.js' %}"></script>
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script src="{% static 'kursverwaltung/js/datatables.min.js' %}"></script>
     <!--
         statisch werden die js vom falschen pfad geladen: kontext/kursverwaltung/js/datatables.js
         wobei kontext= host:8000/kursverwaltung/listenseite
@@ -77,7 +80,6 @@
             </div>
         {% else %}
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <a class="btn btn-outline-success my-2 my-sm-0" href="{% url 'login'%}">Login</a>
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                       <a class="nav-link" href="{% url 'index'%}">Übersicht</a>
@@ -86,6 +88,7 @@
                       <a class="nav-link" href="{% url 'kurs_liste'%}">Kurse</a>
                     </li>
                 </ul>
+                <a class="btn btn-outline-success my-2 my-sm-0" href="{% url 'login'%}">Login</a>
             </div>
         {% endif %}
         </nav>
