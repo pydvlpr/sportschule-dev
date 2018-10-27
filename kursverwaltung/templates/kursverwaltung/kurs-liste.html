@@ -1,10 +1,11 @@
-{% extends "kursverwaltung/base_listen.html" %}
+{% extends "kursverwaltung/base.html" %}
 {% load staticfiles %}
 
 {% block content %}
-    <div class="container">
-        <div class="table-responsive">
-            <h1>Kurse</h1>
+<div class="container">
+    <div class="table-responsive">
+        <h1>Kurse</h1>
+        {% if user.is_authenticated %}
             {% if kurs_liste %}
                 <table id="kurse" class="table table-bordered table-hover ">
                     <thead>
@@ -52,18 +53,62 @@
                         </tr>
                     </tbody>
                 {% endfor %}
-            </table>
-        </div>
+                </table>
+            {% else %}
+                <p>Es sind aktuell keine Kurse verfügbar.</p>
+            {% endif %}
+            <div class="container">
+                <p>
+                    <a href="{% url 'kurs_erstellen' %}" class="btn btn-primary">Kurs hinzufügen</a>
+                    <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
+                </p>
+            </div>
+        {% else %}
+            {% if kurs_liste %}
+                <table id="kurse" class="table table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th>KursID</th>
+                            <th>Titel</th>
+                            <th>Beschreibung</th>
+                            <th>Anfangszeit</th>
+                            <th>Endzeit</th>
+                            <th>Raum</th>
+                            <th>Trainer</th>
+                            <th>Teilnehmerzahl</th>
+                            <th>Max. Teilnehmer</th>
+                            <th>Kursgebühr</th>
+                        <tr>
+                    </thead>
+                {% for kurs in kurs_liste %}
+                    <tbody>
+                        <tr>
+                            <td>{{kurs.id}}</td>
+                            <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">{{ kurs.titel}}</a></td>
+                            <td>{{kurs.beschreibung}}</td>
+                            <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
+                            <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
+                            <td>{{kurs.raum}}</td>
+                            <td>{{kurs.trainer}}</td>
+                            <td>{{kurs.teilnehmerzahl}}</td>
+                            <td>{{kurs.max_teilnehmer}}</td>
+                            <td>{{kurs.gebuehr}} €</td>
+                        </tr>
+                    </tbody>
+                {% endfor %}
+                </table>
+            {% else %}
+                <p>Es sind aktuell keine Kurse verfügbar.</p>
+            {% endif %}
+            <div class="container">
+                <p>
+                    <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
+                </p>
+            </div>
+
+        {% endif %}
     </div>
-    {% else %}
-        <p>Es sind aktuell keine Kurse verfügbar.</p>
-    {% endif %}
-    <div class="container">
-        <p>
-            <a href="{% url 'kurs_erstellen' %}" class="btn btn-primary">Kurs hinzufügen</a>
-            <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
-        </p>
-    </div>
+</div>
 
 {% endblock content%}
 
