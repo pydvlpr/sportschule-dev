@@ -13,21 +13,12 @@
     <!-- Bootstrap core CSS -->
      <link rel="stylesheet" href="{% static 'kursverwaltung/css/bootstrap.min.css' %}">
      <link rel="stylesheet" href="{% static 'kursverwaltung/css/bootstrap-datetimepicker-standalone.min.css' %}">
-
-     <!--
-        <link rel="stylesheet" type="text/css" href="kursverwaltung/css/datatables.css">
-    -->
+     <link rel="stylesheet" href="{% static 'kursverwaltung/css/jquery.dataTables.min.css' %}">
 
 	 <!--Bootstrape and Co.-->
 
-     <!--
-    <script src="{% static 'kursverwaltung/js/jquery-3.3.1.slim.min.js' %}"></script>
-    -->
 
     <script src="{% static 'kursverwaltung/js/jquery-3.3.1.min.js' %}"></script>
-<!--
-    <script src="{% static 'kursverwaltung/js/moment.js' %}"></script>
--->
     <script src="{% static 'kursverwaltung/js/moment-with-locales.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/popper.min.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
@@ -36,17 +27,8 @@
 
 
     <!-- DataTables
-    <script src="{% static 'kursverwaltung/js/datatables.min.js' %}"></script>
+    <script src="{% static 'kursverwaltung/js/jquery.dataTables.min.js' %}"></script>
     -->
-    <!--
-        statisch werden die js vom falschen pfad geladen: kontext/kursverwaltung/js/datatables.js
-        wobei kontext= host:8000/kursverwaltung/listenseite
-        z.B. host:8000/kursverwaltung/kurse//kursverwaltung/js/datatables.js
-    -->
-    <!--
-        <script type="text/javascript" charset="utf8" src="kursverwaltung/js/datatables.js"></script>
-    -->
-
 
     <!-- Eigenes CSS -->
 
@@ -112,9 +94,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
 
     <script src="{% static 'kursverwaltung/js/jquery-3.3.1.min.js' %}"></script>
-<!--
-    <script src="{% static 'kursverwaltung/js/moment.js' %}"></script>
--->
     <script src="{% static 'kursverwaltung/js/moment-with-locales.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/popper.min.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
