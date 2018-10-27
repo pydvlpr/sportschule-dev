@@ -3,7 +3,7 @@
 <!-- Custom styles for this site -->
 
 {% block content %}
-<div class=container>
+<div class=container style="position: relative">
     <h1>Kurs erstellen</h1>
     <form method="post">{% csrf_token %}
         <table>
@@ -13,4 +13,28 @@
         <a class="btn btn-secondary" href="{% url 'kurs_liste' %}">Zurück</a>
     </form>
 </div>
+
+<script type="text/javascript">
+
+$( function() {
+    $( "#datetimepicker-anfangszeit" ).datetimepicker({
+        locale: 'de',
+        format: "DD.MM.YYYY HH:mm",
+        widgetPositioning:{
+                                horizontal: 'auto',
+                                vertical: 'bottom'
+                            },
+    });
+    $( "#datetimepicker-endzeit" ).datetimepicker({
+        locale: 'de',
+        format: "DD.MM.YYYY HH:mm",
+        widgetPositioning:{
+                                horizontal: 'auto',
+                                vertical: 'bottom'
+                            },
+    });
+} );
+</script>
+
+
 {% endblock %}

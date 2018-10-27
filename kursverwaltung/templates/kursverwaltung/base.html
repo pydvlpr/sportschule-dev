@@ -12,6 +12,7 @@
 
     <!-- Bootstrap core CSS -->
      <link rel="stylesheet" href="{% static 'kursverwaltung/css/bootstrap.min.css' %}">
+     <link rel="stylesheet" href="{% static 'kursverwaltung/css/jquery-ui.min.css' %}">
      <link rel="stylesheet" href="{% static 'kursverwaltung/css/bootstrap-datetimepicker-standalone.min.css' %}">
 
      <!--
@@ -19,13 +20,25 @@
     -->
 
 	 <!--Bootstrape and Co.-->
+
+     <!--
     <script src="{% static 'kursverwaltung/js/jquery-3.3.1.slim.min.js' %}"></script>
+    -->
+
+    <script src="{% static 'kursverwaltung/js/jquery-3.3.1.min.js' %}"></script>
+<!--
+    <script src="{% static 'kursverwaltung/js/moment.js' %}"></script>
+-->
     <script src="{% static 'kursverwaltung/js/moment-with-locales.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/popper.min.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/bootstrap-datetimepicker.min.js' %}"></script>
 
+
+
+    <!-- DataTables
     <script src="{% static 'kursverwaltung/js/datatables.min.js' %}"></script>
+    -->
     <!--
         statisch werden die js vom falschen pfad geladen: kontext/kursverwaltung/js/datatables.js
         wobei kontext= host:8000/kursverwaltung/listenseite
@@ -98,8 +111,14 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <script src="{% static 'kursverwaltung/js/jquery-3.3.1.min.js' %}"></script>
+<!--
+    <script src="{% static 'kursverwaltung/js/moment.js' %}"></script>
+-->
+    <script src="{% static 'kursverwaltung/js/moment-with-locales.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/popper.min.js' %}"></script>
     <script src="{% static 'kursverwaltung/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'kursverwaltung/js/bootstrap-datetimepicker.min.js' %}"></script>
   </body>
 </html>

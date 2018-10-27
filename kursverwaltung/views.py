@@ -88,6 +88,8 @@ class TrainerErstellen(CreateView):
     def get_form(self, form_class=None):
         form = super(TrainerErstellen, self).get_form(form_class)
         form.fields['bemerkung'].required = False
+        form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
+                                                            attrs={'id':'datetimepicker-geburtstag'})
         return form
 
     class Meta:
@@ -110,6 +112,8 @@ class TrainerAktualisieren(UpdateView):
     def get_form(self, form_class=None):
         form = super(TrainerAktualisieren, self).get_form(form_class)
         form.fields['bemerkung'].required = False
+        form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y'),
+                                                            attrs={'id':'datetimepicker-geburtstag'})
         return form
 
     class Meta:
@@ -152,6 +156,10 @@ class KursErstellen(CreateView):
         form = super(KursErstellen, self).get_form(form_class)
         form.fields['teilnehmerzahl'].required = False
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
+        form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
+                                                            attrs={'id':'datetimepicker-anfangszeit'})
+        form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
+                                                        attrs={'id':'datetimepicker-endzeit'})
         return form
 
     class Meta:
@@ -175,6 +183,10 @@ class KursAktualisieren(UpdateView):
         form = super(KursAktualisieren, self).get_form(form_class)
         form.fields['beschreibung'].required = False
         form.fields['teilnehmerzahl'].required = False
+        form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
+                                                            attrs={'id':'datetimepicker-anfangszeit'})
+        form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
+                                                        attrs={'id':'datetimepicker-endzeit'})
         return form
 
     class Meta:
@@ -219,8 +231,9 @@ class BuchungErstellen(CreateView):
 
     def get_form(self, form_class=None):
         form = super(BuchungErstellen, self).get_form(form_class)
+        # teilnehmerzahl soll automatisch ermittelt und aktualisert werden
+        # feld darf dann nicht verändert werrden
         #form.fields['teilnehmerzahl'].required = False
-        #form.fields['beschreibung'].required = False #später entfernen, soll True sein!
         return form
 
     class Meta:
@@ -236,8 +249,9 @@ class BuchungAktualisieren(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(BuchungAktualisieren, self).get_form(form_class)
+        # teilnehmerzahl soll automatisch ermittelt und aktualisert werden
+        # feld darf dann nicht verändert werrden
         #form.fields['teilnehmerzahl'].required = False
-        #form.fields['beschreibung'].required = False #später entfernen, soll True sein!
         return form
 
     class Meta:
@@ -313,8 +327,8 @@ class ZertifizierungErstellen(CreateView):
 
     def get_form(self, form_class=None):
         form = super(ZertifizierungErstellen, self).get_form(form_class)
-        #form.fields['bemerkung'].required = False
-        #form.fields['feld2'].required = False
+        form.fields['gueltig_bis'].widget = forms.DateInput(format=('%d.%m.%Y'),
+                                                        attrs={'id':'datetimepicker-zertifizierung'})
         return form
 
 class ZertifizierungAktualisieren(UpdateView):
@@ -325,13 +339,13 @@ class ZertifizierungAktualisieren(UpdateView):
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('zertifizierungen_liste')
 
-    """
+
     def get_form(self, form_class=None):
-        form = super(ZertifizierungErstellen, self).get_form(form_class)
-        #form.fields['bemerkung'].required = False
-        #form.fields['feld2'].required = False
+        form = super(ZertifizierungAktualisieren, self).get_form(form_class)
+        form.fields['gueltig_bis'].widget = forms.DateInput(format=('%d.%m.%Y'),
+                                                        attrs={'id':'datetimepicker-zertifizierung'})
         return form
-    """
+
 
 class ZertifizierungEntfernen(DeleteView):
     model = Zertifizierung
