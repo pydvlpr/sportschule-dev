@@ -146,15 +146,14 @@ class KursErstellen(CreateView):
     template_name = "kurs_create_form.html"
     model = Kurs
 
-    fields = [   'titel', 'anfangszeit', 'endzeit',
+    fields = [  'titel', 'anfangszeit', 'endzeit',
                 'raum', 'trainer', 'max_teilnehmer',
-                'teilnehmerzahl', 'gebuehr', 'beschreibung'
+                'gebuehr', 'beschreibung'
              ]
     success_url = reverse_lazy('kurs_liste')
 
     def get_form(self, form_class=None):
         form = super(KursErstellen, self).get_form(form_class)
-        form.fields['teilnehmerzahl'].required = False
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
         form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-anfangszeit'})
@@ -171,9 +170,9 @@ class KursErstellen(CreateView):
 class KursAktualisieren(UpdateView):
 
     model = Kurs
-    fields = [   'titel', 'anfangszeit', 'endzeit',
+    fields = [  'titel', 'anfangszeit', 'endzeit',
                 'raum', 'trainer', 'max_teilnehmer',
-                'teilnehmerzahl', 'gebuehr', 'beschreibung'
+                'gebuehr', 'beschreibung'
              ]
 
     template_name_suffix = '_aktualisieren_form'
@@ -182,7 +181,6 @@ class KursAktualisieren(UpdateView):
     def get_form(self, form_class=None):
         form = super(KursAktualisieren, self).get_form(form_class)
         form.fields['beschreibung'].required = False
-        form.fields['teilnehmerzahl'].required = False
         form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-anfangszeit'})
         form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),

@@ -19,7 +19,7 @@ class Kurs(models.Model):
     # das soll aber das Form prüfen (d.h. dort max_value setzen)
     max_teilnehmer = models.IntegerField(default=10, verbose_name="Max. Teilnehmer")
 
-    teilnehmerzahl = models.IntegerField(default=1)
+    teilnehmerzahl = models.IntegerField(default=0)
 
     # 6 Stellen vor dem Komma, zwei danach
     gebuehr = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Gebühr")
