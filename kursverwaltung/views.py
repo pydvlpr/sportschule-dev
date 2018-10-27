@@ -40,6 +40,8 @@ class KundeErstellen(CreateView):
         form = super(KundeErstellen, self).get_form(form_class)
         form.fields['handy'].required = False
         form.fields['fax'].required = False
+        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                   'class': 'form-control'})
         return form
 
 class KundeAktualisieren(UpdateView):
@@ -57,6 +59,8 @@ class KundeAktualisieren(UpdateView):
         form = super(KundeAktualisieren, self).get_form(form_class)
         form.fields['handy'].required = False
         form.fields['fax'].required = False
+        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                   'class': 'form-control'})
         return form
 
 
@@ -87,15 +91,13 @@ class TrainerErstellen(CreateView):
 
     def get_form(self, form_class=None):
         form = super(TrainerErstellen, self).get_form(form_class)
-        form.fields['bemerkung'].required = False
         form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-geburtstag'})
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                   'class': 'form-control'})
         return form
 
-    class Meta:
-        widgets = {
-            'bemerkung': forms.Textarea(attrs={'cols' :25, 'row':    100}),
-            }
+
 
 
 class TrainerAktualisieren(UpdateView):
@@ -111,15 +113,12 @@ class TrainerAktualisieren(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(TrainerAktualisieren, self).get_form(form_class)
-        form.fields['bemerkung'].required = False
         form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y'),
                                                             attrs={'id':'datetimepicker-geburtstag'})
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                   'class': 'form-control'})
         return form
 
-    class Meta:
-        widgets = {
-            'bemerkung': forms.Textarea(attrs={'cols' :25, 'row':    100})
-            },
 
 class TrainerEntfernen(DeleteView):
     model = Trainer
@@ -155,16 +154,14 @@ class KursErstellen(CreateView):
     def get_form(self, form_class=None):
         form = super(KursErstellen, self).get_form(form_class)
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
+
         form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-anfangszeit'})
         form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                         attrs={'id':'datetimepicker-endzeit'})
+        form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                   'class': 'form-control'})
         return form
-
-    class Meta:
-        widgets = {
-            'beschreibung': forms.Textarea(attrs={'cols' :25, 'row':    100}),
-            }
 
 
 class KursAktualisieren(UpdateView):
@@ -180,17 +177,14 @@ class KursAktualisieren(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(KursAktualisieren, self).get_form(form_class)
-        form.fields['beschreibung'].required = False
+        #form.fields['beschreibung'].required = False
         form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-anfangszeit'})
         form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                         attrs={'id':'datetimepicker-endzeit'})
+        form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                   'class': 'form-control'})
         return form
-
-    class Meta:
-        widgets = {
-            'beschreibung': forms.Textarea(attrs={'cols' :25, 'row':    100,'class': 'form-control'})
-            },
 
 class KursDetails(DetailView):
 
@@ -282,7 +276,14 @@ class RaumErstellen(CreateView):
     def get_form(self, form_class=None):
         form = super(RaumErstellen, self).get_form(form_class)
         form.fields['bemerkung'].required = False
-        #form.fields['feld2'].required = False
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                'class': 'form-control'})
+        """
+        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                              'class': 'form-control'})
+        form.fields['geraeteverantwortlicher'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                              'class': 'form-control'})
+        """
         return form
 
 class RaumAktualisieren(UpdateView):
@@ -300,6 +301,14 @@ class RaumAktualisieren(UpdateView):
     def get_form(self, form_class=None):
         form = super(RaumAktualisieren, self).get_form(form_class)
         form.fields['bemerkung'].required = False
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                'class': 'form-control'})
+        """
+        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                              'class': 'form-control'})
+        form.fields['geraeteverantwortlicher'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                                              'class': 'form-control'})
+        """
         #form.fields['feld2'].required = False
         return form
 
