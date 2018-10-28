@@ -101,7 +101,7 @@ class TrainerErstellen(CreateView):
     def get_form(self, form_class=None):
         form = super(TrainerErstellen, self).get_form(form_class)
         form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
-                                                          attrs={'id':'datetimepicker-geburtstag'})
+                                                          attrs={'id':'datepicker-geburtstag'})
         form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
@@ -124,7 +124,7 @@ class TrainerAktualisieren(UpdateView):
     def get_form(self, form_class=None):
         form = super(TrainerAktualisieren, self).get_form(form_class)
         form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y'),
-                                                            attrs={'id':'datetimepicker-geburtstag'})
+                                                            attrs={'id':'datepicker-geburtstag',})
         form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
@@ -370,7 +370,7 @@ class ZertifizierungErstellen(CreateView):
     def get_form(self, form_class=None):
         form = super(ZertifizierungErstellen, self).get_form(form_class)
         form.fields['gueltig_bis'].widget = forms.DateInput(format=('%d.%m.%Y'),
-                                                        attrs={'id':'datetimepicker-zertifizierung'})
+                                                        attrs={'id':'datepicker-zertifizierung'})
         return form
 
 class ZertifizierungAktualisieren(UpdateView):
@@ -387,7 +387,7 @@ class ZertifizierungAktualisieren(UpdateView):
     def get_form(self, form_class=None):
         form = super(ZertifizierungAktualisieren, self).get_form(form_class)
         form.fields['gueltig_bis'].widget = forms.DateInput(format=('%d.%m.%Y'),
-                                                        attrs={'id':'datetimepicker-zertifizierung'})
+                                                        attrs={'id':'datepicker-zertifizierung'})
         return form
 
 
