@@ -36,11 +36,14 @@ class KundeErstellen(CreateView):
              ]
     success_url = reverse_lazy('kunden_liste')
 
+    class Meta:
+        pass
+
     def get_form(self, form_class=None):
         form = super(KundeErstellen, self).get_form(form_class)
         form.fields['handy'].required = False
         form.fields['fax'].required = False
-        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
 
@@ -55,11 +58,14 @@ class KundeAktualisieren(UpdateView):
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('kunden_liste')
 
+    class Meta:
+        pass
+
     def get_form(self, form_class=None):
         form = super(KundeAktualisieren, self).get_form(form_class)
         form.fields['handy'].required = False
         form.fields['fax'].required = False
-        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
 
@@ -89,15 +95,16 @@ class TrainerErstellen(CreateView):
              ]
     success_url = reverse_lazy('trainer_liste')
 
+    class Meta:
+        pass
+
     def get_form(self, form_class=None):
         form = super(TrainerErstellen, self).get_form(form_class)
         form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
-                                                            attrs={'id':'datetimepicker-geburtstag'})
-        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+                                                          attrs={'id':'datetimepicker-geburtstag'})
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
-
-
 
 
 class TrainerAktualisieren(UpdateView):
@@ -111,11 +118,14 @@ class TrainerAktualisieren(UpdateView):
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('trainer_liste')
 
+    class Meta:
+        pass
+
     def get_form(self, form_class=None):
         form = super(TrainerAktualisieren, self).get_form(form_class)
         form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y'),
                                                             attrs={'id':'datetimepicker-geburtstag'})
-        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
 
@@ -151,15 +161,19 @@ class KursErstellen(CreateView):
              ]
     success_url = reverse_lazy('kurs_liste')
 
+    class Meta:
+        pass
+
     def get_form(self, form_class=None):
         form = super(KursErstellen, self).get_form(form_class)
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
+        form.fields['raum'].required = False #später entfernen, soll True sein!
 
         form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-anfangszeit'})
         form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                         attrs={'id':'datetimepicker-endzeit'})
-        form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
 
@@ -175,14 +189,19 @@ class KursAktualisieren(UpdateView):
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('kurs_liste')
 
+    class Meta:
+        pass
+
     def get_form(self, form_class=None):
         form = super(KursAktualisieren, self).get_form(form_class)
+        form.fields['beschreibung'].required = False #später entfernen, soll True sein!
+        form.fields['raum'].required = False #später entfernen, soll True sein!
         #form.fields['beschreibung'].required = False
         form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-anfangszeit'})
         form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                         attrs={'id':'datetimepicker-endzeit'})
-        form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
 
@@ -190,6 +209,9 @@ class KursDetails(DetailView):
 
     model = Kurs
     template_name_suffix = '_details_form'
+
+    class Meta:
+        pass
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -200,6 +222,8 @@ class KursEntfernen(DeleteView):
     model = Kurs
     success_url = reverse_lazy('kurs_liste')
 
+    class Meta:
+        pass
 
 ## Buchungen views
 """
@@ -253,6 +277,9 @@ class BuchungEntfernen(DeleteView):
     model = Buchung
     success_url = reverse_lazy('buchungen_liste')
 
+    class Meta:
+        pass
+
 
 ## Räume views
 def raum_liste(request):
@@ -272,16 +299,19 @@ class RaumErstellen(CreateView):
              ]
     success_url = reverse_lazy('raum_liste')
 
+    class Meta:
+        pass
+
 
     def get_form(self, form_class=None):
         form = super(RaumErstellen, self).get_form(form_class)
         form.fields['bemerkung'].required = False
-        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                 'class': 'form-control'})
         """
-        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                               'class': 'form-control'})
-        form.fields['geraeteverantwortlicher'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['geraeteverantwortlicher'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                               'class': 'form-control'})
         """
         return form
@@ -298,15 +328,18 @@ class RaumAktualisieren(UpdateView):
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('raum_liste')
 
+    class Meta:
+        pass
+
     def get_form(self, form_class=None):
         form = super(RaumAktualisieren, self).get_form(form_class)
         form.fields['bemerkung'].required = False
-        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                 'class': 'form-control'})
         """
-        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                               'class': 'form-control'})
-        form.fields['geraeteverantwortlicher'].widget = forms.Textarea(attrs={'cols' :5, 'row': 2,
+        form.fields['geraeteverantwortlicher'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                               'class': 'form-control'})
         """
         #form.fields['feld2'].required = False
@@ -331,6 +364,8 @@ class ZertifizierungErstellen(CreateView):
     fields = [  'name', 'trainer', 'gueltig_bis']
     success_url = reverse_lazy('zertifizierungen_liste')
 
+    class Meta:
+        pass
 
     def get_form(self, form_class=None):
         form = super(ZertifizierungErstellen, self).get_form(form_class)
@@ -346,6 +381,8 @@ class ZertifizierungAktualisieren(UpdateView):
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('zertifizierungen_liste')
 
+    class Meta:
+        pass
 
     def get_form(self, form_class=None):
         form = super(ZertifizierungAktualisieren, self).get_form(form_class)
@@ -357,3 +394,6 @@ class ZertifizierungAktualisieren(UpdateView):
 class ZertifizierungEntfernen(DeleteView):
     model = Zertifizierung
     success_url = reverse_lazy('zertifizierungen_liste')
+
+    class Meta:
+        pass
