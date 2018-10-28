@@ -9,8 +9,8 @@ class Kurs(models.Model):
     beschreibung = models.CharField(max_length=32767, default=" ")
 
     # Datum/Zeit-Erfassung sollte mit Javascrip Widget erfolgen
-    anfangszeit = models.DateTimeField(help_text="Format: Tag.Monat.Jahr Stunde:Minute")
-    endzeit = models.DateTimeField(help_text="Format: Tag.Monat.Jahr Stunde:Minute")
+    anfangszeit = models.DateTimeField()
+    endzeit = models.DateTimeField()
 
     raum = models.ForeignKey(Raum, on_delete=models.CASCADE)
     trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)

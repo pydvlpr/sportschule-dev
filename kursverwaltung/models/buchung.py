@@ -11,7 +11,6 @@ class Buchung(models.Model):
     datum = models.DateField(verbose_name="Datum",auto_now_add=True)
     kurs_nr = models.ForeignKey(Kurs, on_delete= models.CASCADE, default = 0, verbose_name="Kurs-Nr.:")
     kunde = models.ForeignKey(Kunde, on_delete=models.CASCADE, default = 0)
-    trainer = models.ForeignKey(Trainer, on_delete= models.SET_DEFAULT, default = 0)
 
     def __str__(self):
         return ("Datum: "+str(self.datum)+"<br>"  +
