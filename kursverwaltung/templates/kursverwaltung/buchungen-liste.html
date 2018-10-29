@@ -39,7 +39,17 @@
                                 <td>{{buchung.kurs_nr.id}}</td>
                                 <td><a href="{% url 'kurs_details' pk=buchung.kurs_nr.id %}"</a>{{buchung.kurs_nr.titel}}</td>
                                 <td>{{buchung.kunde}}</td>
-                                <td>Hier werden noch die Trainer dynamisch eingebunden aus der Trainerliste</td>
+                                <td>
+                                    {% if trainer_liste %}
+                                        {% for trainer in trainer_liste %}
+                                            {% if trainer.id == buchung.kurs_nr.trainer.id %}
+                                                {{ trainer.nachname }}, {{trainer.vorname}}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>keine Trainer zugeordnet</p>
+                                    {% endif %}
+                                </td>
                             </tr>
                         </tbody>
                     {% endfor %}

@@ -235,7 +235,9 @@ def buchung_liste(request):
 def buchungen_liste(request):
     buchungen_liste = Buchung.objects.order_by('id')
     context = {'buchungen_liste':buchungen_liste}
-    return render(request, 'kursverwaltung/buchungen-liste.html',context)
+    trainer_liste = Trainer.objects.order_by('id')
+    return render(request, 'kursverwaltung/buchungen-liste.html',
+                  {'buchungen_liste':buchungen_liste, 'trainer_liste':trainer_liste})
 
 class BuchungErstellen(CreateView):
     template_name = "buchung_create_form.html"
