@@ -13,8 +13,7 @@ class Buchung(models.Model):
     kunde = models.ForeignKey(Kunde, on_delete=models.CASCADE, default = 0)
 
     def __str__(self):
-        return ("Datum: "+str(self.datum)+"<br>"  +
-                "Trainer: "+str(self.trainer)+"<br>"
+        return ("Datum: "+str(self.datum)+
                 "Kunde: "+str(self.kunde)
                 )
 

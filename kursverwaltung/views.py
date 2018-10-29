@@ -258,7 +258,7 @@ class BuchungErstellen(CreateView):
 class BuchungAktualisieren(UpdateView):
 
     model = Buchung
-    fields = [ 'kurs_nr', 'kunde', 'trainer' ]
+    fields = [ 'kurs_nr', 'kunde' ]
 
     template_name_suffix = '_aktualisieren_form'
     success_url = reverse_lazy('buchungen_liste')

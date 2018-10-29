@@ -6,12 +6,18 @@
 <div class=container>
     <h1>Buchung löschen</h1>
     <form method="post">{% csrf_token %}
-        <p style="color:red">Wollen Sie die Buchung wirklich löschen?</p>
-        <p>
-            {% autoescape off%}
-            {{ object }}
-            {% endautoescape %}
-        </p>
+      <p style="color:red">Wollen Sie die Buchung wirklich löschen?</p>
+        <table class="table table-responsive"
+          <tr>
+            <th>Datum: </th><td> {{ object.datum }}</td
+          </tr>
+          <tr>
+            <th>Kurs: </th><td> {{ object.kurs_nr.titel }}</td
+          </tr>
+          <tr>
+            <th>Kunde: </th><td> {{ object.kunde.nachname }}, {{ object.kunde.vorname }}</td
+          </tr>
+        </table>
         <input class="btn btn-danger" type="submit" value="Löschen">
         <a class="btn btn-secondary" href="{% url 'buchungen_liste' %}">Zurück</a>
     </form>
