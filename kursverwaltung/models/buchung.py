@@ -9,7 +9,7 @@ class Buchung(models.Model):
     # Prüfung auf Doppelbuchung ebenfalls im View
     """
     datum = models.DateField(verbose_name="Datum",auto_now_add=True)
-    kurs_nr = models.ForeignKey(Kurs, on_delete= models.CASCADE, default = 0, verbose_name="Kurs")
+    kurs = models.ForeignKey(Kurs, on_delete= models.CASCADE, default = 0, verbose_name="Kurs")
     kunde = models.ForeignKey(Kunde, on_delete=models.CASCADE, default = 0)
 
     def __str__(self):
@@ -18,3 +18,4 @@ class Buchung(models.Model):
     class Meta:
         #schauen, ob das funktioniert
         ordering = ["-datum"]
+        unique_together = (("kurs", "kunde"),)

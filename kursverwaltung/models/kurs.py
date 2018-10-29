@@ -25,9 +25,10 @@ class Kurs(models.Model):
     gebuehr = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Gebühr")
 
     def __str__(self):
-        return ( "Titel: "+self.titel+" (Kurs-Nr. "+str(self.id)+")"+ ", Trainer: "+str(self.trainer)   )
+        return ( self.titel+" (Kurs-Nr. "+str(self.id)+")"+ ", Trainer: "+str(self.trainer)   )
 
 
     class Meta:
         # Sortierung
         ordering = ["id", "-anfangszeit"]
+        unique_together = (("raum", 'anfangszeit' ),)

@@ -12,10 +12,13 @@
             <th>Datum: </th><td> {{ object.datum }}</td
           </tr>
           <tr>
-            <th>Kurs: </th><td> {{ object.kurs_nr.titel }}</td
+            <th>Kurs: </th><td> {{ object.kurs.titel }}</td
           </tr>
           <tr>
             <th>Kunde: </th><td> {{ object.kunde.nachname }}, {{ object.kunde.vorname }}</td
+          </tr>
+          <tr>
+            <th>Kurs Datum: </th><td> {{ object.kurs.anfangszeit }} bis {{ object.kurs.endzeit }}</td
           </tr>
         </table>
         <input class="btn btn-danger" type="submit" value="Löschen">

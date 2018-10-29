@@ -36,13 +36,15 @@
                                         </a>
                                     </td>
                                 <td>{{buchung.datum|date:'d.m.Y'}}</td>
-                                <td>{{buchung.kurs_nr.id}}</td>
-                                <td><a href="{% url 'kurs_details' pk=buchung.kurs_nr.id %}"</a>{{buchung.kurs_nr.titel}}</td>
+                                <td>{{buchung.kurs.id}}</td>
+                                <td>
+                                    <a href="{% url 'kurs_details' pk=buchung.kurs.id %}"</a>{{buchung.kurs.titel}}
+                                </td>
                                 <td>{{buchung.kunde}}</td>
                                 <td>
                                     {% if trainer_liste %}
                                         {% for trainer in trainer_liste %}
-                                            {% if trainer.id == buchung.kurs_nr.trainer.id %}
+                                            {% if trainer.id == buchung.kurs.trainer.id %}
                                                 {{ trainer.nachname }}, {{trainer.vorname}}
                                             {% endif %}
                                         {% endfor %}
