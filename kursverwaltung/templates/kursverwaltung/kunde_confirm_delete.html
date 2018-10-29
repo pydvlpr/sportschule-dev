@@ -7,11 +7,14 @@
     <h1>Kunde löschen</h1>
     <form method="post">{% csrf_token %}
         <p style="color:red">Wollen Sie den Kunden wirklich löschen?</p>
-        <p>
-            {% autoescape off%}
-            {{ object }}
-            {% endautoescape %}
-        </p>
+        <table class="table table-responsive"
+            <tr>
+              <th>Kunden-Nr.: </th><td> {{ object.id }}</td
+            </tr>
+            <tr>
+                <th>Kunde: </th><td> {{ object.nachname }}, {{ object.vorname }}</td
+            </tr>
+        </table>
         <input class="btn btn-danger" type="submit" value="Löschen">
         <a class="btn btn-secondary" href="{% url 'kunden_liste' %}">Zurück</a>
     </form>

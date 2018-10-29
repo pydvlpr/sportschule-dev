@@ -7,11 +7,17 @@
     <h1>Zertifizierung löschen</h1>
     <form method="post">{% csrf_token %}
         <p style="color:red">Wollen Sie die Zertifizierung wirklich löschen?</p>
-        <p>
-            {% autoescape off%}
-            {{ object }}
-            {% endautoescape %}
-        </p>
+        <table class="table table-responsive"
+            <tr>
+              <th>Zertifizierung: </th><td> {{ object.name}}</td
+            </tr>
+            <tr>
+                <th>Trainer: </th><td> {{ object.trainer }} </td
+            </tr>
+            <tr>
+                <th>Gültigkeit: </th><td> {{ object.gueltig_bis }} </td
+            </tr>
+        </table>
         <input class="btn btn-danger" type="submit" value="Löschen">
         <a class="btn btn-secondary" href="{% url 'zertifizierungen_liste' %}">Zurück</a>
     </form>

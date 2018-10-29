@@ -7,11 +7,14 @@
     <h1>Raum löschen</h1>
     <form method="post">{% csrf_token %}
         <p style="color:red">Wollen Sie den Raum wirklich löschen?</p>
-        <p>
-            {% autoescape off%}
-            {{ object }}
-            {% endautoescape %}
-        </p>
+        <table class="table table-responsive"
+            <tr>
+              <th>Raum: </th><td> {{ object.gebaeude}}</td
+            </tr>
+            <tr>
+                <th>Anschrift: </th><td> {{ object.strasse }} {{ object.hausnummer }}, {{ object.plz }} {{ object.stadt }}</td
+            </tr>
+        </table>
         <input class="btn btn-danger" type="submit" value="Löschen">
         <a class="btn btn-secondary" href="{% url 'raum_liste' %}">Zurück</a>
     </form>

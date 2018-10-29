@@ -22,7 +22,6 @@ class Raum(models.Model):
     stadt = models.CharField(max_length=100)
 
     def __str__(self):
-        return ("Raum-ID: "+str(self.id)+", Gebäude: " +
-                self.gebaeude+", " +self.strasse
-                +", " +self.stadt
+        return (self.gebaeude+", " +self.strasse+ " "+ self.hausnummer
+                +", " +self.plz +" "+self.stadt
                 )

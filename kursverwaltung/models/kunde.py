@@ -13,5 +13,4 @@ class Kunde(Person):
         unique_together = (("nachname", "vorname", 'strasse', 'hausnummer', 'stadt'),)
 
     def __str__(self):
-        return (self.vorname+" " +self.nachname+
-                " (Kd-Nr.: "+str(self.id)+")")
+        return (self.vorname+" " +self.nachname+" (Kd-Nr.: "+str(self.id)+")")

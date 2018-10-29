@@ -9,13 +9,11 @@ class Buchung(models.Model):
     # Prüfung auf Doppelbuchung ebenfalls im View
     """
     datum = models.DateField(verbose_name="Datum",auto_now_add=True)
-    kurs_nr = models.ForeignKey(Kurs, on_delete= models.CASCADE, default = 0, verbose_name="Kurs-Nr.:")
+    kurs_nr = models.ForeignKey(Kurs, on_delete= models.CASCADE, default = 0, verbose_name="Kurs")
     kunde = models.ForeignKey(Kunde, on_delete=models.CASCADE, default = 0)
 
     def __str__(self):
-        return ("Datum: "+str(self.datum)+
-                "Kunde: "+str(self.kunde)
-                )
+        return ("Datum: "+str(self.datum)+", Kunde: "+str(self.kunde))
 
     class Meta:
         #schauen, ob das funktioniert
