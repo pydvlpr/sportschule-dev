@@ -241,7 +241,7 @@ class BuchungErstellen(CreateView):
     template_name = "buchung_create_form.html"
     model = Buchung
 
-    fields = [ 'kurs_nr', 'kunde', 'trainer' ]
+    fields = [ 'kurs_nr', 'kunde' ]
 
     success_url = reverse_lazy('buchungen_liste')
 
