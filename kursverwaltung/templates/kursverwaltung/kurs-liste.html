@@ -84,7 +84,7 @@
                     <tbody>
                         <tr>
                             <td>{{kurs.id}}</td>
-                            <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">{{ kurs.titel}}</a></td>
+                            <td><a href="{% url 'kurs_details' pk=kurs.id %}">{{ kurs.titel}}</a></td>
                             <td>{{kurs.beschreibung}}</td>
                             <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
                             <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>

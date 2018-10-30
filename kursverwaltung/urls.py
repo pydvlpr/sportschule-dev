@@ -31,8 +31,9 @@ urlpatterns = [
     path('raum/entfernen/<int:pk>/', views.RaumEntfernen.as_view(), name='raum_entfernen'),
 
     # urls Kurs Formulare
-    path('kurse/neu/', views.KursErstellen.as_view(), name='kurs_erstellen'),
-    path('kurse/<int:pk>/', views.KursDetails.as_view(), name='kurs_details'),
+    #path('kurse/neu/', views.KursErstellen.as_view(), name='kurs_erstellen'),
+    path('kurse/neu/', views.kurs_erstellen, name='kurs_erstellen'),
+    path('kurse/details/<int:pk>/', views.KursDetails.as_view(), name='kurs_details'),
     path('kurse/aktualisieren/<int:pk>/', views.KursAktualisieren.as_view(), name='kurs_aktualisieren'),
     path('kurse/entfernen/<int:pk>/', views.KursEntfernen.as_view(), name='kurs_entfernen'),
 

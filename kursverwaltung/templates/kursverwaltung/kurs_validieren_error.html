@@ -1,0 +1,59 @@
+{% extends "kursverwaltung/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="container">
+        {% if error_message %}
+            {% if raum_object %}
+                <div class="container">
+                    <h2  style="color:red">{{error_message}}</h2>
+                    <table class="table table-responsive">
+                        <tr>
+                            <th>Kurs:</th><td>{{kurs_object.titel}}</td>
+                        </tr>
+                        <tr>
+                            <th>Zeitraum:</th><td>{{kurs_object.anfangszeit}} bis {{kurs_object.endzeit}}</td>
+                        </tr>
+                        <tr>
+                            <th>Gebäude:</th><td>{{raum_object.gebaeude}}</td>
+                        </tr>
+                        <tr>
+                            <th>Straße:</th><td>{{raum_object.strasse}} {{raum_object.hausnummer}}</td>
+                        </tr>
+                        <tr>
+                            <th>PLZ:</th><td>{{raum_object.plz}}</td>
+                        </tr>
+                        <tr>
+                            <th>Ort:</th><td>{{raum_object.stadt}}</td>
+                        </tr>
+                    </table>
+                </div>
+            {% elif trainer_object %}
+                <div class="container">
+                    <h2  style="color:red">{{error_message}}</h2>
+                    <table class="table table-responsive">
+                        <tr>
+                        <th>Trainer:</th><td>{{trainer_object.nachname}}, {{trainer_object.nachname}}</td>
+                        </tr>
+                        <tr>
+                        <th>Festnetz:</th><td>{{trainer_object.festnetz}}</td>
+                        </tr>
+                        <tr>
+                        <th>E-Mail:</th><td>{{trainer_object.email}}</td>
+                        </tr>
+                    </table>
+                </div>
+            {% endif %}
+        {% else %}
+            <div style="color:blue" class='container'>
+                <p>anderer Fehler</p>
+            </div>
+
+        {% endif %}
+        <div class="container">
+            <p>
+            <a href="{% url 'kurs_erstellen' %}" class="btn btn-secondary">Zurück</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
