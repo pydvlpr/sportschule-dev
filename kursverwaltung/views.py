@@ -4,12 +4,17 @@ from django import forms
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 
+# Modelle
 from .models.kunde import Kunde
 from .models.trainer import Trainer
 from .models.kurs import Kurs
 from .models.raum import Raum
 from .models.buchung import Buchung
 from .models.zertifizierung import Zertifizierung
+
+# Forms
+from .forms import BuchungForm
+
 
 ## Index-Site
 # kann später ggf. entfernt werden
@@ -135,14 +140,6 @@ class TrainerEntfernen(DeleteView):
     success_url = reverse_lazy('trainer_liste')
 
 
-
-## Zertfifizierungen views
-def zertifizierung_liste(request):
-
-    return render(request, 'kursverwaltung/zertifizierung-liste.html')
-
-
-
 ## Kurs Views
 
 def kurs_liste(request):
@@ -156,7 +153,7 @@ class KursErstellen(CreateView):
     model = Kurs
 
     fields = [  'titel', 'anfangszeit', 'endzeit',
-                'raum', 'trainer', 'max_teilnehmer',
+                'raum', 'trainer', 'max_teilnehmer', 'teilnehmerzahl',
                 'gebuehr', 'beschreibung'
              ]
     success_url = reverse_lazy('kurs_liste')
@@ -164,10 +161,12 @@ class KursErstellen(CreateView):
     class Meta:
         pass
 
+
     def get_form(self, form_class=None):
         form = super(KursErstellen, self).get_form(form_class)
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
         form.fields['raum'].required = False #später entfernen, soll True sein!
+        form.fields['teilnehmerzahl'].disabled=True
 
         form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-anfangszeit'})
@@ -182,7 +181,7 @@ class KursAktualisieren(UpdateView):
 
     model = Kurs
     fields = [  'titel', 'anfangszeit', 'endzeit',
-                'raum', 'trainer', 'max_teilnehmer',
+                'raum', 'trainer', 'max_teilnehmer', 'teilnehmerzahl',
                 'gebuehr', 'beschreibung'
              ]
 
@@ -196,7 +195,7 @@ class KursAktualisieren(UpdateView):
         form = super(KursAktualisieren, self).get_form(form_class)
         form.fields['beschreibung'].required = False #später entfernen, soll True sein!
         form.fields['raum'].required = False #später entfernen, soll True sein!
-        #form.fields['beschreibung'].required = False
+        form.fields['teilnehmerzahl'].disabled=True
         form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                                             attrs={'id':'datetimepicker-anfangszeit'})
         form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
@@ -204,6 +203,7 @@ class KursAktualisieren(UpdateView):
         form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
+
 
 class KursDetails(DetailView):
 
@@ -226,61 +226,115 @@ class KursEntfernen(DeleteView):
         pass
 
 ## Buchungen views
-"""
-def buchung_liste(request):
-
-    return render(request, 'kursverwaltung/buchungen-liste.html')
-"""
 
 def buchungen_liste(request):
     buchungen_liste = Buchung.objects.order_by('id')
     context = {'buchungen_liste':buchungen_liste}
     trainer_liste = Trainer.objects.order_by('id')
+
     return render(request, 'kursverwaltung/buchungen-liste.html',
                   {'buchungen_liste':buchungen_liste, 'trainer_liste':trainer_liste})
 
-class BuchungErstellen(CreateView):
-    template_name = "buchung_create_form.html"
-    model = Buchung
 
-    fields = [ 'kurs_nr', 'kunde' ]
+# Buchung erstellen mit eigenem Form für mehr Möglichkeiten
+# zur Validierung der Teilnehmerzahl
+def buchung_erstellen(request):
+    args = {}
+    if request.method == "POST":
+        form = BuchungForm(request.POST)
+        if form.is_valid():
+            # uncleand kurs enthält die gewählte Kurs.id
+            kurs_id = request.POST['kurs']
+            kurs = Kurs.objects.get(pk=kurs_id)
+            kursbuchungen = Buchung.objects.filter(kurs=kurs_id).count()
 
-    success_url = reverse_lazy('buchungen_liste')
+            max = kurs.max_teilnehmer
+            aktuelle_teilnehmerzahl = kurs.teilnehmerzahl
 
-    def get_form(self, form_class=None):
-        form = super(BuchungErstellen, self).get_form(form_class)
-        # teilnehmerzahl soll automatisch ermittelt und aktualisert werden
-        # feld darf dann nicht verändert werrden
-        #form.fields['teilnehmerzahl'].required = False
-        return form
+            # Validierung der Teilnehmerzahl
+            if aktuelle_teilnehmerzahl < max:
+                kurs.teilnehmerzahl = kursbuchungen+1
+                # neue teilnehmerzahl speichern
+                kurs.save()
+                # buchung form speichern
+                post = form.save()
+                post.save()
+                return redirect('buchungen_liste')
+            else:
+                # Fehler bei fehlgeschlagener Validierung
+                error_message = "Der Kurs ist schon voll ( "+str(kursbuchungen)+" Teilnehmer)"
+                return render(request, 'kursverwaltung/buchung_validieren_error.html',
+                              {'error_message':error_message})
+    else:
+        form = BuchungForm()
 
-    class Meta:
-        pass
+    args['form']=form
+    return render(request, "kursverwaltung/buchung_create_form.html", args)
 
-class BuchungAktualisieren(UpdateView):
 
-    model = Buchung
-    fields = [ 'kurs_nr', 'kunde' ]
+# Buchung erstellen mit eigenem Form für mehr Möglichkeiten
+# zur Validierung der teilnehmerzahl
+def buchung_aktualisieren(request,pk):
+    args = {}
+    buchung = get_object_or_404(Buchung, pk=pk)
+    if request.method == "POST":
+        form = BuchungForm(request.POST, instance = buchung)
+        if form.is_valid():
+            # uncleand kurs enthält die gewählte Kurs.id
+            kurs_id = request.POST['kurs']
+            # Kurs Objekte zur ID  holen und zählen
+            kurs = Kurs.objects.get(pk=kurs_id)
+            kursbuchungen = Buchung.objects.filter(kurs=kurs_id).count()
 
-    template_name_suffix = '_aktualisieren_form'
-    success_url = reverse_lazy('buchungen_liste')
+            max = kurs.max_teilnehmer
+            aktuelle_teilnehmerzahl = kurs.teilnehmerzahl
 
-    def get_form(self, form_class=None):
-        form = super(BuchungAktualisieren, self).get_form(form_class)
-        # teilnehmerzahl soll automatisch ermittelt und aktualisert werden
-        # feld darf dann nicht verändert werrden
-        #form.fields['teilnehmerzahl'].required = False
-        return form
+            # Validierung der Teilnehmerzahl
+            if aktuelle_teilnehmerzahl < max:
+                kurs.teilnehmerzahl = kursbuchungen+1
+                # neue teilnehmerzahl speichern
+                kurs.save()
+                # buchung form speichern
+                post = form.save()
+                post.save()
+                return redirect('buchungen_liste')
+            else:
+                # Fehler bei fehlgeschlagener Validierung
+                error_message = "Der Kurs ist schon voll ( "+str(kursbuchungen)+" Teilnehmer)"
+                return render(request, 'kursverwaltung/buchung_validieren_error.html',
+                              {'error_message':error_message})
+    else:
+        form = BuchungForm(instance=buchung)
 
-    class Meta:
-        pass
+    args['form']=form
+    return render(request, "kursverwaltung/buchung_aktualisieren_form.html", args)
 
-class BuchungEntfernen(DeleteView):
-    model = Buchung
-    success_url = reverse_lazy('buchungen_liste')
 
-    class Meta:
-        pass
+# Reduzierung der Teilnehmerzahl bei Löschung noch implementieren
+def buchung_entfernen(request,pk):
+    buchung = get_object_or_404(Buchung, pk=pk)
+    if request.method == "POST":
+        kurs = get_object_or_404(Kurs, pk=buchung.kurs.id)
+
+        aktuelle_teilnehmerzahl = kurs.teilnehmerzahl
+
+        # Validierung der Teilnehmerzahl
+        if aktuelle_teilnehmerzahl >= 0:
+            # neue teilnehmerzahl festlegen und speichern
+            kurs.teilnehmerzahl= aktuelle_teilnehmerzahl - 1
+            kurs.save()
+
+            # Buchung Löschen
+            buchung.delete()
+            return redirect ('buchungen_liste')
+
+        else:
+            # Fehler bei fehlgeschlagener Validierung
+            error_message = "Es sind keine Teilnehmer mehr vorhanden."
+            return render(request, 'kursverwaltung/buchung_validieren_error.html',
+                          {'error_message':error_message})
+
+    return render(request, "kursverwaltung/buchung_confirm_delete.html", {"object":buchung})
 
 
 ## Räume views

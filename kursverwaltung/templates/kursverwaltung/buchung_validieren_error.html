@@ -1,0 +1,22 @@
+{% extends "kursverwaltung/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="container">
+        {% if error_message %}
+            <div style="color:red">
+                <p>{{error_message}}</p>
+            </div>
+        {% else %}
+            <div style="color:blue">
+                <p>anderer Fehler</p>
+            </div>
+
+        {% endif %}
+        <div class="container">
+            <p>
+            <a href="{% url 'buchung_erstellen' %}" class="btn btn-secondary">Zurück</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
