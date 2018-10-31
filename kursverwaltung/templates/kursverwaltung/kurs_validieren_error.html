@@ -33,15 +33,25 @@
                     <h2  style="color:red">{{error_message}}</h2>
                     <table class="table table-responsive">
                         <tr>
-                        <th>Trainer:</th><td>{{trainer_object.nachname}}, {{trainer_object.nachname}}</td>
+                            <th>Kurs:</th><td>{{kurs_object.titel}}</td>
                         </tr>
                         <tr>
-                        <th>Festnetz:</th><td>{{trainer_object.festnetz}}</td>
+                            <th>Zeitraum:</th><td>{{kurs_object.anfangszeit}} bis {{kurs_object.endzeit}}</td>
                         </tr>
                         <tr>
-                        <th>E-Mail:</th><td>{{trainer_object.email}}</td>
+                            <th>Trainer:</th><td>{{trainer_object.nachname}}, {{trainer_object.nachname}}</td>
+                        </tr>
+                        <tr>
+                            <th>Festnetz:</th><td>{{trainer_object.festnetz}}</td>
+                        </tr>
+                        <tr>
+                            <th>E-Mail:</th><td>{{trainer_object.e_mail}}</td>
                         </tr>
                     </table>
+                </div>
+            {% else %}
+                <div class="container">
+                    <h2  style="color:red">{{error_message}}</h2>
                 </div>
             {% endif %}
         {% else %}
@@ -52,7 +62,7 @@
         {% endif %}
         <div class="container">
             <p>
-            <a href="{% url 'kurs_erstellen' %}" class="btn btn-secondary">Zurück</a>
+            <a href="{% url 'kurs_liste' %}" class="btn btn-secondary">Zurück</a>
             </p>
         </div>
     </div>

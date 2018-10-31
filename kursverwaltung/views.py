@@ -20,6 +20,8 @@ from .models.zertifizierung import Zertifizierung
 # Forms
 from .forms import BuchungForm, KursForm
 
+# eigene Funktionen
+from .utils import time_in_range
 
 ## Index-Site
 # kann später ggf. entfernt werden
@@ -152,35 +154,6 @@ def kurs_liste(request):
     context = {'kurs_liste':kurs_liste}
     return render(request, 'kursverwaltung/kurs-liste.html',context)
 
-"""
-class KursErstellen(CreateView):
-    template_name = "kurs_create_form.html"
-    model = Kurs
-
-    fields = [  'titel', 'anfangszeit', 'endzeit',
-                'raum', 'trainer', 'max_teilnehmer', 'teilnehmerzahl',
-                'gebuehr', 'beschreibung'
-             ]
-    success_url = reverse_lazy('kurs_liste')
-
-    class Meta:
-        pass
-
-
-    def get_form(self, form_class=None):
-        form = super(KursErstellen, self).get_form(form_class)
-        form.fields['beschreibung'].required = False #später entfernen, soll True sein!
-        form.fields['raum'].required = False #später entfernen, soll True sein!
-        form.fields['teilnehmerzahl'].disabled=True
-
-        form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
-                                                            attrs={'id':'datetimepicker-anfangszeit'})
-        form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
-                                                        attrs={'id':'datetimepicker-endzeit'})
-        form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                   'class': 'form-control'})
-        return form
-"""
 
 def kurs_erstellen(request):
     args = {}
@@ -190,75 +163,89 @@ def kurs_erstellen(request):
             # kursdaten übernehmen aus form quatsch, neuer_kurs = string des forms
             neuer_kurs = form.save(commit=False)
 
-
             # erforderliche Daten des neuen Kurses entnehmen
             neuer_kurs_anfangszeit = neuer_kurs.anfangszeit.astimezone(timezone('Europe/Berlin'))
             neuer_kurs_endzeit = neuer_kurs.endzeit.astimezone(timezone('Europe/Berlin'))
+            neuer_kurs_tag = neuer_kurs_anfangszeit.date()
 
-            #raum_id = request.POST['raum']
-            raum_id = neuer_kurs.raum_id
-            #trainer_id = request.POST['trainer']
-            trainer_id = neuer_kurs.trainer_id
+            # Form Daten für Kurs-Validierung
+            neuer_kurs_raum = form.cleaned_data['raum']
+            neuer_kurs_trainer = form.cleaned_data['trainer']
 
-            # alle Kurs-Objekte der DB abrufen
+            # alle Kurs-Objekte der DB
             alle_kurse = Kurs.objects.all()
-
+            # alle Kurse am selben Tag
             problem_kurse = []
 
             # Kurse durchlaufen
             for kurs in alle_kurse:
                 #kurszeit auf localtime setzen
                 kurs_beginn = kurs.anfangszeit.astimezone(timezone('Europe/Berlin'))
-                kurs_ende = kurs.endzeit.astimezone(timezone('Europe/Berlin'))
+                kurs_beginn_tag = kurs.anfangszeit.astimezone(timezone('Europe/Berlin')).date()
 
-                ## logik nochmal prüfen ! haut so nicht hin, es werden auch zu alte einträge gefunden
-                if neuer_kurs_anfangszeit <= kurs_beginn or neuer_kurs_endzeit <= kurs_ende\
-                    or neuer_kurs_anfangszeit <= kurs_beginn and neuer_kurs_endzeit <= kurs_ende\
-                    or neuer_kurs_anfangszeit >= kurs_beginn:# and neuer_kurs_endzeit >= kurs_ende:
+                if neuer_kurs_tag == kurs_beginn_tag:
+                    # Kurse am gleichen Tag sammeln für nachfolgende Prüfung
+                    problem_kurse.append(kurs)
 
-                    problem_kurse.append(kurs) # sammel alle zeitlichen Überschneidungen
 
-            balfa = Kurs.objects.by_id("200")
-            ##DEBUG
-            #balfa = Kurs.objects.by_id("200")
-
+            # Kurse mit gleichem Tag prüfen
             for problem_kurs in problem_kurse:
 
-                # räume prüfen
-                if problem_kurs.raum_id == raum_id:
-                    raum_object = get_object_or_404(Raum, pk=raum_id)
-                    kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
-                    error_message = "Raum bereits belegt."
+                problem_kurs_beginn = problem_kurs.anfangszeit.astimezone(timezone('Europe/Berlin'))
+                problem_kurs_ende = problem_kurs.endzeit.astimezone(timezone('Europe/Berlin'))
+                problem_kurs_id = problem_kurs.id
 
-                    return render(request, 'kursverwaltung/kurs_validieren_error.html',
-                                  {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
+                # zeitliche Überschneidungen prüfen
+                # time_in_range(zeitraum_start, zeitraum_ende, zeitpunkt)
+                if  time_in_range(problem_kurs_beginn, problem_kurs_ende, neuer_kurs_anfangszeit) or \
+                    time_in_range(problem_kurs_beginn, problem_kurs_ende, neuer_kurs_endzeit) or \
+                    time_in_range(problem_kurs_beginn, problem_kurs_ende, neuer_kurs_anfangszeit) and \
+                    time_in_range(problem_kurs_beginn, problem_kurs_ende, neuer_kurs_endzeit) or \
+                    time_in_range(neuer_kurs_anfangszeit, neuer_kurs_endzeit, problem_kurs_beginn) or \
+                    time_in_range(neuer_kurs_anfangszeit, neuer_kurs_endzeit, problem_kurs_beginn) and \
+                    time_in_range(neuer_kurs_anfangszeit, neuer_kurs_endzeit, problem_kurs_ende):
 
-                ##DEBUG
-                #balfa = Kurs.objects.by_id("200")
 
-                # und Trainer-Belegung checken
-                if problem_kurs.trainer == trainer_id:
-                    trainer_object = get_object_or_404(Trainer, pk=trainer_id)
-                    kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
-                    error_message = "Trainer bereits gebucht."
+                    # Raum Doppelbelegung prüfen
+                    problem_kurs_raum = problem_kurs.raum
+                    if problem_kurs_raum == neuer_kurs_raum:
+                        raum_dummy = "in if raum..."
+                        raum_object = get_object_or_404(Raum, pk=neuer_kurs_raum.id)
+                        kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
+                        error_message = "Der Raum ist bereits belegt."
 
-                    return render(request, 'kursverwaltung/kurs_validieren_error.html',
-                                  {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
-                ##DEBUG
-                #balfa = Kurs.objects.by_id("200")
+                        ##DEBUG
+                        #balfa = Kurs.objects.by_id("200")
 
+                        return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                                      {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
+
+
+                    # Trainer Doppelbuchung prüfen
+                    problem_kurs_trainer = problem_kurs.trainer
+                    if problem_kurs_trainer  == neuer_kurs_trainer:
+                        trainer_dummy = "in if trainer..."
+                        trainer_object = get_object_or_404(Trainer, pk=problem_kurs_trainer.id)
+                        kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
+                        error_message = "Der Trainer ist bereits gebucht."
+
+                        ##DEBUG
+                        #balfa = Kurs.objects.by_id("200")
+
+                        return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                                      {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
+
+                # greift, wenn Zeitfilter, d.h. Kurs wurde negativ geprüft
                 else:
-                    error_message = "Was anderes ist schief gegangen."
-                    return render(request, 'kursverwaltung/kurs_validieren_error.html',
-                                  {'error_message':error_message})
+                    # Prüfung mit nächstem Kurs fortsetzen
+                    continue
 
-            #balfa = Kurs.objects.by_id("200")
-            # und in DB speichern
-            #neuer_kurs.save()
+            # Neuen Kurs in DB speichern, wenn alles ok
+            neuer_kurs.save()
             return redirect('kurs_liste')
         else:
-            # Fehler bei fehlgeschlagener Validierung
-            error_message = "Ein Fehler ist aufgetreten"
+            # Fehler bei fehlgeschlagener Validierung des Forms
+            error_message = "Ein Fehler bei der Form-Verarbeitung ist aufgetreten"
             return render(request, 'kursverwaltung/kurs_validieren_error.html',
                           {'error_message':error_message})
     else:
@@ -268,33 +255,110 @@ def kurs_erstellen(request):
     return render(request, "kursverwaltung/kurs_create_form.html", args)
 
 
-class KursAktualisieren(UpdateView):
+def kurs_aktualisieren(request, pk):
+    args = {}
+    kurs = get_object_or_404(Kurs, pk=pk)
+    if request.method == "POST":
+        form = KursForm(request.POST, instance=kurs)
+        if form.is_valid():
+            # kursdaten übernehmen aus form quatsch, neuer_kurs = string des forms
+            neuer_kurs = form.save(commit=False)
 
-    model = Kurs
-    fields = [  'titel', 'anfangszeit', 'endzeit',
-                'raum', 'trainer', 'max_teilnehmer', 'teilnehmerzahl',
-                'gebuehr', 'beschreibung'
-             ]
+            # erforderliche Daten des neuen Kurses entnehmen
+            neuer_kurs_anfangszeit = neuer_kurs.anfangszeit.astimezone(timezone('Europe/Berlin'))
+            neuer_kurs_endzeit = neuer_kurs.endzeit.astimezone(timezone('Europe/Berlin'))
+            neuer_kurs_tag = neuer_kurs_anfangszeit.date()
 
-    template_name_suffix = '_aktualisieren_form'
-    success_url = reverse_lazy('kurs_liste')
+            # Form Daten für Kurs-Validierung
+            neuer_kurs_raum = form.cleaned_data['raum']
+            neuer_kurs_trainer = form.cleaned_data['trainer']
 
-    class Meta:
-        pass
+            # alle Kurs-Objekte der DB
+            alle_kurse = Kurs.objects.all()
+            # alle Kurse am selben Tag
+            problem_kurse = []
 
-    def get_form(self, form_class=None):
-        form = super(KursAktualisieren, self).get_form(form_class)
-        form.fields['beschreibung'].required = False #später entfernen, soll True sein!
-        form.fields['raum'].required = False #später entfernen, soll True sein!
-        form.fields['teilnehmerzahl'].disabled=True
-        form.fields['anfangszeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
-                                                            attrs={'id':'datetimepicker-anfangszeit'})
-        form.fields['endzeit'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
-                                                        attrs={'id':'datetimepicker-endzeit'})
-        form.fields['beschreibung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                   'class': 'form-control'})
-        return form
 
+            #blafa=Kurs.objects.by_id(200)
+
+            # Kurse durchlaufen
+            for kurs in alle_kurse:
+                if kurs.id == neuer_kurs.id:
+                    continue
+                #kurszeit auf localtime setzen
+                kurs_beginn = kurs.anfangszeit.astimezone(timezone('Europe/Berlin'))
+                kurs_beginn_tag = kurs.anfangszeit.astimezone(timezone('Europe/Berlin')).date()
+
+                if neuer_kurs_tag == kurs_beginn_tag:
+                    # Kurse am gleichen Tag sammeln für nachfolgende Prüfung
+                    problem_kurse.append(kurs)
+
+
+            # Kurse mit gleichem Tag prüfen
+            for problem_kurs in problem_kurse:
+
+                problem_kurs_beginn = problem_kurs.anfangszeit.astimezone(timezone('Europe/Berlin'))
+                problem_kurs_ende = problem_kurs.endzeit.astimezone(timezone('Europe/Berlin'))
+                problem_kurs_id = problem_kurs.id
+
+                # zeitliche Überschneidungen prüfen
+                # time_in_range(zeitraum_start, zeitraum_ende, zeitpunkt)
+                if  time_in_range(problem_kurs_beginn, problem_kurs_ende, neuer_kurs_anfangszeit) or \
+                    time_in_range(problem_kurs_beginn, problem_kurs_ende, neuer_kurs_endzeit) or \
+                    time_in_range(problem_kurs_beginn, problem_kurs_ende, neuer_kurs_anfangszeit) and \
+                    time_in_range(problem_kurs_beginn, problem_kurs_ende, neuer_kurs_endzeit) or \
+                    time_in_range(neuer_kurs_anfangszeit, neuer_kurs_endzeit, problem_kurs_beginn) or \
+                    time_in_range(neuer_kurs_anfangszeit, neuer_kurs_endzeit, problem_kurs_beginn) and \
+                    time_in_range(neuer_kurs_anfangszeit, neuer_kurs_endzeit, problem_kurs_ende):
+
+
+                    # Raum Doppelbelegung prüfen
+                    problem_kurs_raum = problem_kurs.raum
+                    if problem_kurs_raum == neuer_kurs_raum:
+                        raum_dummy = "in if raum..."
+                        raum_object = get_object_or_404(Raum, pk=neuer_kurs_raum.id)
+                        kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
+                        error_message = "Der Raum ist bereits belegt."
+
+                        ##DEBUG
+                        #balfa = Kurs.objects.by_id("200")
+
+                        return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                                      {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
+
+
+                    # Trainer Doppelbuchung prüfen
+                    problem_kurs_trainer = problem_kurs.trainer
+                    if problem_kurs_trainer  == neuer_kurs_trainer:
+                        trainer_dummy = "in if trainer..."
+                        trainer_object = get_object_or_404(Trainer, pk=problem_kurs_trainer.id)
+                        kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
+                        error_message = "Der Trainer ist bereits gebucht."
+
+                        ##DEBUG
+                        #balfa = Kurs.objects.by_id("200")
+
+                        return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                                      {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
+
+                # greift, wenn Zeitfilter, d.h. Kurs wurde negativ geprüft
+                else:
+                    # Prüfung mit nächstem Kurs fortsetzen
+                    continue
+
+            # Neuen Kurs in DB speichern, wenn alles ok
+            neuer_kurs.save()
+            return redirect('kurs_liste')
+        else:
+            # Fehler bei fehlgeschlagener Validierung des Forms
+            error_message = "Ein Fehler bei der Form-Verarbeitung ist aufgetreten"
+            return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                          {'error_message':error_message})
+    else:
+        form = KursForm(instance=kurs)
+
+    args['form']=form
+    return render(request, "kursverwaltung/kurs_aktualisieren_form.html", args)
 
 class KursDetails(DetailView):
 

@@ -33,8 +33,9 @@ urlpatterns = [
     # urls Kurs Formulare
     #path('kurse/neu/', views.KursErstellen.as_view(), name='kurs_erstellen'),
     path('kurse/neu/', views.kurs_erstellen, name='kurs_erstellen'),
+    path('kurse/aktualisieren/<int:pk>/', views.kurs_aktualisieren, name='kurs_aktualisieren'),
+    #path('kurse/aktualisieren/<int:pk>/', views.KursAktualisieren.as_view(), name='kurs_aktualisieren'),
     path('kurse/details/<int:pk>/', views.KursDetails.as_view(), name='kurs_details'),
-    path('kurse/aktualisieren/<int:pk>/', views.KursAktualisieren.as_view(), name='kurs_aktualisieren'),
     path('kurse/entfernen/<int:pk>/', views.KursEntfernen.as_view(), name='kurs_entfernen'),
 
     # urls Buchung Formulare
