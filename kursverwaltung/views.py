@@ -550,6 +550,7 @@ class RaumErstellen(CreateView):
 
     def get_form(self, form_class=None):
         form = super(RaumErstellen, self).get_form(form_class)
+        form.fields['geraeteverantwortlicher'].required = False
         form.fields['bemerkung'].required = False
         form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                 'class': 'form-control'})
@@ -578,6 +579,7 @@ class RaumAktualisieren(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(RaumAktualisieren, self).get_form(form_class)
+        form.fields['geraeteverantwortlicher'].required = False
         form.fields['bemerkung'].required = False
         form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                 'class': 'form-control'})
