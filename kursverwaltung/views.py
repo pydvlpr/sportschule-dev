@@ -615,3 +615,27 @@ class ZertifizierungEntfernen(DeleteView):
 
     class Meta:
         pass
+
+
+def trainer_suchen(request):
+    """
+    Einfacher View für Suche
+    """
+
+    query = request.GET['q']
+    search_tag = "SUCHE"
+
+    if query != "":
+        # zerfizierungen durchsuchen und relvante Trainer (Objekte) in Liste sammeln
+        zertifizierungen_liste = Zertifizierung.objects.filter(name__contains=query)
+        trainer_liste = []
+        for zertifzierung in zertifizierungen_liste:
+            trainer_liste.append(Trainer.objects.get(id=zertifzierung.trainer.id))
+
+    else:
+        # alle Trainer zurückgeben, wenn nichts gefunden wird
+        zertifizierungen_liste = Zertifizierung.objects.all()
+        trainer_liste = Trainer.objects.all()
+
+    return render(request, "kursverwaltung/trainer-liste.html",
+            {"trainer_liste": trainer_liste, "zertifizierungen_liste":zertifizierungen_liste, "search_tag":search_tag})

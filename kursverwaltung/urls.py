@@ -22,6 +22,7 @@ urlpatterns = [
 
     # urls Trainer Formulare
     path('trainer/neu/', views.TrainerErstellen.as_view(), name='trainer_erstellen'),
+    path('trainer/suchen/', views.trainer_suchen, name='trainer_suchen'),
     path('trainer/aktualisieren/<int:pk>/', views.TrainerAktualisieren.as_view(), name='trainer_aktualisieren'),
     path('trainer/entfernen/<int:pk>/', views.TrainerEntfernen.as_view(), name='trainer_entfernen'),
 
