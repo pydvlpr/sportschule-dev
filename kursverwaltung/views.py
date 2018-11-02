@@ -59,6 +59,7 @@ class KundeErstellen(CreateView):
                                                                    'class': 'form-control'})
         return form
 
+
 class KundeAktualisieren(UpdateView):
 
     model = Kunde
@@ -80,6 +81,19 @@ class KundeAktualisieren(UpdateView):
         form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
+
+
+class KundeDetails(DetailView):
+
+    model = Kunde
+    template_name_suffix = '_details_form'
+
+    class Meta:
+        pass
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class KundeEntfernen(DeleteView):
@@ -140,6 +154,19 @@ class TrainerAktualisieren(UpdateView):
         form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
                                                                    'class': 'form-control'})
         return form
+
+
+class TrainerDetails(DetailView):
+
+    model = Trainer
+    template_name_suffix = '_details_form'
+
+    class Meta:
+        pass
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class TrainerEntfernen(DeleteView):

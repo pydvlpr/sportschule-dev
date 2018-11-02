@@ -4,11 +4,11 @@
 
 {% block content %}
 <div class="container">
-    <h1>Kurs Details</h1>
+    <h1>Trainer Details</h1>
     <table class="table table-bordered table-responsive">
         <tr>
             <th>
-                Kurs-ID:
+                Trainer-ID:
             </th>
             <td>
                 {{ object.id}}
@@ -16,66 +16,80 @@
         </tr>
         <tr>
             <th>
-                Titel:
-            </th>
-                <td>
-                    {{ object.titel}}
-                </td>
-        </tr>
-        <tr>
-            <th>
-                Anfangszeit:
+                Nachname:
             </th>
             <td>
-                {{ object.anfangszeit}}
+                {{ object.nachname}}
+            </td>
+        <tr>
+            <th>
+                Vorname:
+            </th>
+            <td>
+                {{ object.vorname}}
             </td>
         </tr>
         <tr>
             <th>
-                Endzeit:
+                Geburtstag:
             </th>
             <td>
-                {{ object.endzeit}}
+                {{ object.geb_datum}}
             </td>
         </tr>
         <tr>
             <th>
-                Raum:
+                Straße:
             </th>
             <td>
-                {{ object.raum}}
+                {{ object.strasse}}
+            </td>
+        <tr>
+            <th>
+                Hausnummer
+            </th>
+            <td>
+                {{ object.hausnummer}}
             </td>
         </tr>
         <tr>
             <th>
-                Trainer:
+                PLZ:
             </th>
             <td>
-                {{ object.trainer}}
+                {{ object.plz}}
             </td>
         </tr>
         <tr>
             <th>
-                Max. Teilnehmer:
+                Ort:
             </th>
             <td>
-                {{ object.max_teilnehmer}}
+                {{ object.stadt}}
             </td>
         </tr>
         <tr>
             <th>
-                Teilnehmerzahl:
+                Handyr:
             </th>
             <td>
-                {{ object.teilnehmerzahl}}
+                {{ object.handy}}
             </td>
         </tr>
         <tr>
             <th>
-                Gebühr:
+                Festnetz:
             </th>
             <td>
-                {{ object.gebuehr}}
+                {{ object.festnetz}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                E-Mail:
+            </th>
+            <td>
+                {{ object.e_mail}}
             </td>
         </tr>
         <tr>

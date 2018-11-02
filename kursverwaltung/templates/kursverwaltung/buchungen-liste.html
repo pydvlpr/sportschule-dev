@@ -40,12 +40,14 @@
                                 <td>
                                     <a href="{% url 'kurs_details' pk=buchung.kurs.id %}"</a>{{buchung.kurs.titel}}
                                 </td>
-                                <td>{{buchung.kunde}}</td>
+                                <td>
+                                    <a href="{% url 'kunde_details' pk=buchung.kunde.id %}">{{buchung.kunde}}</a>
+                                </td>
                                 <td>
                                     {% if trainer_liste %}
                                         {% for trainer in trainer_liste %}
                                             {% if trainer.id == buchung.kurs.trainer.id %}
-                                                {{ trainer.nachname }}, {{trainer.vorname}}
+                                                <a href="{% url 'trainer_details' pk=trainer.id %}">{{ trainer.nachname }}, {{trainer.vorname}}</a>
                                             {% endif %}
                                         {% endfor %}
                                     {% else %}

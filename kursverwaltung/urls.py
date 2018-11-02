@@ -18,12 +18,14 @@ urlpatterns = [
     # urls Kunden Formulare
     path('kunden/neu/', views.KundeErstellen.as_view(), name='kunde_erstellen'),
     path('kunden/aktualisieren/<int:pk>/', views.KundeAktualisieren.as_view(), name='kunde_aktualisieren'),
+    path('kunden/details/<int:pk>/', views.KundeDetails.as_view(), name='kunde_details'),
     path('kunden/entfernen<int:pk>/', views.KundeEntfernen.as_view(), name='kunde_entfernen'),
 
     # urls Trainer Formulare
     path('trainer/neu/', views.TrainerErstellen.as_view(), name='trainer_erstellen'),
     path('trainer/suchen/', views.trainer_suchen, name='trainer_suchen'),
     path('trainer/aktualisieren/<int:pk>/', views.TrainerAktualisieren.as_view(), name='trainer_aktualisieren'),
+    path('trainer/details/<int:pk>/', views.TrainerDetails.as_view(), name='trainer_details'),
     path('trainer/entfernen/<int:pk>/', views.TrainerEntfernen.as_view(), name='trainer_entfernen'),
 
     # urls Raum Formulare
