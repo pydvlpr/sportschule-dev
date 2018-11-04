@@ -61,46 +61,57 @@ class KundeErstellen(CreateView):
                                                                         'data-content':"Nachname des Kunden eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['vorname'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Vorname des Kunden eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['strasse'].widget = forms.TextInput(attrs={ 'class':'has-popover',
-                                                                        'data-content':"Straße des Kunden eingeben.",
+                                                                        'data-content':"Straße der Wohnanschrift eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['hausnummer'].widget = forms.TextInput(attrs={ 'class':'has-popover',
-                                                                        'data-content':"Hausnummer zur Kundenadresse eingeben.",
+                                                                        'data-content':"Hausnummer der Wohnanschrift eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['plz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
-                                                                        'data-content':"Postleitzahl zur Kundenadresse eingeben.",
+                                                                        'data-content':"Postleitzahl der Wohnanschrift eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['stadt'].widget = forms.TextInput(attrs={ 'class':'has-popover',
-                                                                'data-content':"Stadt zur Kundenadresse eingeben.",
+                                                                'data-content':"Stadt der Wohnanschrift eingeben.",
                                                                 'data-placement':'right',
                                                                 'data-container':'body'})
+
         form.fields['handy'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Handy-Nummer des Kunden eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['festnetz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Festnetz-Nummer des Kunden eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['fax'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                             'data-content':"Fax-Nummer des Kunden eingeben.",
                                                             'data-placement':'right',
                                                             'data-container':'body'})
+
         form.fields['e_mail'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                 'data-content':"E-Mail-Adresse des Kunden eingeben.",
                                                                 'data-placement':'right',
                                                                 'data-container':'body'})
+
         form.fields['ansprechpartner'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Name des Ansprechpartners eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
 
         return form
 
@@ -129,42 +140,52 @@ class KundeAktualisieren(UpdateView):
                                                                         'data-content':"Nachname des Kunden eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['vorname'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Vorname des Kunden eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['strasse'].widget = forms.TextInput(attrs={ 'class':'has-popover',
-                                                                        'data-content':"Straße des Kunden eingeben.",
+                                                                        'data-content':"Straße der Wohnanschrift eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['hausnummer'].widget = forms.TextInput(attrs={ 'class':'has-popover',
-                                                                        'data-content':"Hausnummer zur Kundenadresse eingeben.",
+                                                                        'data-content':"Hausnummer der Wohnanschrift eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['plz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
-                                                                        'data-content':"Postleitzahl zur Kundenadresse eingeben.",
+                                                                        'data-content':"Postleitzahl der Wohnanschrift eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['stadt'].widget = forms.TextInput(attrs={ 'class':'has-popover',
-                                                                'data-content':"Stadt zur Kundenadresse eingeben.",
+                                                                'data-content':"Stadt der Wohnanschrift eingeben.",
                                                                 'data-placement':'right',
                                                                 'data-container':'body'})
+
         form.fields['handy'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Handy-Nummer des Kunden eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['festnetz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Festnetz-Nummer des Kunden eingeben.",
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
+
         form.fields['fax'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                             'data-content':"Fax-Nummer des Kunden eingeben.",
                                                             'data-placement':'right',
                                                             'data-container':'body'})
+
         form.fields['e_mail'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                 'data-content':"E-Mail-Adresse des Kunden eingeben.",
                                                                 'data-placement':'right',
                                                                 'data-container':'body'})
+
         form.fields['ansprechpartner'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Name des Ansprechpartners eingeben.",
                                                                         'data-placement':'right',
@@ -216,10 +237,59 @@ class TrainerErstellen(CreateView):
 
     def get_form(self, form_class=None):
         form = super(TrainerErstellen, self).get_form(form_class)
+        # Form-Felder modifizieren
+        form.fields['nachname'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Nachname des Trainers eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['vorname'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Vorname des Trainers eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
         form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
-                                                          attrs={'id':'datepicker-geburtstag'})
-        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                   'class': 'form-control'})
+                                                          attrs={'id':'datepicker-geburtstag',
+                                                                    'class':'has-popover',
+                                                                  'data-content':"Geburtsdatum eingeben (Format: Tag.Monat.Jahr)",
+                                                                  'data-placement':'right',
+                                                                  'data-container':'body'})
+
+        form.fields['strasse'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Straße der Wohnanschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['hausnummer'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Hausnummer der Wohnanschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['plz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Postleitzahl de Wohnanschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['stadt'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"Stadt der Wohnanschrift eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['festnetz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Festnetz-Nummer des Trainers eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['e_mail'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"E-Mail-Adresse des Trainers eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :20, 'rows': 2,
+                                                                'class':'has-popover',
+                                                                'data-content':"Bemerkung eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
         return form
 
 
@@ -239,10 +309,59 @@ class TrainerAktualisieren(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(TrainerAktualisieren, self).get_form(form_class)
-        form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y'),
-                                                            attrs={'id':'datepicker-geburtstag',})
-        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                   'class': 'form-control'})
+        # Form-Felder modifizieren
+        form.fields['nachname'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Nachname des Trainers eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['vorname'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Vorname des Trainers eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
+                                                          attrs={'id':'datepicker-geburtstag',
+                                                                    'class':'has-popover',
+                                                                  'data-content':"Geburtsdatum eingeben (Format: Tag.Monat.Jahr)",
+                                                                  'data-placement':'right',
+                                                                  'data-container':'body'})
+
+        form.fields['strasse'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Straße der Wohnanschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['hausnummer'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Hausnummer der Wohnanschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['plz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Postleitzahl de Wohnanschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['stadt'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"Stadt der Wohnanschrift eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['festnetz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Festnetz-Nummer des Trainers eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['e_mail'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"E-Mail-Adresse des Trainers eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :20, 'rows': 2,
+                                                                'class':'has-popover',
+                                                                'data-content':"Bemerkung eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
         return form
 
 
@@ -642,14 +761,57 @@ class RaumErstellen(CreateView):
         form = super(RaumErstellen, self).get_form(form_class)
         form.fields['geraeteverantwortlicher'].required = False
         form.fields['bemerkung'].required = False
-        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                'class': 'form-control'})
-        """
-        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                              'class': 'form-control'})
-        form.fields['geraeteverantwortlicher'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                              'class': 'form-control'})
-        """
+
+        form.fields['gebaeude'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Bezeichnung für das Gebäude eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['strasse'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Straße der Anschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['hausnummer'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Hausnummer der Anschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['raum_nr'].widget = forms.NumberInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Raumnummer eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['plz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Postleitzahl de Anschrift eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['stadt'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"Stadt der Anschrift eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :20, 'rows': 2,
+                                                                'class':'has-popover',
+                                                                'data-content':"Bemerkung eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+        form.fields['sitzplaetze'].widget = forms.NumberInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Anzahl verfügbarer Sitzplätze eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['ansprechpartner'].widget = forms.TextInput(attrs={'class':'has-popover',
+                                                                        'data-content':"Ansprechpartner eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['geraeteverantwortlicher'].widget = forms.TextInput(attrs={'class':'has-popover',
+                                                                        'data-content':"Geräteverantwortlichen eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
         return form
 
 class RaumAktualisieren(UpdateView):
@@ -671,15 +833,57 @@ class RaumAktualisieren(UpdateView):
         form = super(RaumAktualisieren, self).get_form(form_class)
         form.fields['geraeteverantwortlicher'].required = False
         form.fields['bemerkung'].required = False
-        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                'class': 'form-control'})
-        """
-        form.fields['ansprechpartner'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                              'class': 'form-control'})
-        form.fields['geraeteverantwortlicher'].widget = forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                                              'class': 'form-control'})
-        """
-        #form.fields['feld2'].required = False
+
+        form.fields['gebaeude'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"Bezeichnung für das Gebäude eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['strasse'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"Straße der Anschrift eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['hausnummer'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"Hausnummer der Anschrift eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['raum_nr'].widget = forms.NumberInput(attrs={ 'class':'has-popover',
+                                                                    'data-content':"Raumnummer eingeben.",
+                                                                    'data-placement':'right',
+                                                                    'data-container':'body'})
+
+        form.fields['plz'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                    'data-content':"Postleitzahl de Anschrift eingeben.",
+                                                                    'data-placement':'right',
+                                                                    'data-container':'body'})
+
+        form.fields['stadt'].widget = forms.TextInput(attrs={ 'class':'has-popover',
+                                                                'data-content':"Stadt der Anschrift eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+
+        form.fields['bemerkung'].widget = forms.Textarea(attrs={'cols' :20, 'rows': 2,
+                                                                'class':'has-popover',
+                                                                'data-content':"Bemerkung eingeben.",
+                                                                'data-placement':'right',
+                                                                'data-container':'body'})
+        form.fields['sitzplaetze'].widget = forms.NumberInput(attrs={ 'class':'has-popover',
+                                                                        'data-content':"Anzahl verfügbarer Sitzplätze eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['ansprechpartner'].widget = forms.TextInput(attrs={'class':'has-popover',
+                                                                        'data-content':"Ansprechpartner eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
+        form.fields['geraeteverantwortlicher'].widget = forms.TextInput(attrs={'class':'has-popover',
+                                                                        'data-content':"Geräteverantwortlichen eingeben.",
+                                                                        'data-placement':'right',
+                                                                        'data-container':'body'})
+
         return form
 
 
