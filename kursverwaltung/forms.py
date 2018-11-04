@@ -7,6 +7,15 @@ from .models.kurs import Kurs
 
 class BuchungForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(BuchungForm,self).__init__(*args, **kwargs)
+        for field in self.fields:
+            help_text = self.fields[field].help_text
+            self.fields[field].help_text = None
+            if help_text != '':
+                self.fields[field].widget.attrs.update(
+                    {'class':'has-popover', 'data-content':help_text, 'data-placement':'right', 'data-container':'body'})
+
     class Meta:
         model = Buchung
         fields = ( 'kurs', 'kunde' )
@@ -19,6 +28,13 @@ class KursForm(forms.ModelForm):
         self.fields['beschreibung'].required = True
         self.fields['raum'].required = False
         self.fields['teilnehmerzahl'].disabled=True
+        for field in self.fields:
+            help_text = self.fields[field].help_text
+            self.fields[field].help_text = None
+            if help_text != '':
+                self.fields[field].widget.attrs.update(
+                    {'class':'has-popover', 'data-content':help_text, 'data-placement':'right', 'data-container':'body'})
+
 
     class Meta:
         template_name = "kurs_create_form.html"
@@ -36,9 +52,7 @@ class KursForm(forms.ModelForm):
                                             attrs={'id':'datetimepicker-anfangszeit'}),
             'endzeit': forms.DateInput(format=('%d.%m.%Y %H:%M'),
                                         attrs={'id':'datetimepicker-endzeit'}),
-            'beschreibung': forms.Textarea(attrs={'cols' :5, 'rows': 2,
-                                                    'class': 'form-control'}),
-
+            'beschreibung': forms.Textarea(attrs={'cols' :20, 'rows': 2}),
         }
 
     def get_form(self, form_class=None):

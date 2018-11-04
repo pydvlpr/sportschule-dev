@@ -5,24 +5,24 @@ from .trainer import Trainer
 
 class Kurs(models.Model):
 
-    titel = models.CharField(max_length=100, unique=True)
-    beschreibung = models.CharField(max_length=32767, default=" ")
+    titel = models.CharField(max_length=100, unique=True,help_text="Titel des Kurses eingeben.")
+    beschreibung = models.CharField(max_length=32767, default=" ",help_text="Beschreibung des Kurses eingeben.")
 
     # Datum/Zeit-Erfassung sollte mit Javascrip Widget erfolgen
-    anfangszeit = models.DateTimeField()
-    endzeit = models.DateTimeField()
+    anfangszeit = models.DateTimeField(help_text="Anfangszeit des Kurses eingeben. (Format: Tag.Monat.Jahr Stunde:Minute)")
+    endzeit = models.DateTimeField(help_text="Anfangszeit des Kurses eingeben. (Format: Tag.Monat.Jahr Stunde:Minute)")
 
-    raum = models.ForeignKey(Raum, on_delete=models.CASCADE)
-    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+    raum = models.ForeignKey(Raum, on_delete=models.CASCADE,help_text="Raum des Kurses auswählen.")
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE, help_text="Trainer des Kurses auswählen.")
 
     # Teilnehmerzahl darf max. Teilnehmer nicht überschreiten,
     # das soll aber das Form prüfen (d.h. dort max_value setzen)
-    max_teilnehmer = models.IntegerField(default=10, verbose_name="Max. Teilnehmer")
+    max_teilnehmer = models.IntegerField(default=10, verbose_name="Max. Teilnehmer",help_text="Maximale Teilnehmerzahl festlegen.")
 
-    teilnehmerzahl = models.IntegerField(default=0)
+    teilnehmerzahl = models.IntegerField(default=0,help_text="Aktuelle Zahl der Teilnehmer.")
 
     # 6 Stellen vor dem Komma, zwei danach
-    gebuehr = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Gebühr")
+    gebuehr = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Gebühr",help_text="Gebühr des Kurses (€) eingeben.")
 
     def __str__(self):
         return ( self.titel+" (Kurs-Nr. "+str(self.id)+")"+ ", Trainer: "+str(self.trainer)   )
