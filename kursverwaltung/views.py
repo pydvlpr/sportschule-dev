@@ -616,8 +616,18 @@ class ZertifizierungErstellen(CreateView):
 
     def get_form(self, form_class=None):
         form = super(ZertifizierungErstellen, self).get_form(form_class)
+        form.fields['name'].widget = forms.TextInput(attrs={'class':'has-popover',
+                                                             'data-content':"Name der Zertifizierung eingeben.",
+                                                             'data-placement':'right',
+                                                             'data-container':'body'})
+
         form.fields['gueltig_bis'].widget = forms.DateInput(format=('%d.%m.%Y'),
-                                                        attrs={'id':'datepicker-zertifizierung'})
+                                                        attrs={'id':'datepicker-zertifizierung',
+                                                               'class':'has-popover',
+                                                               'data-content':"Gültigkeitsdatum der Zertifizierung eingeben.",
+                                                               'data-placement':'right',
+                                                               'data-container':'body'})
+
         return form
 
 class ZertifizierungAktualisieren(UpdateView):
@@ -633,8 +643,17 @@ class ZertifizierungAktualisieren(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(ZertifizierungAktualisieren, self).get_form(form_class)
+        form.fields['name'].widget = forms.TextInput(attrs={'class':'has-popover',
+                                                             'data-content':"Name der Zertifizierung eingeben.",
+                                                             'data-placement':'right',
+                                                             'data-container':'body'})
+
         form.fields['gueltig_bis'].widget = forms.DateInput(format=('%d.%m.%Y'),
-                                                        attrs={'id':'datepicker-zertifizierung'})
+                                                        attrs={'id':'datepicker-zertifizierung',
+                                                               'class':'has-popover',
+                                                               'data-content':"Gültigkeitsdatum der Zertifizierung eingeben.",
+                                                               'data-placement':'right',
+                                                               'data-container':'body'})
         return form
 
 
