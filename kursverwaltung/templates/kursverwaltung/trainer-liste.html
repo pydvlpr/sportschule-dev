@@ -3,21 +3,9 @@
 
 {% block content %}
     <div class="container">
-        <div class="table-responsive">
+        
             <h1>Trainer</h1>
-            {% if trainer_liste %}
-                {% if not search_tag %}
-                    <form method="get" action='suchen' align='right' action="" id="suchform" class="navbar-form pull-right">
-                        <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Portfolio-Suche...">
-                        <input class="btn btn-secondary" type="submit" class="btn btn-default" value="Suchen" ">
-                    </form>
-                {% else %}
-                        <div align="right">
-                            <a href="{% url 'trainer_liste' %}" class="btn btn-secondary">Zurück</a>
-                        </div>
-                {% endif %}
-
-                <table class="table table-bordered table-hover ">
+                <table class="table table-bordered table-hover " id = "dataTable">
                     <thead>
                         <tr>
                             <th>Aktion</td>
@@ -31,7 +19,7 @@
                             <th>Zertifizierungen</th>
                             <th>Telefonnummer</th>
                             <th>E-Mail</th>
-                        <tr>
+                        </tr>
                     </thead>
                 {% for trainer in trainer_liste %}
                     <tbody>
@@ -76,16 +64,9 @@
                     </tbody>
                 {% endfor %}
             </table>
-        </div>
+       
     </div>
-    {% else %}
-        {% if not search_tag%}
-            <p>Es sind aktuell keine Trainer verfügbar.</p>
-        {% else %}
-            <p>Suche fehlgeschlagen</p>
-            <a href="{% url 'trainer_liste' %}" class="btn btn-secondary">Zurück</a>
-        {% endif %}
-    {% endif %}
+   
     <div class="container">
         <p>
             {%if not search_tag %}
@@ -96,4 +77,12 @@
             {% endif %}
         </p>
     </div>
+	
+	<script>
+	$.noConflict();
+	jQuery(document).ready( function ($) 
+	{
+		$('#dataTable').DataTable();
+	} );
+	</script>
 {% endblock content %}

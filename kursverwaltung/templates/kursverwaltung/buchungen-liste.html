@@ -4,9 +4,9 @@
 {% block content %}
     <div class="container">
         <h1>Buchungen</h1>
-        <div class="table-responsive">
+       
             {% if buchungen_liste %}
-                <table class="table table-bordered table-hover ">
+                <table class="display " id="dataTable">
                     <thead>
                         <tr>
                             <th>Aktion</th>
@@ -15,13 +15,12 @@
                             <th>Kurs</th>
                             <th>Kunde</th>
                             <th>Trainer</th>
-                        <tr>
+                        </tr>
                     </thead>
                     {% for buchung in buchungen_liste %}
                         <tbody>
                             <tr>
-                                <tr>
-                                    <td >
+									<td>
                                         <a href="{% url 'buchung_aktualisieren' pk=buchung.id %}">
                                             <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
                                             title="Buchung ändern"
@@ -67,4 +66,12 @@
         <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
         </p>
     </div>
+	
+	<script>
+	$.noConflict();
+	jQuery(document).ready( function ($) 
+	{
+		$('#dataTable').DataTable();
+	} );
+	</script>
 {% endblock %}

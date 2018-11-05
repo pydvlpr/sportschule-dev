@@ -3,11 +3,10 @@
 
 {% block content %}
 <div class="container">
-    <div class="table-responsive">
         <h1>Kurse</h1>
         {% if user.is_authenticated %}
             {% if kurs_liste %}
-                <table id="kurse" class="table table-bordered table-hover ">
+                <table id="dataTable" class="display">
                     <thead>
                         <tr>
                             <th>Aktion</th>
@@ -21,7 +20,7 @@
                             <th>Teilnehmerzahl</th>
                             <th>Max. Teilnehmer</th>
                             <th>Kursgebühr</th>
-                        <tr>
+                        </tr>
                     </thead>
                 {% for kurs in kurs_liste %}
                     <tbody>
@@ -65,7 +64,7 @@
             </div>
         {% else %}
             {% if kurs_liste %}
-                <table id="kurse" class="table table-bordered table-hover ">
+                <table id="dataTable" class="display">
                     <thead>
                         <tr>
                             <th>KursID</th>
@@ -78,7 +77,7 @@
                             <th>Teilnehmerzahl</th>
                             <th>Max. Teilnehmer</th>
                             <th>Kursgebühr</th>
-                        <tr>
+                        </tr>
                     </thead>
                 {% for kurs in kurs_liste %}
                     <tbody>
@@ -101,14 +100,16 @@
                 <p>Es sind aktuell keine Kurse verfügbar.</p>
             {% endif %}
         {% endif %}
-    </div>
+  
 </div>
+<script>
+	$.noConflict();
+	jQuery(document).ready( function ($) 
+	{
+		$('#dataTable').DataTable();
+	} );
+	</script>
 
 {% endblock content%}
 
-<!-- funktioniert noch nicht -->
-<scrip>
-    $(document).ready( function () {
-        $('#kurse').DataTable();
-    } );
-</script>
+

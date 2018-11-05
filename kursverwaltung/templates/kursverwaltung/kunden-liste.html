@@ -3,10 +3,10 @@
 
 {% block content %}
     <div class="container">
-        <div class="table-responsive">
+        
             <h1>Kunden</h1>
             {% if kunden_liste %}
-                <table class="table table-bordered table-hover ">
+                <table class="display" id="dataTable">
                     <thead>
                         <tr>
                             <th>Aktion</th>
@@ -21,12 +21,12 @@
                             <th>Festnetz</th>
                             <th>Fax</th>
                             <th>E-Mail</th>
-                        <tr>
+                        </tr>
                     </thead>
                     {% for kunde in kunden_liste %}
                         <tbody>
                             <tr>
-                                <td >
+                                <td>
                                     <a href="{% url 'kunde_aktualisieren' pk=kunde.id %}">
                                         <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
                                         title="Kunde ändern"
@@ -55,7 +55,7 @@
                         </tbody>
                     {% endfor %}
                 </table>
-            </div>
+            
         </div>
         {% else %}
             <p>Es sind aktuell keine Kunden verfügbar.</p>
@@ -66,4 +66,12 @@
         <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
         </p>
     </div>
+	
+	<script>
+	$.noConflict();
+	jQuery(document).ready( function ($) 
+	{
+		$('#dataTable').DataTable();
+	} );
+	</script>
 {% endblock %}
