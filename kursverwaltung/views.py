@@ -320,7 +320,7 @@ class TrainerAktualisieren(UpdateView):
                                                                         'data-placement':'right',
                                                                         'data-container':'body'})
 
-        form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y %H:%M'),
+        form.fields['geb_datum'].widget = forms.DateInput(format=('%d.%m.%Y'),
                                                           attrs={'id':'datepicker-geburtstag',
                                                                     'class':'has-popover',
                                                                   'data-content':"Geburtsdatum eingeben (Format: Tag.Monat.Jahr)",
