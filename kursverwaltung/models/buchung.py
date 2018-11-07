@@ -15,6 +15,23 @@ class Buchung(models.Model):
     def __str__(self):
         return ("Datum: "+str(self.datum)+", Kunde: "+str(self.kunde))
 
+
+    # wird eine Buchung gelöscht, muss die Teilnehmerzahl korrigiert werden.
+    def delete(self, *args, **kwargs):
+
+        kurs = self.kurs
+
+        aktuelle_teilnehmerzahl = kurs.teilnehmerzahl
+
+        # Validierung der Teilnehmerzahl
+        if aktuelle_teilnehmerzahl >= 0:
+            # neue teilnehmerzahl festlegen und speichern
+            kurs.teilnehmerzahl= aktuelle_teilnehmerzahl - 1
+            kurs.save()
+
+        super(Buchung, self).delete(*args, **kwargs)
+
+
     class Meta:
         #schauen, ob das funktioniert
         ordering = ["-datum"]
