@@ -708,10 +708,13 @@ def buchung_aktualisieren(request,pk):
                 post.save()
                 return redirect('buchungen_liste')
             else:
-                # Fehler bei fehlgeschlagener Validierung
-                error_message = "Der Kurs ist schon voll ( "+str(kursbuchungen)+" Teilnehmer)"
-                return render(request, 'kursverwaltung/buchung_validieren_error.html',
-                              {'error_message':error_message})
+                if not form.changed_data:
+                    return redirect('buchungen_liste')
+                else:
+                    # Fehler bei fehlgeschlagener Validierung
+                    error_message = "Der Kurs ist schon voll ( "+str(kursbuchungen)+" Teilnehmer)"
+                    return render(request, 'kursverwaltung/buchung_validieren_error.html',
+                                  {'error_message':error_message})
     else:
         form = BuchungForm(instance=buchung)
 
