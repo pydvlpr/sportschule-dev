@@ -4,6 +4,7 @@
 {% block content %}
 
     <div class="container">
+        {% if user.is_authenticated %}
             <h1>Räume</h1>
             {% if raum_liste %}
                 <table id="dataTable" class="display table-responsive" style="width:100%">
@@ -51,16 +52,25 @@
                         {% endfor %}
                     </tbody>
             </table>
-    </div>
-    {% else %}
-        <p>Es sind aktuell keine Räume verfügbar.</p>
-    {% endif %}
-    <div class="container">
-        <p>
-            <a href="{% url 'raum_erstellen' %}" class="btn btn-primary">Raum hinzufügen</a>
-            <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
-        </p>
-    </div>
+
+            </div>
+                {% else %}
+                    <p>Es sind aktuell keine Räume verfügbar.</p>
+                {% endif %}
+            <div class="container">
+                <p>
+                    <a href="{% url 'raum_erstellen' %}" class="btn btn-primary">Raum hinzufügen</a>
+                    <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
+                </p>
+            </div>
+        {% else %}
+            <div style="color:red">
+                <h2>Fehler bei der Authentifizierung</h2>
+                <p>Sie dürfen diese Seite nicht anzeigen.</p>
+                <p>Bitte melden Sie sich an.</p>
+            </div>
+        {% endif %}
+
 
     <script>
     $.noConflict();

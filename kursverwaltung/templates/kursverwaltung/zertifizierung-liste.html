@@ -4,55 +4,62 @@
 {% block content %}
 
     <div class="container">
-            <h1>Zertifizierungen</h1>
-            {% if zertifizierung_liste %}
-				<table id="dataTable" class="display table-responsive" style="width:100%">
-					<thead>
-						<tr>
-							<th>Aktion</th>
-							<th>Name</th>
-							<th>Trainer</th>
-							<th>Gültigkeit der Zertifizierung</th>
-						</tr>
-					</thead>
-					<tbody>
-					{% for zertifizierung in zertifizierung_liste %}
-						<tr>
-							<td>
-                                <a href="{% url 'zertifizierung_aktualisieren' pk=zertifizierung.id %}">
-													<img src="{% static 'kursverwaltung/ico/edit.svg' %}"
-													title="Zertifizierung ändern"
-													height="20" width="20"
-													>
-												</a>
-												<a href="{% url 'zertifizierung_entfernen' pk=zertifizierung.id %}">
-													<img src="{% static 'kursverwaltung/ico/delete.svg' %}"
-													title="Zertifizierung entfernen"
-													height="20" width="20"
-													>
-												</a>
-                                            </td>
-							<td><a href="{% url 'zertifizierung_aktualisieren' pk=zertifizierung.id %}">{{ zertifizierung.name}}</a></td>
-							<td>{{ zertifizierung.trainer }}</td>
-							<td>{{zertifizierung.gueltig_bis|date:'d.m.Y'}}</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
+        {% if user.is_authenticated %}
+                <h1>Zertifizierungen</h1>
+                {% if zertifizierung_liste %}
+        			<table id="dataTable" class="display table-responsive" style="width:100%">
+        				<thead>
+        					<tr>
+        						<th>Aktion</th>
+        						<th>Name</th>
+        						<th>Trainer</th>
+        						<th>Gültigkeit der Zertifizierung</th>
+        					</tr>
+        				</thead>
+        				<tbody>
+        				{% for zertifizierung in zertifizierung_liste %}
+        					<tr>
+        						<td>
+                                    <a href="{% url 'zertifizierung_aktualisieren' pk=zertifizierung.id %}">
+        												<img src="{% static 'kursverwaltung/ico/edit.svg' %}"
+        												title="Zertifizierung ändern"
+        												height="20" width="20"
+        												>
+        											</a>
+        											<a href="{% url 'zertifizierung_entfernen' pk=zertifizierung.id %}">
+        												<img src="{% static 'kursverwaltung/ico/delete.svg' %}"
+        												title="Zertifizierung entfernen"
+        												height="20" width="20"
+        												>
+        											</a>
+                                                </td>
+        						<td><a href="{% url 'zertifizierung_aktualisieren' pk=zertifizierung.id %}">{{ zertifizierung.name}}</a></td>
+        						<td>{{ zertifizierung.trainer }}</td>
+        						<td>{{zertifizierung.gueltig_bis|date:'d.m.Y'}}</td>
+        					</tr>
+        				{% endfor %}
+        				</tbody>
+        			</table>
 
-            {% else %}
-                <p>Es sind aktuell keine Zertifizierungen verfügbar.</p>
-            {% endif %}
+                {% else %}
+                    <p>Es sind aktuell keine Zertifizierungen verfügbar.</p>
+                {% endif %}
 
-    </div>
+        </div>
 
-    <div class="container">
-        <p>
-            <a href="{% url 'zertifizierung_erstellen' %}" class="btn btn-primary">Zertifizierung hinzufügen</a>
-            <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
-        </p>
-    </div>
-
+        <div class="container">
+            <p>
+                <a href="{% url 'zertifizierung_erstellen' %}" class="btn btn-primary">Zertifizierung hinzufügen</a>
+                <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
+            </p>
+        </div>
+    {% else %}
+        <div style="color:red">
+            <h2>Fehler bei der Authentifizierung</h2>
+            <p>Sie dürfen diese Seite nicht anzeigen.</p>
+            <p>Bitte melden Sie sich an.</p>
+        </div>
+    {% endif %}
 	<script>
 	$.noConflict();
 	jQuery(document).ready( function ($)

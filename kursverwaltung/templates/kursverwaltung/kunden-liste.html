@@ -3,67 +3,75 @@
 
 {% block content %}
     <div class="container">
-        <h1>Kunden</h1>
-        {% if kunden_liste %}
-            <table id="dataTable" class="display table-responsive" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Aktion</th>
-                        <th>Kd-Nr.</th>
-                        <th>Name</th>
-                        <th>Straße</th>
-                        <th>Hausnummer</th>
-                        <th>PLZ</th>
-                        <th>Stadt</th>
-                        <th>Ansprechpartner</th>
-                        <th>Handy</th>
-                        <th>Festnetz</th>
-                        <th>Fax</th>
-                        <th>E-Mail</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        {% for kunde in kunden_liste %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'kunde_aktualisieren' pk=kunde.id %}">
-                                        <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
-                                        title="Kunde ändern"
-                                        height="20" width="20"
-                                        >
-                                    </a>
-                                    <a href="{% url 'kunde_entfernen' pk=kunde.id %}">
-                                        <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
-                                        title="Kunde entfernen"
-                                        height="20" width="20"
-                                        >
-                                    </a>
-                                </td>
-                                <td>{{kunde.id}}</td>
-                                <td><a href="{% url 'kunde_aktualisieren' pk=kunde.id %}">{{ kunde.nachname}}, {{kunde.vorname}}</a></td>
-                                <td>{{kunde.strasse}}</td>
-                                <td>{{kunde.hausnummer}}</td>
-                                <td>{{kunde.plz}}</td>
-                                <td>{{kunde.stadt}}</td>
-                                <td>{{kunde.ansprechpartner}}</td>
-                                <td>{{kunde.handy}}</td>
-                                <td>{{kunde.festnetz}}</td>
-                                <td>{{kunde.fax}}</td>
-                                <td>{{kunde.e_mail}}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-            </table>
-            {% else %}
-                <p>Es sind aktuell keine Kunden verfügbar.</p>
-            {% endif %}
-    </div>
-    <div class="container">
-        <p>
-        <a href="{% url 'kunde_erstellen' %}" class="btn btn-primary">Kunde hinzufügen</a>
-        <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
-        </p>
-    </div>
+        {% if user.is_authenticated %}
+            <h1>Kunden</h1>
+            {% if kunden_liste %}
+                <table id="dataTable" class="display table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Aktion</th>
+                            <th>Kd-Nr.</th>
+                            <th>Name</th>
+                            <th>Straße</th>
+                            <th>Hausnummer</th>
+                            <th>PLZ</th>
+                            <th>Stadt</th>
+                            <th>Ansprechpartner</th>
+                            <th>Handy</th>
+                            <th>Festnetz</th>
+                            <th>Fax</th>
+                            <th>E-Mail</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            {% for kunde in kunden_liste %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'kunde_aktualisieren' pk=kunde.id %}">
+                                            <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
+                                            title="Kunde ändern"
+                                            height="20" width="20"
+                                            >
+                                        </a>
+                                        <a href="{% url 'kunde_entfernen' pk=kunde.id %}">
+                                            <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
+                                            title="Kunde entfernen"
+                                            height="20" width="20"
+                                            >
+                                        </a>
+                                    </td>
+                                    <td>{{kunde.id}}</td>
+                                    <td><a href="{% url 'kunde_aktualisieren' pk=kunde.id %}">{{ kunde.nachname}}, {{kunde.vorname}}</a></td>
+                                    <td>{{kunde.strasse}}</td>
+                                    <td>{{kunde.hausnummer}}</td>
+                                    <td>{{kunde.plz}}</td>
+                                    <td>{{kunde.stadt}}</td>
+                                    <td>{{kunde.ansprechpartner}}</td>
+                                    <td>{{kunde.handy}}</td>
+                                    <td>{{kunde.festnetz}}</td>
+                                    <td>{{kunde.fax}}</td>
+                                    <td>{{kunde.e_mail}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                </table>
+                {% else %}
+                    <p>Es sind aktuell keine Kunden verfügbar.</p>
+                {% endif %}
+        </div>
+        <div class="container">
+            <p>
+            <a href="{% url 'kunde_erstellen' %}" class="btn btn-primary">Kunde hinzufügen</a>
+            <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
+            </p>
+        </div>
+    {% else %}
+        <div style="color:red">
+            <h2>Fehler bei der Authentifizierung</h2>
+            <p>Sie dürfen diese Seite nicht anzeigen.</p>
+            <p>Bitte melden Sie sich an.</p>
+        </div>
+    {% endif %}
 
 
     <script>
