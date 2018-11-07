@@ -2,136 +2,179 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="container">
-        <h1>Kurse</h1>
-        {% if user.is_authenticated %}
-            {% if kurs_liste %}
-                <table id="dataTable" class="display">
-                    <thead>
-                        <tr>
-                            <th>Aktion</th>
-                            <th>KursID</th>
-                            <th>Titel</th>
-                            <th>Beschreibung</th>
-                            <th>Anfangszeit</th>
-                            <th>Endzeit</th>
-                            <th>Raum</th>
-                            <th>Trainer</th>
-                            <th>Teilnehmerzahl</th>
-                            <th>Max. Teilnehmer</th>
-                            <th>Kursgebühr</th>
-                        </tr>
-                    </thead>
-                {% for kurs in kurs_liste %}
-                    <tbody>
-                        <tr>
-                            <td >
-                                <a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">
-                                    <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
-                                    title="Kurs ändern"
-                                    height="20" width="20"
-                                    >
-                                </a>
-                                <a href="{% url 'kurs_entfernen' pk=kurs.id %}">
-                                    <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
-                                    title="Kurs entfernen"
-                                    height="20" width="20"
-                                    >
-                                </a>
-                            </td>
-                            <td>{{kurs.id}}</td>
-                            <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">{{ kurs.titel}}</a></td>
-                            <td>{{kurs.beschreibung}}</td>
-                            <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
-                            <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
-                            <td>
-                                {% if not kurs.raum.id %}
-                                    noch nicht bekannt
-                                {% else %}
-                                    {{kurs.raum}}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if not kurs.trainer.id %}
-                                    noch nicht bekannt
-                                {% else %}
-                                    {{kurs.trainer}}
-                                {% endif %}
-                            </td>
-                            <td>{{kurs.teilnehmerzahl}}</td>
-                            <td>{{kurs.max_teilnehmer}}</td>
-                            <td>{{kurs.gebuehr}} €</td>
-                        </tr>
-                    </tbody>
-                {% endfor %}
-                </table>
+    <div class="container">
+            <h1>Kurse</h1>
+            {% if user.is_authenticated %}
+                {% if kurs_liste %}
+                    <table id="dataTable" class="display table-responsive" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Aktion</th>
+                                <th>Kurs-Nr.</th>
+                                <th>Titel</th>
+                                <th>Beschreibung</th>
+                                <th>Anfangszeit</th>
+                                <th>Endzeit</th>
+                                <th>Raum</th>
+                                <th>Trainer</th>
+                                <th>Teilnehmerzahl</th>
+                                <th>Max. Teilnehmer</th>
+                                <th>Kursgebühr</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for kurs in kurs_liste %}
+                                <tr>
+                                    <td >
+                                        <a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">
+                                            <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
+                                            title="Kurs ändern"
+                                            height="20" width="20"
+                                            >
+                                        </a>
+                                        <a href="{% url 'kurs_entfernen' pk=kurs.id %}">
+                                            <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
+                                            title="Kurs entfernen"
+                                            height="20" width="20"
+                                            >
+                                        </a>
+                                    </td>
+                                    <td>{{kurs.id}}</td>
+                                    <td><a href="{% url 'kurs_aktualisieren' pk=kurs.id %}">{{ kurs.titel}}</a></td>
+                                    <td>{{kurs.beschreibung}}</td>
+                                    <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
+                                    <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
+                                    <td>
+                                        {% if not kurs.raum.id %}
+                                            noch nicht bekannt
+                                        {% else %}
+                                            {{kurs.raum}}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if not kurs.trainer.id %}
+                                            noch nicht bekannt
+                                        {% else %}
+                                            {{kurs.trainer}}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{kurs.teilnehmerzahl}}</td>
+                                    <td>{{kurs.max_teilnehmer}}</td>
+                                    <td>{{kurs.gebuehr}} €</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Es sind aktuell keine Kurse verfügbar.</p>
+                {% endif %}
+                <div class="container">
+                    <p>
+                        <a href="{% url 'kurs_erstellen' %}" class="btn btn-primary">Kurs hinzufügen</a>
+                        <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
+                    </p>
+                </div>
             {% else %}
-                <p>Es sind aktuell keine Kurse verfügbar.</p>
+                {% if kurs_liste %}
+                    <table id="dataTable" class="display table-responsive" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Kurs-Nr.</th>
+                                <th>Titel</th>
+                                <th>Beschreibung</th>
+                                <th>Anfangszeit</th>
+                                <th>Endzeit</th>
+                                <th>Raum</th>
+                                <th>Trainer</th>
+                                <th>Teilnehmerzahl</th>
+                                <th>Max. Teilnehmer</th>
+                                <th>Kursgebühr</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for kurs in kurs_liste %}
+                                <tr>
+                                    <td>{{kurs.id}}</td>
+                                    <td><a href="{% url 'kurs_details' pk=kurs.id %}">{{ kurs.titel}}</a></td>
+                                    <td>{{kurs.beschreibung}}</td>
+                                    <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
+                                    <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
+                                    <td>
+                                        {% if not kurs.raum.raum_id %}
+
+                                        {% else %}
+                                            {{kurs.raum}}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if not kurs.trainer.nachname %}
+
+                                        {% else %}
+                                            {{kurs.trainer}}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{kurs.teilnehmerzahl}}</td>
+                                    <td>{{kurs.max_teilnehmer}}</td>
+                                    <td>{{kurs.gebuehr}} €</td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Es sind aktuell keine Kurse verfügbar.</p>
+                {% endif %}
             {% endif %}
-            <div class="container">
-                <p>
-                    <a href="{% url 'kurs_erstellen' %}" class="btn btn-primary">Kurs hinzufügen</a>
-                    <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
-                </p>
-            </div>
-        {% else %}
-            {% if kurs_liste %}
-                <table id="dataTable" class="display">
-                    <thead>
-                        <tr>
-                            <th>KursID</th>
-                            <th>Titel</th>
-                            <th>Beschreibung</th>
-                            <th>Anfangszeit</th>
-                            <th>Endzeit</th>
-                            <th>Raum</th>
-                            <th>Trainer</th>
-                            <th>Teilnehmerzahl</th>
-                            <th>Max. Teilnehmer</th>
-                            <th>Kursgebühr</th>
-                        </tr>
-                    </thead>
-                {% for kurs in kurs_liste %}
-                    <tbody>
-                        <tr>
-                            <td>{{kurs.id}}</td>
-                            <td><a href="{% url 'kurs_details' pk=kurs.id %}">{{ kurs.titel}}</a></td>
-                            <td>{{kurs.beschreibung}}</td>
-                            <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
-                            <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
-                            <td>
-                                {% if not kurs.raum.raum_id %}
+    </div>
+    <script>
+    $.noConflict();
+    jQuery(document).ready( function ($)
+    {
+        $('#dataTable').DataTable( {
+                "language": {
+                    //"url": "/kursverwaltung/static/lokale/dataTables.german.lang"
 
-                                {% else %}
-                                    {{kurs.raum}}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if not kurs.trainer.nachname %}
-
-                                {% else %}
-                                    {{kurs.trainer}}
-                                {% endif %}
-                            </td>
-                            <td>{{kurs.teilnehmerzahl}}</td>
-                            <td>{{kurs.max_teilnehmer}}</td>
-                            <td>{{kurs.gebuehr}} €</td>
-                        </tr>
-                    </tbody>
-                {% endfor %}
-                </table>
-            {% else %}
-                <p>Es sind aktuell keine Kurse verfügbar.</p>
-            {% endif %}
-        {% endif %}
-
-</div>
-<script>
-	$.noConflict();
-	jQuery(document).ready( function ($)
-	{
-		$('#dataTable').DataTable();
-	} );
-	</script>
+                            "sEmptyTable":      "Keine Daten in der Tabelle vorhanden",
+                            "sInfo":            "_START_ bis _END_ von _TOTAL_ Einträgen",
+                            "sInfoEmpty":       "Keine Daten vorhanden",
+                            "sInfoFiltered":    "(gefiltert von _MAX_ Einträgen)",
+                            "sInfoPostFix":     "",
+                            "sInfoThousands":   ".",
+                            "sLengthMenu":      "_MENU_ Einträge anzeigen",
+                            "sLoadingRecords":  "Wird geladen ..",
+                            "sProcessing":      "Bitte warten ..",
+                            "sSearch":          "Suchen",
+                            "sZeroRecords":     "Keine Einträge vorhanden",
+                            "oPaginate": {
+                                "sFirst":       "Erste",
+                                "sPrevious":    "Zurück",
+                                "sNext":        "Nächste",
+                                "sLast":        "Letzte"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": aktivieren, um Spalte aufsteigend zu sortieren",
+                                "sSortDescending": ": aktivieren, um Spalte absteigend zu sortieren"
+                            },
+                            "select": {
+                                "rows": {
+                                    "_": "%d Zeilen ausgewählt",
+                                    "0": "",
+                                    "1": "1 Zeile ausgewählt"
+                                }
+                            },
+                            "buttons": {
+                                "print":    "Drucken",
+                                "colvis":   "Spalten",
+                                "copy":     "Kopieren",
+                                "copyTitle":    "In Zwischenablage kopieren",
+                                "copyKeys": "Taste <i>ctrl</i> oder <i>\u2318</i> + <i>C</i> um Tabelle<br>in Zwischenspeicher zu kopieren.<br><br>Um abzubrechen die Nachricht anklicken oder Escape drücken.",
+                                "copySuccess": {
+                                    "_": "%d Spalten kopiert",
+                                    "1": "1 Spalte kopiert"
+                                }
+                            }
+                        }
+                });
+    } );
+    </script>
 
 {% endblock content%}

@@ -1,88 +1,130 @@
-{% extends "kursverwaltung/base_listen.html" %}
+{% extends "kursverwaltung/base.html" %}
 {% load staticfiles %}
 
 {% block content %}
+
     <div class="container">
-        
             <h1>Trainer</h1>
-                <table class="table table-bordered table-hover " id = "dataTable">
-                    <thead>
-                        <tr>
-                            <th>Aktion</td>
-                            <th>Name</th>
-                            <th>Bemerkungen</th>
-                            <th>Geburtsdatum</th>
-                            <th>Straße</th>
-                            <th>Hausnummer</th>
-                            <th>Stadt</th>
-                            <th>PLZ</th>
-                            <th>Zertifizierungen</th>
-                            <th>Telefonnummer</th>
-                            <th>E-Mail</th>
-                        </tr>
-                    </thead>
-                {% for trainer in trainer_liste %}
+            <table id="dataTable" class="display table-responsive" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Aktion</th>
+                        <th>Name</th>
+                        <th>Bemerkungen</th>
+                        <th>Geburtsdatum</th>
+                        <th>Straße</th>
+                        <th>Hausnummer</th>
+                        <th>Stadt</th>
+                        <th>PLZ</th>
+                        <th>Zertifizierungen</th>
+                        <th>Telefonnummer</th>
+                        <th>E-Mail</th>
+                    </tr>
+                </thead>
                     <tbody>
-                        <tr>
-                            <td >
-                                <a href="{% url 'trainer_aktualisieren' pk=trainer.id %}">
-                                    <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
-                                    title="Trainer ändern"
-                                    height="20" width="20"
-                                    >
-                                </a>
-                                <a href="{% url 'trainer_entfernen' pk=trainer.id %}">
-                                    <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
-                                    title="Trainer entfernen"
-                                    height="20" width="20"
-                                    >
-                                </a>
-                            </td>
-                            <td><a href="{% url 'trainer_aktualisieren' pk=trainer.id %}"> {{ trainer.nachname}}, {{trainer.vorname}}</a></td>
-                            <td>{{trainer.bemerkung}}</td>
-                            <td>{{trainer.geb_datum|date:'d.m.Y'}}</td>
-                            <td>{{trainer.strasse}}</td>
-                            <td>{{trainer.hausnummer}}</td>
-                            <td>{{trainer.stadt}}</td>
-                            <td>{{trainer.plz}}</td>
-                            <td>
-                                {% if zertifizierungen_liste %}
-                                    {% for zertifizierung in zertifizierungen_liste %}
-                                        {% if zertifizierung.trainer.id == trainer.id %}
-                                        <ul class="list-group">
-                                            <li class="list-group-item">{{ zertifizierung.name }} ({{zertifizierung.gueltig_bis|date:'d.m.Y'}})</li>
-                                        </ul>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    <p>keine Zertifikate</p>
-                                {% endif %}
-                            </td>
-                            <td>{{trainer.telefonnummer}}</td>
-                            <td>{{trainer.e_mail}}</td>
-                        </tr>
+                        {% for trainer in trainer_liste %}
+                            <tr>
+                                <td >
+                                    <a href="{% url 'trainer_aktualisieren' pk=trainer.id %}">
+                                        <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
+                                        title="Trainer ändern"
+                                        height="20" width="20"
+                                        >
+                                    </a>
+                                    <a href="{% url 'trainer_entfernen' pk=trainer.id %}">
+                                        <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
+                                        title="Trainer entfernen"
+                                        height="20" width="20"
+                                        >
+                                    </a>
+                                </td>
+                                <td><a href="{% url 'trainer_aktualisieren' pk=trainer.id %}"> {{ trainer.nachname}}, {{trainer.vorname}}</a></td>
+                                <td>{{trainer.bemerkung}}</td>
+                                <td>{{trainer.geb_datum|date:'d.m.Y'}}</td>
+                                <td>{{trainer.strasse}}</td>
+                                <td>{{trainer.hausnummer}}</td>
+                                <td>{{trainer.stadt}}</td>
+                                <td>{{trainer.plz}}</td>
+                                <td>
+                                    {% if zertifizierungen_liste %}
+                                        {% for zertifizierung in zertifizierungen_liste %}
+                                            {% if zertifizierung.trainer.id == trainer.id %}
+                                            <ul class="list-group">
+                                                <li class="list-group-item">{{ zertifizierung.name }} ({{zertifizierung.gueltig_bis|date:'d.m.Y'}})</li>
+                                            </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>keine Zertifikate</p>
+                                    {% endif %}
+                                </td>
+                                <td>{{trainer.telefonnummer}}</td>
+                                <td>{{trainer.e_mail}}</td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
-                {% endfor %}
             </table>
-       
     </div>
-   
+
     <div class="container">
         <p>
             {%if not search_tag %}
             <a href="{% url 'trainer_erstellen' %}" class="btn btn-primary">Trainer hinzufügen</a>
             <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
-            {%else %}
 
             {% endif %}
         </p>
     </div>
-	
-	<script>
-	$.noConflict();
-	jQuery(document).ready( function ($) 
-	{
-		$('#dataTable').DataTable();
-	} );
-	</script>
+
+    <script>
+    $.noConflict();
+    jQuery(document).ready( function ($)
+    {
+        $('#dataTable').DataTable( {
+                "language": {
+                    //"url": "/kursverwaltung/static/lokale/dataTables.german.lang"
+
+                            "sEmptyTable":      "Keine Daten in der Tabelle vorhanden",
+                            "sInfo":            "_START_ bis _END_ von _TOTAL_ Einträgen",
+                            "sInfoEmpty":       "Keine Daten vorhanden",
+                            "sInfoFiltered":    "(gefiltert von _MAX_ Einträgen)",
+                            "sInfoPostFix":     "",
+                            "sInfoThousands":   ".",
+                            "sLengthMenu":      "_MENU_ Einträge anzeigen",
+                            "sLoadingRecords":  "Wird geladen ..",
+                            "sProcessing":      "Bitte warten ..",
+                            "sSearch":          "Suchen",
+                            "sZeroRecords":     "Keine Einträge vorhanden",
+                            "oPaginate": {
+                                "sFirst":       "Erste",
+                                "sPrevious":    "Zurück",
+                                "sNext":        "Nächste",
+                                "sLast":        "Letzte"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": aktivieren, um Spalte aufsteigend zu sortieren",
+                                "sSortDescending": ": aktivieren, um Spalte absteigend zu sortieren"
+                            },
+                            "select": {
+                                "rows": {
+                                    "_": "%d Zeilen ausgewählt",
+                                    "0": "",
+                                    "1": "1 Zeile ausgewählt"
+                                }
+                            },
+                            "buttons": {
+                                "print":    "Drucken",
+                                "colvis":   "Spalten",
+                                "copy":     "Kopieren",
+                                "copyTitle":    "In Zwischenablage kopieren",
+                                "copyKeys": "Taste <i>ctrl</i> oder <i>\u2318</i> + <i>C</i> um Tabelle<br>in Zwischenspeicher zu kopieren.<br><br>Um abzubrechen die Nachricht anklicken oder Escape drücken.",
+                                "copySuccess": {
+                                    "_": "%d Spalten kopiert",
+                                    "1": "1 Spalte kopiert"
+                                }
+                            }
+                        }
+                });
+    } );
+    </script>
 {% endblock content %}

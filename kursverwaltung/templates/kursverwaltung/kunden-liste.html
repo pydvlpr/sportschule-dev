@@ -1,30 +1,29 @@
-{% extends "kursverwaltung/base_listen.html" %}
+{% extends "kursverwaltung/base.html" %}
 {% load staticfiles %}
 
 {% block content %}
     <div class="container">
-        
-            <h1>Kunden</h1>
-            {% if kunden_liste %}
-                <table class="display" id="dataTable">
-                    <thead>
-                        <tr>
-                            <th>Aktion</th>
-                            <th>Kd-Nr.</th>
-                            <th>Name</th>
-                            <th>Straße</th>
-                            <th>Hausnummer</th>
-                            <th>PLZ</th>
-                            <th>Stadt</th>
-                            <th>Ansprechpartner</th>
-                            <th>Handy</th>
-                            <th>Festnetz</th>
-                            <th>Fax</th>
-                            <th>E-Mail</th>
-                        </tr>
-                    </thead>
-                    {% for kunde in kunden_liste %}
-                        <tbody>
+        <h1>Kunden</h1>
+        {% if kunden_liste %}
+            <table id="dataTable" class="display table-responsive" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Aktion</th>
+                        <th>Kd-Nr.</th>
+                        <th>Name</th>
+                        <th>Straße</th>
+                        <th>Hausnummer</th>
+                        <th>PLZ</th>
+                        <th>Stadt</th>
+                        <th>Ansprechpartner</th>
+                        <th>Handy</th>
+                        <th>Festnetz</th>
+                        <th>Fax</th>
+                        <th>E-Mail</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        {% for kunde in kunden_liste %}
                             <tr>
                                 <td>
                                     <a href="{% url 'kunde_aktualisieren' pk=kunde.id %}">
@@ -52,26 +51,70 @@
                                 <td>{{kunde.fax}}</td>
                                 <td>{{kunde.e_mail}}</td>
                             </tr>
-                        </tbody>
-                    {% endfor %}
-                </table>
-            
-        </div>
-        {% else %}
-            <p>Es sind aktuell keine Kunden verfügbar.</p>
-        {% endif %}
+                        {% endfor %}
+                    </tbody>
+            </table>
+            {% else %}
+                <p>Es sind aktuell keine Kunden verfügbar.</p>
+            {% endif %}
+    </div>
     <div class="container">
         <p>
         <a href="{% url 'kunde_erstellen' %}" class="btn btn-primary">Kunde hinzufügen</a>
         <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
         </p>
     </div>
-	
-	<script>
-	$.noConflict();
-	jQuery(document).ready( function ($) 
-	{
-		$('#dataTable').DataTable();
-	} );
-	</script>
+
+
+    <script>
+    $.noConflict();
+    jQuery(document).ready( function ($)
+    {
+        $('#dataTable').DataTable( {
+                "language": {
+                    //"url": "/kursverwaltung/static/lokale/dataTables.german.lang"
+
+                            "sEmptyTable":      "Keine Daten in der Tabelle vorhanden",
+                            "sInfo":            "_START_ bis _END_ von _TOTAL_ Einträgen",
+                            "sInfoEmpty":       "Keine Daten vorhanden",
+                            "sInfoFiltered":    "(gefiltert von _MAX_ Einträgen)",
+                            "sInfoPostFix":     "",
+                            "sInfoThousands":   ".",
+                            "sLengthMenu":      "_MENU_ Einträge anzeigen",
+                            "sLoadingRecords":  "Wird geladen ..",
+                            "sProcessing":      "Bitte warten ..",
+                            "sSearch":          "Suchen",
+                            "sZeroRecords":     "Keine Einträge vorhanden",
+                            "oPaginate": {
+                                "sFirst":       "Erste",
+                                "sPrevious":    "Zurück",
+                                "sNext":        "Nächste",
+                                "sLast":        "Letzte"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": aktivieren, um Spalte aufsteigend zu sortieren",
+                                "sSortDescending": ": aktivieren, um Spalte absteigend zu sortieren"
+                            },
+                            "select": {
+                                "rows": {
+                                    "_": "%d Zeilen ausgewählt",
+                                    "0": "",
+                                    "1": "1 Zeile ausgewählt"
+                                }
+                            },
+                            "buttons": {
+                                "print":    "Drucken",
+                                "colvis":   "Spalten",
+                                "copy":     "Kopieren",
+                                "copyTitle":    "In Zwischenablage kopieren",
+                                "copyKeys": "Taste <i>ctrl</i> oder <i>\u2318</i> + <i>C</i> um Tabelle<br>in Zwischenspeicher zu kopieren.<br><br>Um abzubrechen die Nachricht anklicken oder Escape drücken.",
+                                "copySuccess": {
+                                    "_": "%d Spalten kopiert",
+                                    "1": "1 Spalte kopiert"
+                                }
+                            }
+                        }
+                });
+    } );
+    </script>
 {% endblock %}

@@ -1,16 +1,15 @@
-{% extends "kursverwaltung/base_listen.html" %}
+{% extends "kursverwaltung/base.html" %}
 {% load staticfiles %}
 
 {% block content %}
+
     <div class="container">
-       
             <h1>Räume</h1>
             {% if raum_liste %}
-                <table class="display" id="dataTable" style="width:100%">
+                <table id="dataTable" class="display table-responsive" style="width:100%">
                     <thead>
                         <tr>
                             <th>Aktion</th>
-                            <th>Raum-ID</th>
                             <th>Gebäude</th>
                             <th>Straße</th>
                             <th>Hausnummer</th>
@@ -23,24 +22,21 @@
                             <th>Geräteverantwortlicher</th>
                         </tr>
                     </thead>
-                    {% for raum in raum_liste %}
-                        <tbody>
+                    <tbody>
+                        {% for raum in raum_liste %}
                             <tr>
-                                <td >
+                                <td>
                                     <a href={% url 'raum_aktualisieren' pk=raum.id %}>
                                         <img src="{% static 'kursverwaltung/ico/edit.svg' %}"
                                         title="Raum ändern"
-                                        height="20" width="20"
-                                        >
+                                        height="20" width="20">
                                     </a>
                                     <a href={% url 'raum_entfernen' pk=raum.id %}>
                                         <img src="{% static 'kursverwaltung/ico/delete.svg' %}"
                                         title="raum entfernen"
-                                        height="20" width="20"
-                                        >
+                                        height="20" width="20">
                                     </a>
                                 </td>
-                                <td>{{raum.id}}</td>
                                 <td>{{raum.gebaeude}}</td>
                                 <td>{{raum.strasse}}</td>
                                 <td>{{raum.hausnummer}}</td>
@@ -52,10 +48,9 @@
                                 <td>{{raum.ansprechpartner}}</td>
                                 <td>{{raum.geraeteverantwortlicher}}</td>
                             </tr>
-                        </tbody>
-                    {% endfor %}
+                        {% endfor %}
+                    </tbody>
             </table>
-     
     </div>
     {% else %}
         <p>Es sind aktuell keine Räume verfügbar.</p>
@@ -66,12 +61,57 @@
             <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
         </p>
     </div>
-	
-	<script>
-	$.noConflict();
-	jQuery(document).ready( function ($) 
-	{
-		$('#dataTable').DataTable();
-	} );
-	</script>
+
+    <script>
+    $.noConflict();
+    jQuery(document).ready( function ($)
+
+    {
+        $('#dataTable').DataTable( {
+                "language": {
+                    //"url": "/kursverwaltung/static/lokale/dataTables.german.lang"
+
+                            "sEmptyTable":      "Keine Daten in der Tabelle vorhanden",
+                            "sInfo":            "_START_ bis _END_ von _TOTAL_ Einträgen",
+                            "sInfoEmpty":       "Keine Daten vorhanden",
+                            "sInfoFiltered":    "(gefiltert von _MAX_ Einträgen)",
+                            "sInfoPostFix":     "",
+                            "sInfoThousands":   ".",
+                            "sLengthMenu":      "_MENU_ Einträge anzeigen",
+                            "sLoadingRecords":  "Wird geladen ..",
+                            "sProcessing":      "Bitte warten ..",
+                            "sSearch":          "Suchen",
+                            "sZeroRecords":     "Keine Einträge vorhanden",
+                            "oPaginate": {
+                                "sFirst":       "Erste",
+                                "sPrevious":    "Zurück",
+                                "sNext":        "Nächste",
+                                "sLast":        "Letzte"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": aktivieren, um Spalte aufsteigend zu sortieren",
+                                "sSortDescending": ": aktivieren, um Spalte absteigend zu sortieren"
+                            },
+                            "select": {
+                                "rows": {
+                                    "_": "%d Zeilen ausgewählt",
+                                    "0": "",
+                                    "1": "1 Zeile ausgewählt"
+                                }
+                            },
+                            "buttons": {
+                                "print":    "Drucken",
+                                "colvis":   "Spalten",
+                                "copy":     "Kopieren",
+                                "copyTitle":    "In Zwischenablage kopieren",
+                                "copyKeys": "Taste <i>ctrl</i> oder <i>\u2318</i> + <i>C</i> um Tabelle<br>in Zwischenspeicher zu kopieren.<br><br>Um abzubrechen die Nachricht anklicken oder Escape drücken.",
+                                "copySuccess": {
+                                    "_": "%d Spalten kopiert",
+                                    "1": "1 Spalte kopiert"
+                                }
+                            }
+                        }
+                });
+    } );
+    </script>
 {% endblock %}

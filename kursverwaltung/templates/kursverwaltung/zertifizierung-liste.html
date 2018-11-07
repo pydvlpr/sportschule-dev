@@ -3,11 +3,10 @@
 
 {% block content %}
 
-
     <div class="container">
             <h1>Zertifizierungen</h1>
             {% if zertifizierung_liste %}
-				<table id="dataTable" class="display" style="width:100%">
+				<table id="dataTable" class="display table-responsive" style="width:100%">
 					<thead>
 						<tr>
 							<th>Aktion</th>
@@ -19,7 +18,8 @@
 					<tbody>
 					{% for zertifizierung in zertifizierung_liste %}
 						<tr>
-							<td><a href="{% url 'zertifizierung_aktualisieren' pk=zertifizierung.id %}">
+							<td>
+                                <a href="{% url 'zertifizierung_aktualisieren' pk=zertifizierung.id %}">
 													<img src="{% static 'kursverwaltung/ico/edit.svg' %}"
 													title="Zertifizierung ändern"
 													height="20" width="20"
@@ -30,7 +30,8 @@
 													title="Zertifizierung entfernen"
 													height="20" width="20"
 													>
-												</a></td>
+												</a>
+                                            </td>
 							<td><a href="{% url 'zertifizierung_aktualisieren' pk=zertifizierung.id %}">{{ zertifizierung.name}}</a></td>
 							<td>{{ zertifizierung.trainer }}</td>
 							<td>{{zertifizierung.gueltig_bis|date:'d.m.Y'}}</td>
@@ -38,25 +39,69 @@
 					{% endfor %}
 					</tbody>
 				</table>
-			
+
             {% else %}
                 <p>Es sind aktuell keine Zertifizierungen verfügbar.</p>
             {% endif %}
-        
+
     </div>
-	
+
     <div class="container">
         <p>
             <a href="{% url 'zertifizierung_erstellen' %}" class="btn btn-primary">Zertifizierung hinzufügen</a>
             <a href="{% url 'index' %}" class="btn btn-secondary">Zurück</a>
         </p>
     </div>
-	
+
 	<script>
 	$.noConflict();
-	jQuery(document).ready( function ($) 
+	jQuery(document).ready( function ($)
 	{
-		$('#dataTable').DataTable();
+		$('#dataTable').DataTable( {
+                "language": {
+                    //"url": "/kursverwaltung/static/lokale/dataTables.german.lang"
+
+                            "sEmptyTable":      "Keine Daten in der Tabelle vorhanden",
+                            "sInfo":            "_START_ bis _END_ von _TOTAL_ Einträgen",
+                            "sInfoEmpty":       "Keine Daten vorhanden",
+                            "sInfoFiltered":    "(gefiltert von _MAX_ Einträgen)",
+                            "sInfoPostFix":     "",
+                            "sInfoThousands":   ".",
+                            "sLengthMenu":      "_MENU_ Einträge anzeigen",
+                            "sLoadingRecords":  "Wird geladen ..",
+                            "sProcessing":      "Bitte warten ..",
+                            "sSearch":          "Suchen",
+                            "sZeroRecords":     "Keine Einträge vorhanden",
+                            "oPaginate": {
+                                "sFirst":       "Erste",
+                                "sPrevious":    "Zurück",
+                                "sNext":        "Nächste",
+                                "sLast":        "Letzte"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": aktivieren, um Spalte aufsteigend zu sortieren",
+                                "sSortDescending": ": aktivieren, um Spalte absteigend zu sortieren"
+                            },
+                            "select": {
+                                "rows": {
+                                    "_": "%d Zeilen ausgewählt",
+                                    "0": "",
+                                    "1": "1 Zeile ausgewählt"
+                                }
+                            },
+                            "buttons": {
+                                "print":    "Drucken",
+                                "colvis":   "Spalten",
+                                "copy":     "Kopieren",
+                                "copyTitle":    "In Zwischenablage kopieren",
+                                "copyKeys": "Taste <i>ctrl</i> oder <i>\u2318</i> + <i>C</i> um Tabelle<br>in Zwischenspeicher zu kopieren.<br><br>Um abzubrechen die Nachricht anklicken oder Escape drücken.",
+                                "copySuccess": {
+                                    "_": "%d Spalten kopiert",
+                                    "1": "1 Spalte kopiert"
+                                }
+                            }
+                        }
+                });
 	} );
 	</script>
 
