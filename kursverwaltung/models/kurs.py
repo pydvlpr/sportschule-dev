@@ -6,14 +6,14 @@ from .trainer import Trainer
 class Kurs(models.Model):
 
     titel = models.CharField(max_length=100, unique=True,help_text="Titel des Kurses eingeben.")
-    beschreibung = models.CharField(max_length=32767, default=" ",help_text="Beschreibung des Kurses eingeben.")
+    beschreibung = models.CharField(max_length=32767, help_text="Beschreibung des Kurses eingeben.")
 
     # Datum/Zeit-Erfassung sollte mit Javascrip Widget erfolgen
     anfangszeit = models.DateTimeField(help_text="Anfangszeit des Kurses eingeben. (Format: Tag.Monat.Jahr Stunde:Minute)")
     endzeit = models.DateTimeField(help_text="Anfangszeit des Kurses eingeben. (Format: Tag.Monat.Jahr Stunde:Minute)")
 
-    raum = models.ForeignKey(Raum, on_delete=models.CASCADE,help_text="Raum des Kurses auswählen.")
-    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE, help_text="Trainer des Kurses auswählen.")
+    raum = models.ForeignKey(Raum, blank=True, null=True, on_delete=models.CASCADE,help_text="Raum des Kurses auswählen.")
+    trainer = models.ForeignKey(Trainer, blank=True, null=True, on_delete=models.CASCADE, help_text="Trainer des Kurses auswählen.")
 
     # Teilnehmerzahl darf max. Teilnehmer nicht überschreiten,
     # das soll aber das Form prüfen (d.h. dort max_value setzen)

@@ -44,8 +44,20 @@
                             <td>{{kurs.beschreibung}}</td>
                             <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
                             <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
-                            <td>{{kurs.raum}}</td>
-                            <td>{{kurs.trainer}}</td>
+                            <td>
+                                {% if not kurs.raum.id %}
+                                    noch nicht bekannt
+                                {% else %}
+                                    {{kurs.raum}}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not kurs.trainer.id %}
+                                    noch nicht bekannt
+                                {% else %}
+                                    {{kurs.trainer}}
+                                {% endif %}
+                            </td>
                             <td>{{kurs.teilnehmerzahl}}</td>
                             <td>{{kurs.max_teilnehmer}}</td>
                             <td>{{kurs.gebuehr}} €</td>
@@ -87,8 +99,20 @@
                             <td>{{kurs.beschreibung}}</td>
                             <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
                             <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
-                            <td>{{kurs.raum}}</td>
-                            <td>{{kurs.trainer}}</td>
+                            <td>
+                                {% if not kurs.raum.raum_id %}
+
+                                {% else %}
+                                    {{kurs.raum}}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not kurs.trainer.nachname %}
+
+                                {% else %}
+                                    {{kurs.trainer}}
+                                {% endif %}
+                            </td>
                             <td>{{kurs.teilnehmerzahl}}</td>
                             <td>{{kurs.max_teilnehmer}}</td>
                             <td>{{kurs.gebuehr}} €</td>
@@ -100,16 +124,14 @@
                 <p>Es sind aktuell keine Kurse verfügbar.</p>
             {% endif %}
         {% endif %}
-  
+
 </div>
 <script>
 	$.noConflict();
-	jQuery(document).ready( function ($) 
+	jQuery(document).ready( function ($)
 	{
 		$('#dataTable').DataTable();
 	} );
 	</script>
 
 {% endblock content%}
-
-

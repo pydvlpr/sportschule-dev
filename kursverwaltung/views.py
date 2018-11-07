@@ -393,9 +393,13 @@ def kurs_liste(request):
 
 def kurs_erstellen(request):
     args = {}
+    valid=False
+    post=False
     if request.method == "POST":
+        post = True
         form = KursForm(request.POST)
         if form.is_valid():
+            valid=True
             # kursdaten übernehmen aus form quatsch, neuer_kurs = string des forms
             neuer_kurs = form.save(commit=False)
 
@@ -420,9 +424,10 @@ def kurs_erstellen(request):
                 kurs_beginn_tag = kurs.anfangszeit.astimezone(timezone('Europe/Berlin')).date()
 
                 if neuer_kurs_tag == kurs_beginn_tag:
-                    # Kurse am gleichen Tag sammeln für nachfolgende Prüfung
-                    problem_kurse.append(kurs)
 
+                    if kurs.trainer is not None or kurs.raum is not None:
+                        # Kurse am gleichen Tag sammeln für nachfolgende Prüfung
+                        problem_kurse.append(kurs)
 
             # Kurse mit gleichem Tag prüfen
             for problem_kurs in problem_kurse:
@@ -443,33 +448,35 @@ def kurs_erstellen(request):
 
 
                     # Raum Doppelbelegung prüfen
-                    problem_kurs_raum = problem_kurs.raum
-                    if problem_kurs_raum == neuer_kurs_raum:
-                        raum_dummy = "in if raum..."
-                        raum_object = get_object_or_404(Raum, pk=neuer_kurs_raum.id)
-                        kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
-                        error_message = "Der Raum ist bereits belegt."
+                    if problem_kurs.raum is not None:
+                        problem_kurs_raum = problem_kurs.raum
+                        if problem_kurs_raum == neuer_kurs_raum:
+                            raum_dummy = "in if raum..."
+                            raum_object = get_object_or_404(Raum, pk=problem_kurs_raum.id)
+                            kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
+                            error_message = "Der Raum ist bereits belegt."
 
-                        ##DEBUG
-                        #balfa = Kurs.objects.by_id("200")
+                            ##DEBUG
+                            #balfa = Kurs.objects.by_id("200")
 
-                        return render(request, 'kursverwaltung/kurs_validieren_error.html',
-                                      {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
+                            return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                                          {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
 
 
                     # Trainer Doppelbuchung prüfen
-                    problem_kurs_trainer = problem_kurs.trainer
-                    if problem_kurs_trainer  == neuer_kurs_trainer:
-                        trainer_dummy = "in if trainer..."
-                        trainer_object = get_object_or_404(Trainer, pk=problem_kurs_trainer.id)
-                        kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
-                        error_message = "Der Trainer ist bereits gebucht."
+                    if problem_kurs.trainer is not None:
+                        problem_kurs_trainer = problem_kurs.trainer
+                        if problem_kurs_trainer  == neuer_kurs_trainer:
+                            trainer_dummy = "in if trainer..."
+                            trainer_object = get_object_or_404(Trainer, pk=problem_kurs_trainer.id)
+                            kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
+                            error_message = "Der Trainer ist bereits gebucht."
 
-                        ##DEBUG
-                        #balfa = Kurs.objects.by_id("200")
+                            ##DEBUG
+                            #balfa = Kurs.objects.by_id("200")
 
-                        return render(request, 'kursverwaltung/kurs_validieren_error.html',
-                                      {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
+                            return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                                          {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
 
                 # greift, wenn Zeitfilter, d.h. Kurs wurde negativ geprüft
                 else:
@@ -525,9 +532,13 @@ def kurs_aktualisieren(request, pk):
                 kurs_beginn = kurs.anfangszeit.astimezone(timezone('Europe/Berlin'))
                 kurs_beginn_tag = kurs.anfangszeit.astimezone(timezone('Europe/Berlin')).date()
 
+                # Kurse mit zeitlicher Überschneidung finden
+                # und sammeln, wenn Trainer oder Raum gesetzt sind
                 if neuer_kurs_tag == kurs_beginn_tag:
-                    # Kurse am gleichen Tag sammeln für nachfolgende Prüfung
-                    problem_kurse.append(kurs)
+
+                    if kurs.trainer is not None or kurs.raum is not None:
+                        # Kurse am gleichen Tag sammeln für nachfolgende Prüfung
+                        problem_kurse.append(kurs)
 
 
             # Kurse mit gleichem Tag prüfen
@@ -549,33 +560,36 @@ def kurs_aktualisieren(request, pk):
 
 
                     # Raum Doppelbelegung prüfen
-                    problem_kurs_raum = problem_kurs.raum
-                    if problem_kurs_raum == neuer_kurs_raum:
-                        raum_dummy = "in if raum..."
-                        raum_object = get_object_or_404(Raum, pk=neuer_kurs_raum.id)
-                        kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
-                        error_message = "Der Raum ist bereits belegt."
+                    if problem_kurs.raum is not None:
+                        problem_kurs_raum = problem_kurs.raum
+                        if problem_kurs_raum == neuer_kurs_raum:
+                            raum_dummy = "in if raum..."
 
-                        ##DEBUG
-                        #balfa = Kurs.objects.by_id("200")
+                            raum_object = get_object_or_404(Raum, pk=problem_kurs_raum.id)
+                            kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
+                            error_message = "Der Raum ist bereits belegt."
 
-                        return render(request, 'kursverwaltung/kurs_validieren_error.html',
-                                      {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
+                            ##DEBUG
+                            #balfa = Kurs.objects.by_id("200")
+
+                            return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                                          {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
 
 
                     # Trainer Doppelbuchung prüfen
-                    problem_kurs_trainer = problem_kurs.trainer
-                    if problem_kurs_trainer  == neuer_kurs_trainer:
-                        trainer_dummy = "in if trainer..."
-                        trainer_object = get_object_or_404(Trainer, pk=problem_kurs_trainer.id)
-                        kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
-                        error_message = "Der Trainer ist bereits gebucht."
+                    if problem_kurs.trainer is not None:
+                        problem_kurs_trainer = problem_kurs.trainer
+                        if problem_kurs_trainer  == neuer_kurs_trainer:
+                            trainer_dummy = "in if trainer..."
+                            trainer_object = get_object_or_404(Trainer, pk=problem_kurs_trainer.id)
+                            kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
+                            error_message = "Der Trainer ist bereits gebucht."
 
-                        ##DEBUG
-                        #balfa = Kurs.objects.by_id("200")
+                            ##DEBUG
+                            #balfa = Kurs.objects.by_id("200")
 
-                        return render(request, 'kursverwaltung/kurs_validieren_error.html',
-                                      {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
+                            return render(request, 'kursverwaltung/kurs_validieren_error.html',
+                                          {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
 
                 # greift, wenn Zeitfilter, d.h. Kurs wurde negativ geprüft
                 else:

@@ -27,6 +27,7 @@ class KursForm(forms.ModelForm):
         super(KursForm,self).__init__(*args, **kwargs)
         self.fields['beschreibung'].required = True
         self.fields['raum'].required = False
+        self.fields['trainer'].required = False
         self.fields['teilnehmerzahl'].disabled=True
         for field in self.fields:
             help_text = self.fields[field].help_text
