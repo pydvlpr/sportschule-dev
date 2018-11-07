@@ -212,6 +212,30 @@ class KundeEntfernen(DeleteView):
     success_url = reverse_lazy('kunden_liste')
 
 
+
+"""
+    def get_object(self):
+        id= self.kwargs.get("id")
+
+        return get_object_or_404(Kunde, id=id)
+"""
+
+"""
+
+    def post(self, request, *args, **kwargs):
+        self.kunde = self.get_object()
+
+        # Buchungen des Kunden abrufen
+        buchungen = Buchung.objects.filter(self.kunde.id).count()
+
+        Kunde.get_object(500)
+
+
+        return HttpResponse(html)
+
+"""
+
+
 ## Trainer Views
 
 def trainer_liste(request):
@@ -456,9 +480,6 @@ def kurs_erstellen(request):
                             kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
                             error_message = "Der Raum ist bereits belegt."
 
-                            ##DEBUG
-                            #balfa = Kurs.objects.by_id("200")
-
                             return render(request, 'kursverwaltung/kurs_validieren_error.html',
                                           {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
 
@@ -471,9 +492,6 @@ def kurs_erstellen(request):
                             trainer_object = get_object_or_404(Trainer, pk=problem_kurs_trainer.id)
                             kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
                             error_message = "Der Trainer ist bereits gebucht."
-
-                            ##DEBUG
-                            #balfa = Kurs.objects.by_id("200")
 
                             return render(request, 'kursverwaltung/kurs_validieren_error.html',
                                           {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
@@ -521,9 +539,6 @@ def kurs_aktualisieren(request, pk):
             # alle Kurse am selben Tag
             problem_kurse = []
 
-
-            #blafa=Kurs.objects.by_id(200)
-
             # Kurse durchlaufen
             for kurs in alle_kurse:
                 if kurs.id == neuer_kurs.id:
@@ -569,9 +584,6 @@ def kurs_aktualisieren(request, pk):
                             kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
                             error_message = "Der Raum ist bereits belegt."
 
-                            ##DEBUG
-                            #balfa = Kurs.objects.by_id("200")
-
                             return render(request, 'kursverwaltung/kurs_validieren_error.html',
                                           {'error_message':error_message, 'raum_object':raum_object, 'kurs_object':kurs_object})
 
@@ -584,9 +596,6 @@ def kurs_aktualisieren(request, pk):
                             trainer_object = get_object_or_404(Trainer, pk=problem_kurs_trainer.id)
                             kurs_object = get_object_or_404(Kurs, pk=problem_kurs.id)
                             error_message = "Der Trainer ist bereits gebucht."
-
-                            ##DEBUG
-                            #balfa = Kurs.objects.by_id("200")
 
                             return render(request, 'kursverwaltung/kurs_validieren_error.html',
                                           {'error_message':error_message, 'trainer_object':trainer_object, 'kurs_object':kurs_object})
@@ -686,11 +695,20 @@ def buchung_erstellen(request):
 def buchung_aktualisieren(request,pk):
     args = {}
     buchung = get_object_or_404(Buchung, pk=pk)
+    bisheriger_kurs = buchung.kurs
+
     if request.method == "POST":
         form = BuchungForm(request.POST, instance = buchung)
         if form.is_valid():
             # uncleand kurs enthält die gewählte Kurs.id
             kurs_id = request.POST['kurs']
+
+            # prüfen, ob der Kurs geändert wurde, dann teilnehmer alter Kurs reduzieren
+            if form.has_changed():
+                #bisheriger_kurs_buchungen = Buchung.objects.filter(kurs=kurs_id).count()
+                bisheriger_kurs.teilnehmerzahl-=1
+                bisheriger_kurs.save()
+
             # Kurs Objekte zur ID  holen und zählen
             kurs = Kurs.objects.get(pk=kurs_id)
             kursbuchungen = Buchung.objects.filter(kurs=kurs_id).count()
@@ -722,8 +740,11 @@ def buchung_aktualisieren(request,pk):
     return render(request, "kursverwaltung/buchung_aktualisieren_form.html", args)
 
 
-# Reduzierung der Teilnehmerzahl bei Löschung noch implementieren
+"""
+ Löschen einer Buchung
+"""
 def buchung_entfernen(request,pk):
+
     buchung = get_object_or_404(Buchung, pk=pk)
     if request.method == "POST":
         kurs = get_object_or_404(Kurs, pk=buchung.kurs.id)
@@ -732,16 +753,14 @@ def buchung_entfernen(request,pk):
 
         # Validierung der Teilnehmerzahl
         if aktuelle_teilnehmerzahl >= 0:
-            # neue teilnehmerzahl festlegen und speichern
-            kurs.teilnehmerzahl= aktuelle_teilnehmerzahl - 1
-            kurs.save()
 
             # Buchung Löschen
             buchung.delete()
+
             return redirect ('buchungen_liste')
 
         else:
-            # Fehler bei fehlgeschlagener Validierung
+            # Fehler bei fehlgeschlagener Validierung, sollte aber nie vorkommen
             error_message = "Es sind keine Teilnehmer mehr vorhanden."
             return render(request, 'kursverwaltung/buchung_validieren_error.html',
                           {'error_message':error_message})

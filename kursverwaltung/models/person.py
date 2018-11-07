@@ -1,7 +1,17 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator, RegexValidator
 
+"""
+    Person
+
+    Abstrakte Klasse für Personendetails (Trainer/Kunde)
+"""
+
 class Person(models.Model):
+
+    class Meta:
+        abstract = True
+
 
     nachname = models.CharField(max_length=100)
     vorname = models.CharField(max_length=100)
@@ -28,6 +38,3 @@ class Person(models.Model):
             ],)
 
     e_mail = models.EmailField(verbose_name="E-Mail")
-
-    class Meta:
-        abstract = True

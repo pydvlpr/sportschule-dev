@@ -1,9 +1,20 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+
 from .raum import Raum
 from .trainer import Trainer
 
+"""
+    Kurs
+
+    Abbildung eines Kurses der Sportschule
+"""
 class Kurs(models.Model):
+
+    class Meta:
+        # Sortierung
+        ordering = ["id", "-anfangszeit"]
+        unique_together = (("raum", 'anfangszeit' ),)
 
     titel = models.CharField(max_length=100, unique=True,help_text="Titel des Kurses eingeben.")
     beschreibung = models.CharField(max_length=32767, help_text="Beschreibung des Kurses eingeben.")
@@ -15,8 +26,6 @@ class Kurs(models.Model):
     raum = models.ForeignKey(Raum, blank=True, null=True, on_delete=models.CASCADE,help_text="Raum des Kurses auswählen.")
     trainer = models.ForeignKey(Trainer, blank=True, null=True, on_delete=models.CASCADE, help_text="Trainer des Kurses auswählen.")
 
-    # Teilnehmerzahl darf max. Teilnehmer nicht überschreiten,
-    # das soll aber das Form prüfen (d.h. dort max_value setzen)
     max_teilnehmer = models.IntegerField(default=10, verbose_name="Max. Teilnehmer",help_text="Maximale Teilnehmerzahl festlegen.")
 
     teilnehmerzahl = models.IntegerField(default=0,help_text="Aktuelle Zahl der Teilnehmer.")
@@ -26,9 +35,3 @@ class Kurs(models.Model):
 
     def __str__(self):
         return ( self.titel+" (Kurs-Nr. "+str(self.id)+")"+ ", Trainer: "+str(self.trainer)   )
-
-
-    class Meta:
-        # Sortierung
-        ordering = ["id", "-anfangszeit"]
-        unique_together = (("raum", 'anfangszeit' ),)

@@ -1,7 +1,16 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator, RegexValidator
 
+"""
+    Raum
+
+    Veranstaltungsort eines Kurses
+"""
 class Raum(models.Model):
+
+    class Meta:
+        pass
+
     raum_nr = models.IntegerField(
         default=1,
         validators=[
@@ -13,10 +22,12 @@ class Raum(models.Model):
 
     gebaeude = models.CharField(max_length=100, verbose_name="Gebäude")
     bemerkung = models.CharField(max_length=32767)
+
     sitzplaetze = models.IntegerField(validators=[
         MaxValueValidator(9999999999, "Sitzplatzzahl darf nur maximal 10-stellig sein."),
         MinValueValidator(1)
         ],verbose_name="Sitzplätze")
+
     ansprechpartner = models.CharField(max_length=100)
     geraeteverantwortlicher = models.CharField(max_length=100, verbose_name="Geräteverantwortlicher")
     strasse = models.CharField(max_length=100,verbose_name="Straße")
