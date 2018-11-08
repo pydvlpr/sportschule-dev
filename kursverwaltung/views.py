@@ -261,6 +261,7 @@ class TrainerErstellen(CreateView):
 
     def get_form(self, form_class=None):
         form = super(TrainerErstellen, self).get_form(form_class)
+        form.fields['bemerkung'].required = False
         # Form-Felder modifizieren
         form.fields['nachname'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Nachname des Trainers eingeben.",
@@ -333,6 +334,7 @@ class TrainerAktualisieren(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(TrainerAktualisieren, self).get_form(form_class)
+        form.fields['bemerkung'].required = False
         # Form-Felder modifizieren
         form.fields['nachname'].widget = forms.TextInput(attrs={ 'class':'has-popover',
                                                                         'data-content':"Nachname des Trainers eingeben.",
@@ -795,7 +797,7 @@ class RaumErstellen(CreateView):
 
     def get_form(self, form_class=None):
         form = super(RaumErstellen, self).get_form(form_class)
-        form.fields['geraeteverantwortlicher'].required = False
+        form.fields['geraeteverantwortlicher'].required = True
         form.fields['bemerkung'].required = False
 
         form.fields['gebaeude'].widget = forms.TextInput(attrs={ 'class':'has-popover',
@@ -867,7 +869,7 @@ class RaumAktualisieren(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(RaumAktualisieren, self).get_form(form_class)
-        form.fields['geraeteverantwortlicher'].required = False
+        form.fields['geraeteverantwortlicher'].required = True
         form.fields['bemerkung'].required = False
 
         form.fields['gebaeude'].widget = forms.TextInput(attrs={ 'class':'has-popover',
