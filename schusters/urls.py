@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include,path
 
 urlpatterns = [
+    path('', include('kursverwaltung.urls')),
     # Einbinden der lokalen URLs der Kursverwaltung
     path('kursverwaltung/', include('kursverwaltung.urls')),
 
