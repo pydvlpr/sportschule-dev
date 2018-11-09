@@ -100,8 +100,8 @@
                                     <td>{{kurs.anfangszeit|date:'d.m.Y H:i'}} Uhr</td>
                                     <td>{{kurs.endzeit|date:'d.m.Y H:i'}} Uhr</td>
                                     <td>
-                                        {% if not kurs.raum.raum_id %}
-
+                                        {% if not kurs.raum.id %}
+                                            noch nicht bekannt
                                         {% else %}
                                             {{kurs.raum}}
                                         {% endif %}
