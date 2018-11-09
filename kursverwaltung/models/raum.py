@@ -30,8 +30,14 @@ class Raum(models.Model):
 
     ansprechpartner = models.CharField(max_length=100)
     geraeteverantwortlicher = models.CharField(max_length=100, verbose_name="Geräteverantwortlicher")
-    strasse = models.CharField(max_length=100,verbose_name="Straße")
-    hausnummer = models.CharField(max_length=100)
+
+    strasse = models.CharField(max_length=100,verbose_name="Straße", validators=[
+            RegexValidator('^[a-zA-Z0-9üöäÜÖÄß ]+$',"Nur Buchstaben, Zahlen und Leerzeichen sind erlaubt.")
+            ],)
+
+    hausnummer = models.CharField(max_length=100, validators=[
+            RegexValidator('^[a-zA-Z0-9üöäÜÖÄß ]+$',"Nur Buchstaben, Zahlen und Leerzeichen sind erlaubt.")
+            ],)
 
     plz = models.CharField(max_length=5,verbose_name="PLZ", default="00000",validators=[
         MinLengthValidator(5, "Die Postleitzahl muss 5-stellig sein."),
@@ -39,7 +45,7 @@ class Raum(models.Model):
         ],)
 
     stadt = models.CharField(max_length=100, validators=[
-            RegexValidator('^[a-zA-Z ]+$',"Nur Buchstaben sind erlaubt.")
+            RegexValidator('^[a-zA-Z9üöäÜÖÄß ]+$',"Nur Buchstaben sind erlaubt.")
             ],)
 
     def __str__(self):

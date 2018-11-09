@@ -15,8 +15,15 @@ class Person(models.Model):
 
     nachname = models.CharField(max_length=100)
     vorname = models.CharField(max_length=100)
-    strasse = models.CharField(max_length=100, verbose_name="Straße")
-    hausnummer = models.CharField(max_length=100)
+
+    strasse = models.CharField(max_length=100, verbose_name="Straße", validators=[
+            RegexValidator('^[a-zA-Z0-99üöäÜÖÄß ]+$',"Nur Buchstaben, Zahlen und Leerzeichen sind erlaubt.")
+            ],)
+
+    hausnummer = models.CharField(max_length=100, validators=[
+            RegexValidator('^[a-zA-Z0-999üöäÜÖÄß ]+$',"Nur Buchstaben, Zahlen und Leerzeichen sind erlaubt.")
+            ],)
+
     # CharField da sonst plz mit 0 nicht gehen
     plz = models.CharField(max_length=5,verbose_name="PLZ", default="00000",validators=[
         MinLengthValidator(5, "Die Postleitzahl muss 5-stellig sein."),
@@ -24,7 +31,7 @@ class Person(models.Model):
         ],)
 
     stadt = models.CharField(max_length=100, validators=[
-            RegexValidator('^[a-zA-Z ]+$',"Nur Buchstaben sind erlaubt.")
+            RegexValidator('^[a-zA-Z9üöäÜÖÄ ]+$',"Nur Buchstaben sind erlaubt.")
             ],)
 
     #CharField wegen internationaler Nummern
