@@ -39,7 +39,7 @@ class Raum(models.Model):
         ],)
 
     stadt = models.CharField(max_length=100, validators=[
-            RegexValidator('^[A-Za-z]+$',"Nur Buchstaben sind erlaubt.")
+            RegexValidator('^[a-zA-Z ]+$',"Nur Buchstaben sind erlaubt.")
             ],)
 
     def __str__(self):
